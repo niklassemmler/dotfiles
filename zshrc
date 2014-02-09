@@ -5,7 +5,6 @@ SAVEHIST=1000
 setopt appendhistory autocd extendedglob notify
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/Users/magum/.zshrc'
 
 #bindkey -v
 #bindkey "^P" vi-up-line-or-history
@@ -20,22 +19,7 @@ zstyle :compinstall filename '/Users/magum/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
-export PYTHONSTARTUP=~/.pythonrc
-export NCS_DIR=/Users/pharaoh/dev/tail-f/ncs-3.0.1/
-export CONFD_DIR=/Users/pharaoh/dev/tail-f/confd-5.0/
 # TODO change on linux
-export PYTHONBIN=~/Library/Python/2.7/bin
-export ANT_HOME="/Users/pharaoh/dev/ant"
-PATH=$PYTHONBIN:/Users/pharaoh/bin:/opt/local/bin:/usr/local/bin/:$PATH
-PATH=/opt/local/sbin:/usr/local/sbin:$ANT_HOME/bin:$PATH
-PATH=/Users/pharaoh/dev/ns-allinone-2.35/bin:$PATH
-PATH=$CONFD_DIR/bin/:$NCS_DIR/bin/:$PATH
-export PATH=/Users/pharaoh/dev/ns-allinone-2.35/bin:$PATH
-LD_PATH=/Users/pharaoh/dev/ns-allinone-2.35/otcl-1.14:$LD_PATH
-export LD_PATH=/Users/pharaoh/dev/ns-allinone-2.35/lib:$LD_PATH
-export TCL_LIBRARY=/Users/pharaoh/dev/ns-allinone-2.35/tcl8.5.10/library:$TCL_LIBRARY
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export MANPATH=$CONFD_DIR/man/:$NCS_DIR/man/:$MANPATH
 
 # start applications
 alias -s tex=vim
@@ -44,7 +28,6 @@ alias -s py=vim
 alias -s bashrc=vim
 alias -s zshrc=vim
 alias -s txt=vim
-alias ls="ls -G"
 
 # set aliases
 alias -g ...='../..'
@@ -77,12 +60,3 @@ setopt autocd autopushd pushdignoredups
 if [ -e ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
-. ~/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
-. $NCS_DIR/ncsrc
-. $CONFD_DIR/confdrc
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# Disable interpreting Control S and some more ...
-stty -ixon

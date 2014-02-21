@@ -1,8 +1,8 @@
-if line("$") == 1 && strlen(getline(1)) == 0
-    call feedkeys("i_article\<tab>")
-endif
-ab _ _{}<LEFT>
-ab ^ ^{}<LEFT>
-ab didier Didier D. S. Gumbs 5830915
-ab chiel Chiel Kooijman 5743028
-ab sander Sander Latour 5743044
+" LaTeX (rubber) macro
+nnoremap <leader>b :w<CR>:!rubber --pdf --warn all %<CR>
+
+" View PDF macro; '%:r' is current file's root (base) name.
+nnoremap <leader>v :!zathura %:r.pdf &<CR><CR>
+
+let g:username = "Niklas Semmler"
+let g:email = "semmler@kth.se"

@@ -4,9 +4,14 @@ from libqtile import layout, bar, widget
 from libqtile import hook
 import os
 import signal
+import subprocess
+import re
 
+
+###########################################################
+### Keys                                                ###
+###########################################################
 mod = "mod4"
-pid_record_path = os.path.expanduser(".qtile_tasks")
 
 keys = [
     # Switch between windows in current stack pane
@@ -69,9 +74,6 @@ keys = [
         [mod, "shift"], "space",
         lazy.layout.rotate()
     ),
-    ###########################################################
-    ### Fn keys                                             ###
-    ###########################################################
     Key(
         [], "XF86AudioRaiseVolume",
         lazy.spawn("amixer -c 0 -q set Master 2dB+")
@@ -116,17 +118,21 @@ keys = [
     Key([mod], "Return", lazy.spawn("terminator")),
     Key([mod], "BackSpace", lazy.spawn("Thunar")),
     Key([mod], "Return", lazy.spawn("terminator")),
-    Key([mod], ",", lazy.spawn("xterm -e 'journalctl -lfp0..4'")),
-    Key([mod], ".", lazy.spawn("xterm -e 'htop'")),
+    Key([mod], "comma", lazy.spawn("xterm -e 'journalctl -lfp0..4'")),
+    Key([mod], "period", lazy.spawn("xterm -e 'htop'")),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.nextlayout()),
     Key([mod], "w", lazy.window.kill()),
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod], "r", lazy.spawncmd()),
-    Key([mod, "control", "shift"], "q", shutdown()),
+    Key([mod, "control", "shift"], "q", lazy.shutdown()),
 ]
 
+
+###########################################################
+### Groups                                              ###
+###########################################################
 groups = [
     Group("a.mail", matches=[
         Match(wm_class=['Mail', 'Thunderbird'])
@@ -139,7 +145,7 @@ groups = [
     ]),
     Group("f.open"),
     Group("u.notes", matches=[
-        Match(wm_class=['Qt Jambi application'])
+        Match(wm_class=['Qt Jambi application', 'keepassx', 'Keepassx'])
     ]),
     Group("i.msg", matches=[
         Match(wm_class=['Skype', 'skype', 'Pidgin', 'pidgin'])
@@ -147,8 +153,8 @@ groups = [
     Group("o.game", matches=[
         Match(wm_class=['Wine'])
     ]),
-    Group("p.ctrl", spawn="xterm -e 'htop'", matches=[
-        Match(wm_class=['xterm'])
+    Group("p.ctrl", matches=[
+        Match(wm_class=['xterm', 'Xterm'])
     ]),
 ]
 
@@ -176,6 +182,10 @@ layouts = [
     #layout.Stack(stacks=2)
 ]
 
+
+###########################################################
+### Widgets                                             ###
+###########################################################
 widget_options = dict(fontsize=14)
 screens = [
     Screen(
@@ -208,21 +218,13 @@ screens = [
     ),
 ]
 
-@hook.subscribe.screen_change
-def restart_on_randr(qtile, ev):
-    qtile.cmd_restart()
 
-# Dialogues
-@hook.subscribe.client_new
-def floating_dialogs(window):
-    dialog = window.window.get_wm_type() == 'dialog'
-    wclass = window.window.get_wm_class() == 'gcr-prompter'
-    transient = window.window.get_wm_transient_for()
-    if dialog or transient or wclass:
-        window.floating = True
+###########################################################
+### Startup                                             ###
+###########################################################
+pid_record_path = os.path.expanduser("~/.qtile_tasks")
 
 # Startup
-import subprocess, re
 def is_running(process):
     process = process.split()[0]
     s = subprocess.Popen(["ps", "axw"], stdout=subprocess.PIPE)
@@ -240,7 +242,7 @@ def execute(process):
 
 @hook.subscribe.startup
 def startup():
-    #execute_once("parcellite")
+    execute("feh --bg-max /home/thoth/view/wallpaper/abathur2.png"),
     pids = [
         execute_once("nm-applet"),
         execute_once("udiskie --tray"),
@@ -251,11 +253,11 @@ def startup():
         execute_once("pidgin"),
         execute_once("chromium"),
         execute_once("thunderbird"),
+        execute_once("keepassx"),
         execute_once("nixnote"),
         execute_once("xflux -l 59.329444 -g  18.068611"),
-        execute("bash -c 'sleep 30; feh --bg-max ~/view/wallpaper/abathur2.png' &"),
     ]
-    pids = [str(p) for p in pids]
+    pids = [str(p) for p in pids if p]
     with open(pid_record_path, "w") as pid_record:
         pid_record.write(",".join(pids))
 
@@ -263,16 +265,25 @@ def shutdown():
     with open("pid_record_path") as pid_file:
         pids = pid_file.read().split(",")
     for pid in pids:
-        os.kill(int(pid), signal.SIGTERM)
+        try:
+            os.kill(int(pid), signal.SIGTERM)
+        except OSError:
+            pass # so process doesn't exist anymore, so what.
     lazy.shutdown()
 
-# --- RECENT changes END ---
 
-main = None
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
-floating_layout = layout.Floating()
-mouse = ()
-auto_fullscreen = True
-widget_defaults = {}
+###########################################################
+### More hooks                                          ###
+###########################################################
+# Dialogues
+@hook.subscribe.client_new
+def floating_dialogs(window):
+    dialog = window.window.get_wm_type() == 'dialog'
+    wclass = window.window.get_wm_class() == 'gcr-prompter'
+    transient = window.window.get_wm_transient_for()
+    if dialog or transient or wclass:
+        window.floating = True
+
+@hook.subscribe.screen_change
+def restart_on_randr(qtile, ev):
+    qtile.cmd_restart()

@@ -197,10 +197,10 @@ screens = [
                 widget.Prompt(**widget_options),
                 widget.WindowName(**widget_options),
                 widget.Pacman(**widget_options),
-                widget.NetGraph(),
+                #widget.NetGraph(),
                 widget.Systray(),
-                #widget.BatteryIcon(battery_name="BAT0"),
-                #widget.BatteryIcon(battery_name="BAT1"),
+                widget.BatteryIcon(battery_name="BAT0"),
+                widget.BatteryIcon(battery_name="BAT1"),
                 widget.Clock('%Y-%m-%d %a %I:%M %p', **widget_options),
             ],
             30,
@@ -242,7 +242,7 @@ def execute(process):
 
 @hook.subscribe.startup
 def startup():
-    execute("feh --bg-max /home/thoth/view/wallpaper/abathur2.png"),
+    execute("feh --bg-max /home/thoth/view/wallpaper/bg_image"),
     pids = [
         execute_once("nm-applet"),
         execute_once("udiskie --tray"),
@@ -256,6 +256,7 @@ def startup():
         execute_once("keepassx"),
         execute_once("nixnote"),
         execute_once("xflux -l 59.329444 -g  18.068611"),
+        #execute_once("xfce4-power-manager"),
     ]
     pids = [str(p) for p in pids if p]
     with open(pid_record_path, "w") as pid_record:

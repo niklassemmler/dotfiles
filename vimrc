@@ -1,6 +1,6 @@
 " personal information
-let g:email="metaswirl@gmail.com"
-let g:username="metawirl"
+let g:email="nsemmler@inet.tu-berlin.de"
+let g:username="Niklas Semmler"
 
 set nocompatible               " be iMproved
 filetype off                   " required!
@@ -54,9 +54,15 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
 " open pdf files in vim
 Bundle 'rhysd/open-pdf.vim'
-" vim surround??
-"Bundle tpope/vim-surround
-
+" vim surround del
+" ' => ds', change ' to ( => cs'(, add ' => ys + text obj + '
+Bundle 'tpope/vim-surround'
+" Text Object for arguments (d/c/v + i/a + a)
+Bundle 'vim-scripts/argtextobj.vim'
+" Text Object for indentation (d/c/v + i/a + i)
+Bundle 'michaeljsmith/vim-indent-object'
+" Easy Motion
+Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on     " required!
 syntax on
@@ -69,6 +75,7 @@ let mapleader=","
 nmap <leader>t :NERDTreeToggle<CR>
 " > TagBar
 nmap <leader>f :TagbarToggle<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " > NerdTree
 nmap <leader>t :NERDTreeToggle<CR>
@@ -92,6 +99,22 @@ autocmd BufNewFile,BufRead *.py map <buffer> <S-T> :MakeGreen %<CR>
 " <leader>d --> show original definition
 " <leader>r --> rename all occurrences of var
 " <leader>n --> show all uses of var
+let g:jedi#use_tabs_not_buffers = 0
+
+" Syntastic
+nmap <leader>e :call ErrorToggle()<CR>
+
+let g:syntastic_loc_list_height=15
+let g:error_list_is_closed = 1
+function! ErrorToggle()
+    if g:error_list_is_closed
+        Errors
+        let g:error_list_is_closed = 0
+    else
+        lclose
+        let g:error_list_is_closed = 1
+    endif
+endfunction
 
 " > powerline
 python from powerline.vim import setup as powerline_setup
@@ -135,7 +158,7 @@ vnoremap > >gv
 set number
 " set nowrap
 set wrap
-set textwidth=79
+set textwidth=89
 set linebreak
 nmap j gj
 nmap k gk
@@ -213,10 +236,10 @@ noremap <C-w><C-c> <Nop>
 
 "============> Colors
 " Colorscheme solarized
-set background=dark
-colorscheme solarized
-set colorcolumn=80
-highlight ColorColumn ctermbg=9
+set background=light
+" colorscheme solarized
+"set colorcolumn=80
+"highlight ColorColumn ctermbg=9
 
 " Mark cursor in insert mode and showcmd for more transparency.
 set showcmd

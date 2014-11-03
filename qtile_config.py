@@ -84,7 +84,7 @@ keys = [
     ),
     Key(
         [], "XF86AudioMute",
-        lazy.spawn("amixer -c 0 -q set Master toggle")
+        lazy.spawn("amixer -q set Master toggle"),
     ),
     # Leads to errors :(
     #Key(
@@ -101,10 +101,18 @@ keys = [
     ),
     Key(
         [], "XF86MonBrightnessDown",
-        lazy.spawn("xscreensaver-command --lock")
+        lazy.spawn("xbacklight -dec 5")
     ),
     Key(
         [], "XF86MonBrightnessUp",
+        lazy.spawn("xbacklight -inc 5")
+    ),
+    Key(
+        [], "XF86LaunchA",
+        lazy.spawn("xscreensaver-command --lock")
+    ),
+    Key(
+        [], "XF86MyComputer",
         lazy.spawn("systemctl suspend")
     ),
     # Toggle between split and unsplit sides of stack.
@@ -240,7 +248,7 @@ def execute_once(process):
 def execute(process):
     return subprocess.Popen(process.split()).pid
 
-@hook.subscribe.startup
+@hook.subscribe.startup_once
 def startup():
     execute("feh --bg-max /home/thoth/view/wallpaper/bg_image"),
     pids = [
@@ -255,7 +263,7 @@ def startup():
         execute_once("thunderbird"),
         execute_once("keepassx"),
         execute_once("nixnote"),
-        execute_once("xflux -l 59.329444 -g  18.068611"),
+        execute_once("xflux -l 52.478836 -g 13.436614"),
         #execute_once("xfce4-power-manager"),
     ]
     pids = [str(p) for p in pids if p]

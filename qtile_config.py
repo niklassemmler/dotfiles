@@ -96,8 +96,8 @@ keys = [
         lazy.spawn("scrot '/home/thoth/view/screen_capture/%Y_%m_%d_%H:%M:%S.png'")
     ),
     Key(
-        ["shift"], "XF86Display",
-        lazy.spawn('recordmydesktop ~/view/screen_capture/$(date +"%Y_%m_%d_%H:%M.ogv") &')
+        [], "XF86Tools",
+        lazy.spawn('/home/thoth/exec/record_screen')
     ),
     Key(
         [], "XF86MonBrightnessDown",
@@ -142,8 +142,8 @@ keys = [
 ### Groups                                              ###
 ###########################################################
 groups = [
-    Group("a.mail", matches=[
-        Match(wm_class=['Mail', 'Thunderbird'])
+    Group("a.mail",
+        matches=[Match(wm_class=['Mail', 'Thunderbird'])
     ]),
     Group("s.www", matches=[
         Match(wm_class=['chromium'], role=['browser'])
@@ -209,7 +209,7 @@ screens = [
                 widget.Systray(),
                 widget.BatteryIcon(battery_name="BAT0"),
                 widget.BatteryIcon(battery_name="BAT1"),
-                widget.Clock('%Y-%m-%d %a %I:%M %p', **widget_options),
+                widget.Clock(format='%Y-%m-%d %a %I:%M %p', **widget_options),
             ],
             30,
         ),
@@ -219,7 +219,7 @@ screens = [
             [
                 widget.GroupBox(**widget_options),
                 widget.WindowName(**widget_options),
-                widget.Clock('%Y-%m-%d %a %I:%M %p', **widget_options),
+                widget.Clock(format='%Y-%m-%d %a %I:%M %p', **widget_options),
             ],
             30,
         ),
@@ -250,7 +250,7 @@ def execute(process):
 
 @hook.subscribe.startup_once
 def startup():
-    execute("feh --bg-max /home/thoth/view/wallpaper/bg_image"),
+    execute("feh --bg-max --randomize /home/thoth/view/wallpaper/"),
     pids = [
         execute_once("nm-applet"),
         execute_once("udiskie --tray"),
@@ -262,8 +262,7 @@ def startup():
         execute_once("chromium"),
         execute_once("thunderbird"),
         execute_once("keepassx"),
-        execute_once("nixnote"),
-        execute_once("xflux -l 52.478836 -g 13.436614"),
+        execute_once("xflux -l 52.478836 -g 13.436614 -k 4400"),
         #execute_once("xfce4-power-manager"),
     ]
     pids = [str(p) for p in pids if p]

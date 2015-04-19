@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+# Start GNOME Keyring
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+# You probably need to do this too:
+export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+
+PATH="/home/thoth/exec:$PATH"
+BROWSER="chromium"
+DE="xfce"
+export PATH BROWSER DE
+export BROWSER
+
+# load solarized
+xrdb ~/.Xresources
+xbacklight -set 90
+
+# load umlaute
+xmodmap ~/.Xmodmap
+
+if [ $2 = "qtile" ]; then
+    exec /usr/bin/qtile
+elif [$2 = "awesome"]; then
+    exec /usr/bin/awesome
+elif [$2 = "xfce4"]; then
+    exec /usr/bin/startxfce4
+fi
+
+# exec gnome-session
+# exec startkde
+# exec startxfce4
+# ...or the Window Manager of your choice

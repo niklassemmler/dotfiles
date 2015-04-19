@@ -1,0 +1,7 @@
+!keycode 108 = Mode_switch Multi_key
+keycode 66 = Mode_switch Multi_key
+clear Lock
+keycode 38 = a A adiaeresis Adiaeresis NoSymbol NoSymbol
+keycode 32 = o O odiaeresis Odiaeresis NoSymbol NoSymbol
+keycode 30 = u U udiaeresis Udiaeresis NoSymbol NoSymbol
+keycode 39 = s S ssharp ssharp NoSymbol NoSymbol

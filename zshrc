@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/zsh -xv
 #### Antigen ####
 source /usr/share/zsh/scripts/antigen/antigen.zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -12,7 +12,8 @@ antigen bundle encode64
 antigen bundle jsontools
 antigen bundle pylint
 antigen bundle python
-antigen theme bira
+# antigen theme bira
+antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 #antigen theme nfarrar/oh-my-powerline oh-my-powerline
 antigen apply
 
@@ -57,7 +58,7 @@ function insert_date () {
 zle -N insert_date
 
 function gsearch () {
-    find / -name "*$@*" 2> /dev/null
+    find / -iname "*$@*" 2> /dev/null
 }
 
 # FIXME
@@ -196,13 +197,15 @@ alias -s xcf=gimp
 
 # set aliases
 alias l='less'
+alias z='zathura'
 alias v='vim'
 alias vi='vim'
+alias scala='scala -Dscala.color'
 alias vd='vimdiff'
 alias lt='ls -t | head -30'
 alias mkdir='mkdir -pv'
 alias cp='cp -v'
-alias search='find . -name '
+alias search='find . -iname '
 
 # end of line aliases
 alias -g C='| wc -l'

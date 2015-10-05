@@ -5,9 +5,9 @@ let g:username="Niklas Semmler"
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 " set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
@@ -21,10 +21,10 @@ call vundle#rc()
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 " basic for managing bundles
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 " snippets
 Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+"Bundle 'honza/vim-snippets'
 " templates in vim (mostly for latex)
 Bundle 'aperezdc/vim-template'
 " list of open buffers
@@ -63,15 +63,18 @@ Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'michaeljsmith/vim-indent-object'
 " Easy Motion
 Bundle 'Lokaltog/vim-easymotion'
-" Eclim
+"" Eclim
+Bundle 'derekwyatt/vim-scala'
 Bundle 'initrc/eclim-vundle'
-" Bookmarks and(!) annotations
-Bundle 'MattesGroeger/vim-bookmarks'
-" Undo
+"" Bookmarks and(!) annotations
+Bundle 'sukima/xmledit'
+"Bundle 'MattesGroeger/vim-bookmarks'
+"" Undo
 Bundle 'sjl/gundo.vim'
 " Ag / Searching / Grep substitute
 Bundle 'rking/ag.vim'
 
+call vundle#end()
 filetype plugin indent on     " required!
 syntax on
 
@@ -79,38 +82,39 @@ syntax on
 let mapleader=","
 
 "============> Plugin customizations
-" > NerdTree
-nmap <leader>t :NERDTreeToggle<CR>
-" > TagBar
-nmap <leader>f :TagbarToggle<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" > Syntastic
+let g:syntastic_python_pylint_args = "--extension-pkg-whitelist=numpy"
+let g:syntastic_java_javac_autoload_maven_classpath = 0
 
 " > NerdTree
 nmap <leader>t :NERDTreeToggle<CR>
-let g:NERDTreeWinPos="right"
+let g:NERDTreeWinPos="left"
+
 " > TagBar
 nmap <leader>f :TagbarToggle<CR>
-let g:tagbar_left = 1
-" go up the tree to find tags file
-set tags=tags;/
-" scala to tagbar
-" XXX: Replace by vim-scala?
-let g:tagbar_type_scala = {
-    \ 'ctagstype' : 'scala',
-    \ 'sro'       : '.',
-    \ 'kinds'     : [
-      \ 'p:packages',
-      \ 'T:types:1',
-      \ 't:traits',
-      \ 'o:objects',
-      \ 'O:case objects',
-      \ 'c:classes',
-      \ 'C:case classes',
-      \ 'm:methods',
-      \ 'V:values:1',
-      \ 'v:variables:1'
-    \ ]
-\ }
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+let g:tagbar_left = 0
+
+"" go up the tree to find tags file
+"set tags=tags;/
+"" scala to tagbar
+"" XXX: Replace by vim-scala?
+"let g:tagbar_type_scala = {
+"    \ 'ctagstype' : 'scala',
+"    \ 'sro'       : '.',
+"    \ 'kinds'     : [
+"      \ 'p:packages',
+"      \ 'T:types:1',
+"      \ 't:traits',
+"      \ 'o:objects',
+"      \ 'O:case objects',
+"      \ 'c:classes',
+"      \ 'C:case classes',
+"      \ 'm:methods',
+"      \ 'V:values:1',
+"      \ 'v:variables:1'
+"    \ ]
+"\ }
 " > Ulti Snippets
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 "   g:UltiSnipsJumpBackwardTrigger="<alt-tab>"
@@ -156,6 +160,9 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusl
 
 " > ConqueTerm
 let g:ConqueTerm_StartMessages = 0
+
+" > gUndo
+nmap <leader>u :GundoToggle<CR>
 "===================================
 
 " For the tex plugin
@@ -220,7 +227,6 @@ nmap k gk
 nmap vj vgj
 nmap vk vgk
 set bs=2 " defines backspace
-" set fo-=t
 "no auto wrapping
 
 " Tabulators
@@ -240,7 +246,7 @@ set splitbelow
 set splitright
 
 " Ignore some files
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.aux,*.pdf,*.bbl,*.blg
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.aux,*.pdf,*.bbl,*.blg,*.log
 
 " Sudo write
 cmap w!! w !sudo tee % >/dev/null
@@ -344,9 +350,6 @@ autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 " gV now highlights last entered text
 nnoremap gV `[v`]
 
-" toggle gundo / Super-Undo
-nnoremap <leader>u :GundoToggle<CR>
-
 " save session / Super-Save
 nnoremap <leader>s :mksession<CR>
 
@@ -357,3 +360,6 @@ nnoremap <leader>a :Ag
 nnoremap <leader>bd :bd
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bp :bp<CR>
+
+"" Don't redraw while executing macros (good performance config)
+"set lazyredraw

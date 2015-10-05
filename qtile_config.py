@@ -62,6 +62,16 @@ keys = [
         lazy.to_screen(1),
         lazy.group.toscreen(1)
     ),
+    Key(
+        [mod], "3",
+        lazy.to_screen(2),
+        lazy.group.toscreen(2)
+    ),
+    Key(
+        [mod], "4",
+        lazy.to_screen(3),
+        lazy.group.toscreen(3)
+    ),
 
     # Switch window focus to other pane(s) of stack
     Key(
@@ -130,7 +140,7 @@ keys = [
     Key([mod], "period", lazy.spawn("xterm -e 'htop'")),
 
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.nextlayout()),
+    Key([mod], "Tab", lazy.next_layout()),
     Key([mod], "w", lazy.window.kill()),
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod], "r", lazy.spawncmd()),
@@ -201,11 +211,18 @@ screens = [
             [
                 widget.GroupBox(**widget_options),
                 widget.Sep(),
-                widget.Notify(**widget_options),
-                widget.Prompt(**widget_options),
                 widget.WindowName(**widget_options),
+                widget.Notify(default_timeout=100, **widget_options),
+                widget.Prompt(**widget_options),
                 widget.Pacman(**widget_options),
-                #widget.NetGraph(),
+                widget.Clipboard(),
+                widget.CPUGraph(),
+                widget.MemoryGraph(),
+                widget.HDDBusyGraph(device='sda'),
+                widget.NetGraph(interface='wlp3s0'),
+                widget.NetGraph(interface='enp0s25'),
+                widget.ThermalSensor(tag_sensor="Core 0"),
+                widget.ThermalSensor(tag_sensor="Core 1"),
                 widget.Systray(),
                 widget.BatteryIcon(battery_name="BAT0"),
                 widget.BatteryIcon(battery_name="BAT1"),
@@ -218,7 +235,17 @@ screens = [
         bottom=bar.Bar(
             [
                 widget.GroupBox(**widget_options),
+                widget.Sep(),
                 widget.WindowName(**widget_options),
+                widget.Notify(default_timeout=100, **widget_options),
+                widget.Prompt(**widget_options),
+                widget.CPUGraph(),
+                widget.MemoryGraph(),
+                widget.HDDBusyGraph(device='sda'),
+                widget.NetGraph(interface='wlp3s0'),
+                widget.NetGraph(interface='enp0s25'),
+                widget.ThermalSensor(tag_sensor="Core 0"),
+                widget.ThermalSensor(tag_sensor="Core 1"),
                 widget.Clock(format='%Y-%m-%d %a %I:%M %p', **widget_options),
             ],
             30,
@@ -250,7 +277,7 @@ def execute(process):
 
 @hook.subscribe.startup_once
 def startup():
-    execute("feh --bg-max --randomize /home/thoth/view/wallpaper/"),
+    #execute("feh --bg-max --randomize /home/thoth/view/wallpaper/"),
     pids = [
         execute_once("nm-applet"),
         execute_once("udiskie --tray"),

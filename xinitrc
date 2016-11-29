@@ -4,6 +4,8 @@
 #
 # Executed by startx (run your window manager from here)
 
+WM="${2:-xxx}"
+
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/*; do
     [ -x "$f" ] && . "$f"
@@ -18,9 +20,8 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 PATH="/home/thoth/exec:$PATH"
 BROWSER="chromium"
-DE="xfce"
-export PATH BROWSER DE
-export BROWSER
+#DE="xfce"
+export PATH BROWSER 
 
 # load solarized
 xrdb ~/.Xresources
@@ -29,12 +30,36 @@ xbacklight -set 90
 # load umlaute
 xmodmap ~/.Xmodmap
 
-if [ $2 = "qtile" ]; then
+xset s 9000
+xset dpms 9000 9000 9000
+nm-applet &
+pasystray &
+arandr-indicator &
+conky -c ~/.conkyrc1
+conky -c ~/.conkyrc2
+udiskie --tray &
+#xscreensaver -no-splash &
+#xss-lock -- xscreensaver-command -lock &
+synclient maxtaptime=0
+xsetroot -cursor_name left_ptr
+xflux -l 52.478836 -g 13.436614 -k 4400 &
+
+if [ "${WM}" = "qtile" ]; then
     exec /usr/bin/qtile
-elif [$2 = "awesome"]; then
+elif [ "${WM}" = "awesome" ]; then
     exec /usr/bin/awesome
-elif [$2 = "xfce4"]; then
+elif [ "${WM}" = "xmonad" ]; then
+    xmobar -x 0 &
+    #xmobar -x 1 & --overlays the other xmobar in a single monitor setup
+    trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+        --expand true --width 6 --transparent true --alpha 0 --tint 0x000000 \
+        --height 16 --monitor 0 &  
+    feh --bg-max ~/h/do/view/wallpaper/iss.jpg
+    exec /usr/bin/xmonad
+elif [ "${WM}" = "xfce4" ]; then
     exec /usr/bin/startxfce4
+else
+    exec $(which terminator)
 fi
 
 # exec gnome-session

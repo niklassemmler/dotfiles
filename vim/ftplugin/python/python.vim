@@ -1,5 +1,7 @@
 compiler nose
 
+let g:syntastic_auto_loc_list = 0
+
 " Folding is done in the python_editing.vim file!
 
 " Add the virtualenv's site-packages to vim path

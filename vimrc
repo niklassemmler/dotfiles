@@ -20,11 +20,13 @@ call vundle#begin()
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
+" Combine Tab
+Bundle 'ervandew/supertab'
 " basic for managing bundles
 Bundle 'gmarik/Vundle.vim'
 " snippets
 Bundle 'SirVer/ultisnips'
-"Bundle 'honza/vim-snippets'
+Bundle 'honza/vim-snippets'
 " templates in vim (mostly for latex)
 Bundle 'aperezdc/vim-template'
 " list of open buffers
@@ -38,12 +40,18 @@ Bundle 'tpope/vim-fugitive'
 " show red/green test bar
 Bundle 'reinh/vim-makegreen'
 Bundle 'lambdalisue/nose.vim'
+" closing brackets
+Bundle 'Raimondi/delimitMate'
 " " directory structure
 Bundle 'scrooloose/nerdtree'
-" syntax checking
+" syntax checking XXX: Really bad for python :(
 Bundle 'scrooloose/syntastic'
-" python autocomplete
-Bundle 'davidhalter/jedi-vim'
+" python autocomplete / Not needed due to youcompleteme?
+"Bundle 'davidhalter/jedi-vim'
+" python checker
+" Bundle "nvie/vim-flake8"
+" more autocomplete
+" Bundle "Valloric/YouCompleteMe"
 " erlang for vim
 Bundle 'jimenezrick/vimerl'
 " solarized colors
@@ -65,7 +73,8 @@ Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'Lokaltog/vim-easymotion'
 "" Eclim
 Bundle 'derekwyatt/vim-scala'
-Bundle 'initrc/eclim-vundle'
+" XXX: Screws up Synastic and not only for java
+" Bundle 'initrc/eclim-vundle'
 "" Bookmarks and(!) annotations
 Bundle 'sukima/xmledit'
 "Bundle 'MattesGroeger/vim-bookmarks'
@@ -73,6 +82,15 @@ Bundle 'sukima/xmledit'
 Bundle 'sjl/gundo.vim'
 " Ag / Searching / Grep substitute
 Bundle 'rking/ag.vim'
+" tern_for_vim
+Bundle 'ternjs/tern_for_vim'
+"Bundle 'marijnh/tern_for_vim'
+" Meteor Plugin
+Bundle 'Slava/tern-meteor'
+" Nim Plugin
+Bundle 'zah/nim.vim'
+" Recovery
+" Bundle 'chrisbra/Recover.vim'
 
 call vundle#end()
 filetype plugin indent on     " required!
@@ -83,8 +101,20 @@ let mapleader=","
 
 "============> Plugin customizations
 " > Syntastic
-let g:syntastic_python_pylint_args = "--extension-pkg-whitelist=numpy"
+" Default options from help syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height=7
+let g:error_list_is_closed = 1
+" End
+"let g:syntastic_python_pylint_args = "--extension-pkg-whitelist=numpy"
 let g:syntastic_java_javac_autoload_maven_classpath = 0
+let g:syntastic_c_checkers = ["gcc"]
+let g:syntastic_python_checker = "flake8"
+
+
 
 " > NerdTree
 nmap <leader>t :NERDTreeToggle<CR>
@@ -96,7 +126,7 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 let g:tagbar_left = 0
 
 "" go up the tree to find tags file
-"set tags=tags;/
+set tags=./tags;/,tags;/
 "" scala to tagbar
 "" XXX: Replace by vim-scala?
 "let g:tagbar_type_scala = {
@@ -115,9 +145,16 @@ let g:tagbar_left = 0
 "      \ 'v:variables:1'
 "    \ ]
 "\ }
-" > Ulti Snippets
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-"   g:UltiSnipsJumpBackwardTrigger="<alt-tab>"
+
+" > YCM and Supertab
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" > UltiSnippets better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " > nose & makegreen
 autocmd BufNewFile,BufRead *.py map <buffer> <S-T> :MakeGreen %<CR>
@@ -139,8 +176,6 @@ let g:jedi#use_tabs_not_buffers = 0
 " Syntastic
 nmap <leader>e :call ErrorToggle()<CR>
 
-let g:syntastic_loc_list_height=15
-let g:error_list_is_closed = 1
 function! ErrorToggle()
     if g:error_list_is_closed
         Errors
@@ -212,6 +247,18 @@ nnoremap <leader><space> :%s/\s\+$//<cr>''
 " Retain visual selection on tabbing.
 vnoremap < <gv
 vnoremap > >gv
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Don't start ex mode
 nnoremap Q <nop>
@@ -363,3 +410,9 @@ nnoremap <leader>bp :bp<CR>
 
 "" Don't redraw while executing macros (good performance config)
 "set lazyredraw
+
+"--- Copy to system register
+nmap <leader>c "*y
+
+"--- Paste from system register
+"nmap <leader>v "*p

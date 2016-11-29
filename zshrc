@@ -1,18 +1,22 @@
 #!/usr/bin/zsh -xv
 #### Antigen ####
+
 source /usr/share/zsh/scripts/antigen/antigen.zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen use oh-my-zsh
 antigen bundle git
 antigen bundle pip
+antigen bundle taskwarrior
 antigen bundle archlinux
 antigen bundle dirhistory
-#antigen bundle common-aliases
+antigen bundle dirpersist
 antigen bundle encode64
 antigen bundle jsontools
 antigen bundle pylint
 antigen bundle python
-# antigen theme bira
+antigen bundle systemd
+#antigen bundle autojump
+antigen bundle scala
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 #antigen theme nfarrar/oh-my-powerline oh-my-powerline
 antigen apply
@@ -34,6 +38,9 @@ colors
 autoload edit-command-line
 zle -N edit-command-line
 zmodload zsh/mathfunc
+
+BROWSER="chromium"
+[ ${DISPLAY} ] || BROWSER="w3m"
 
 #### Scripts ####
 function cs () {
@@ -59,6 +66,18 @@ zle -N insert_date
 
 function gsearch () {
     find / -iname "*$@*" 2> /dev/null
+}
+function lsearch () {
+    find ./ -iname "*$@*" 2> /dev/null
+}
+function google () {
+    echo x${@}x
+    QUERY=$(echo "$@" | sed -e 's/\s/\+/g')
+    echo ${QUERY}
+    QUERY=$(echo ${QUERY} | sed -e 's/"/%22/g')
+    echo ${QUERY}
+    echo "${BROWSER} https://www.google.com/search?q=$QUERY"
+    ${BROWSER} "https://www.google.com/search?q=$QUERY"
 }
 
 # FIXME
@@ -116,6 +135,23 @@ function backward-path-segment () {
 }
 zle -N backward-path-segment
 
+# Go UP/DOWN locally
+up-line-or-local-history() {
+    zle set-local-history 1
+    zle up-line-or-history
+    zle set-local-history 0
+}
+zle -N up-line-or-local-history
+down-line-or-local-history() {
+    zle set-local-history 1
+    zle down-line-or-history
+    zle set-local-history 0
+}
+zle -N down-line-or-local-history
+top10_history() {
+    fc -lL -10 | awk -F" " 'BEGIN { COUNT=11 } { $1=""; printf "!-%02d -> %s\n", COUNT, $0; COUNT--; }'
+}
+
 #backward-word
 #function backward_path () {
 #    if [[ $LBUFFER in $WORDCHARS ]]; then
@@ -131,11 +167,13 @@ zle -N backward-path-segment
 #
 # Warning: Backspace sends ^?
 # source ~/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
-[[ -n ${key[Left]} ]] && bindkey "${key[Left]}" backward-char
-[[ -n ${key[Right]} ]] && bindkey "${key[Right]}" forward-char
+#[[ -n ${key[Left]} ]] && bindkey "${key[Left]}" backward-char
+#[[ -n ${key[Right]} ]] && bindkey "${key[Right]}" forward-char
     # etc.
 # TODO: Move to keymap?
 # KEY C-Z -> Zoom into window
+bindkey '^[OA' up-line-or-local-history
+bindkey "^[OB" down-line-or-local-history
 bindkey '^[e' vi-forward-blank-word-end
 bindkey '^[%' vi-match-bracket
 bindkey '^[u' undo
@@ -196,6 +234,7 @@ alias -s htm=chromium
 alias -s xcf=gimp
 
 # set aliases
+alias zcp='zmv -C'
 alias l='less'
 alias z='zathura'
 alias v='vim'
@@ -219,6 +258,8 @@ alias -g S='| sort'
 alias -g SU='| sort -u'
 alias -g H='| head'
 alias -g T='| tail'
+alias -g h="top10_history"
+alias -g j='jobs'
 
 # Dots
 
@@ -240,6 +281,7 @@ zstyle ':completion:*:kill:*' verbose yes # show description for kill
 
 #### OPTIONS ####
 # History
+setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE

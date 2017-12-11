@@ -21,7 +21,7 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 PATH="/home/thoth/exec:$PATH"
 BROWSER="chromium"
 #DE="xfce"
-export PATH BROWSER 
+export PATH BROWSER
 
 # load solarized
 xrdb ~/.Xresources
@@ -42,13 +42,14 @@ udiskie --tray &
 #xss-lock -- xscreensaver-command -lock &
 synclient maxtaptime=0
 xsetroot -cursor_name left_ptr
-xflux -l 52.478836 -g 13.436614 -k 4400 &
+redshift &
 
 if [ "${WM}" = "qtile" ]; then
     exec /usr/bin/qtile
 elif [ "${WM}" = "awesome" ]; then
     exec /usr/bin/awesome
 elif [ "${WM}" = "xmonad" ]; then
+    rm -f .xmonad/xmonad.state
     xmobar -x 0 &
     #xmobar -x 1 & --overlays the other xmobar in a single monitor setup
     trayer --edge top --align right --SetDockType true --SetPartialStrut true \

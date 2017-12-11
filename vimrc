@@ -44,8 +44,11 @@ Bundle 'lambdalisue/nose.vim'
 Bundle 'Raimondi/delimitMate'
 " " directory structure
 Bundle 'scrooloose/nerdtree'
-" syntax checking XXX: Really bad for python :(
-Bundle 'scrooloose/syntastic'
+" syntax checking 
+" XXX: Really bad for python :(
+" XXX: and cannot handle large java programs. Probably need to add jars to
+" classpath. But do I really want to that manually?
+" Bundle 'scrooloose/syntastic'
 " python autocomplete / Not needed due to youcompleteme?
 "Bundle 'davidhalter/jedi-vim'
 " python checker
@@ -91,6 +94,9 @@ Bundle 'Slava/tern-meteor'
 Bundle 'zah/nim.vim'
 " Recovery
 " Bundle 'chrisbra/Recover.vim'
+Bundle 'wakatime/vim-wakatime'
+" markdown plugin to also get math support in markdown
+Bundle 'plasticboy/vim-markdown'
 
 call vundle#end()
 filetype plugin indent on     " required!
@@ -114,7 +120,9 @@ let g:syntastic_java_javac_autoload_maven_classpath = 0
 let g:syntastic_c_checkers = ["gcc"]
 let g:syntastic_python_checker = "flake8"
 
-
+" > vim-markdown
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
 
 " > NerdTree
 nmap <leader>t :NERDTreeToggle<CR>

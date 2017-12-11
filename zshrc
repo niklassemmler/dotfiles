@@ -1,7 +1,10 @@
 #!/usr/bin/zsh -xv
 #### Antigen ####
 
-source /usr/share/zsh/scripts/antigen/antigen.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=14'
+
+source /usr/share/zsh/share/antigen.zsh
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen use oh-my-zsh
 antigen bundle git
@@ -93,6 +96,13 @@ function sudo_call () {
 }
 zle -N sudo_call
 
+function background_call () {
+    VAR="$(mktemp -u)"
+    BUFFER="nohup $BUFFER >${VAR}.out 2>${VAR}.err &"
+    CURSOR=$#BUFFER
+}
+zle -N background_call
+
 # FIXME
 function vim_cmd_edit () {
     TEMPFILE=$(mktemp)
@@ -110,6 +120,8 @@ function rationalise-dot () {
     fi
 }
 zle -N rationalise-dot
+bindkey . rationalise-dot
+bindkey -M isearch . self-insert # so that search works
 
 # copy and deactivate mark
 # http://unix.stackexchange.com/questions/19947/adding-more-emacs-like-bindings-to-zshs-line-editor-zle
@@ -184,7 +196,7 @@ bindkey '^[F' forward-path-segment
 bindkey '^[r' history-incremental-pattern-search-backward
 #bindkey '^[s' history-incremental-pattern-search-forward
 bindkey '^[s' sudo_call
-bindkey . rationalise-dot
+bindkey '^[a' background_call 
 #bindkey '^[p' vim_cmd_edit
 bindkey '^[m' man_open
 bindkey '^[o' insert_date
@@ -302,3 +314,11 @@ fi
 
 # For Terminator
 export TERM=xterm-256color
+
+PATH="/home/thoth/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/thoth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/thoth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/thoth/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/thoth/perl5"; export PERL_MM_OPT;
+GOROOT="/usr/lib/go/"; export GOROOT;
+GOPATH="${HOME}/h/do/work/golang/"; export GOPATH;

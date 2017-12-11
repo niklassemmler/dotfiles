@@ -20,7 +20,6 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 PATH="/home/thoth/exec:$PATH"
 BROWSER="chromium"
-#DE="xfce"
 export PATH BROWSER
 
 # load solarized
@@ -44,18 +43,13 @@ synclient maxtaptime=0
 xsetroot -cursor_name left_ptr
 redshift &
 
-if [ "${WM}" = "qtile" ]; then
-    exec /usr/bin/qtile
-elif [ "${WM}" = "awesome" ]; then
-    exec /usr/bin/awesome
-elif [ "${WM}" = "xmonad" ]; then
+if [ "${WM}" = "xmonad" ]; then
     rm -f .xmonad/xmonad.state
     xmobar -x 0 &
     #xmobar -x 1 & --overlays the other xmobar in a single monitor setup
     trayer --edge top --align right --SetDockType true --SetPartialStrut true \
         --expand true --width 6 --transparent true --alpha 0 --tint 0x000000 \
         --height 16 --monitor 0 &  
-    feh --bg-max ~/h/do/view/wallpaper/iss.jpg
     exec /usr/bin/xmonad
 elif [ "${WM}" = "xfce4" ]; then
     exec /usr/bin/startxfce4

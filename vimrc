@@ -6,7 +6,6 @@ set nocompatible               " be iMproved
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/Vundle.vim/
-" set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 call vundle#begin()
 
 " let Vundle manage Vundle
@@ -31,8 +30,6 @@ Bundle 'honza/vim-snippets'
 Bundle 'aperezdc/vim-template'
 " list of open buffers
 Bundle 'fholgado/minibufexpl.vim'
-" the info bar
-Bundle 'Lokaltog/powerline'
 " git and vim
 " TODO: read more into git
 Bundle 'tpope/vim-fugitive'
@@ -85,6 +82,9 @@ Bundle 'sukima/xmledit'
 Bundle 'sjl/gundo.vim'
 " Ag / Searching / Grep substitute
 Bundle 'rking/ag.vim'
+" vim airline
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 " tern_for_vim
 Bundle 'ternjs/tern_for_vim'
 "Bundle 'marijnh/tern_for_vim'
@@ -195,9 +195,6 @@ function! ErrorToggle()
 endfunction
 
 " > powerline
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 

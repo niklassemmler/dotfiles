@@ -34,6 +34,8 @@ Bundle 'fholgado/minibufexpl.vim'
 " TODO: read more into git
 Bundle 'tpope/vim-fugitive'
 " "Bundle 'klen/python-mode'  " a lot of stuff for python
+" colorscheme badwolf
+Bundle 'sjl/badwolf'
 " show red/green test bar
 Bundle 'reinh/vim-makegreen'
 Bundle 'lambdalisue/nose.vim'

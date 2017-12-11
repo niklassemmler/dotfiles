@@ -314,11 +314,3 @@ fi
 
 # For Terminator
 export TERM=xterm-256color
-
-PATH="/home/thoth/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/thoth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/thoth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/thoth/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/thoth/perl5"; export PERL_MM_OPT;
-GOROOT="/usr/lib/go/"; export GOROOT;
-GOPATH="${HOME}/h/do/work/golang/"; export GOPATH;

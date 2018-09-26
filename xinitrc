@@ -33,6 +33,7 @@ xset s 9000
 xset dpms 9000 9000 9000
 nm-applet &
 pasystray &
+blueman-applet &
 arandr-indicator &
 conky -c ~/.conkyrc1
 conky -c ~/.conkyrc2
@@ -45,7 +46,8 @@ redshift &
 
 if [ "${WM}" = "xmonad" ]; then
     rm -f .xmonad/xmonad.state
-    xmobar -x 0 &
+    xmobar -x 0 > /tmp/xmobar1.stdout 2> /tmp/xmobar1.stderr &
+    xmobar -x 1 > /tmp/xmobar2.stdout 2> /tmp/xmobar2.stderr &
     #xmobar -x 1 & --overlays the other xmobar in a single monitor setup
     trayer --edge top --align right --SetDockType true --SetPartialStrut true \
         --expand true --width 6 --transparent true --alpha 0 --tint 0x000000 \

@@ -28,6 +28,10 @@ import XMonad.Hooks.ManageHelpers
 import System.IO
 import XMonad.Util.SpawnOnce
 
+-- HINTs 
+-- * use xprop to figure out window name
+-- * restart with MOD-Q
+
 myWorkspaces = ["1","2","3","4","5","6","7","8","9","a:✉","s:☏","d:☺","f:⌂"]
 
 myManageHook = composeAll
@@ -41,10 +45,16 @@ myManageHook = composeAll
       , className =? "Keepassx" --> doShift "f:⌂"
       , className =? "Wine" --> doFullFloat
       , className =? "sun-awt-X11-XDialogPeer" --> doFullFloat
+      , className =? "jetbrains-idea-ce" <&&> appName =? "sun-awt-X11-XWindowPeer" --> doIgnore 
+      --and wmName =? contains win343
+      --[ appName =? "sun-awt-X11-XWindowPeer" <&&> className =?
+      --"jetbrains-idea" --> doIgnore ]
       , className =? "Vlc" --> doFullFloat
       , role =? "AlarmWindow" --> doRectFloat(W.RationalRect 0.25 0.25 0.3 0.2)
       , className =? "Arandr" --> doCenterFloat
       , className =? "Pavucontrol" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5)
+      , className =? "Pavucontrol" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5)
+      , className =? "Blueman-manager" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5)
       ]
       where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -63,6 +73,8 @@ keysToAdd x = [
               ,((0, xF86XK_LaunchA), spawn "i3lock -f -c 000000")
               ,((0, xF86XK_Explorer), spawn "systemctl suspend")
               ,((mod4Mask, xK_BackSpace), spawn "xterm ranger")
+              --,((0, xF86XK_Tools), spawn "/usr/bin/togglexkbmap")
+              ,((0, xF86XK_Tools), spawn "xmodmap ~/.Xmodmap")
               --,((0, xF86XK_MyComputer), spawn "amixer -c 0 -q set Master 2dB-")
               ,((mod4Mask, xK_a), (windows $ W.view "a:✉"))
               ,(((mod4Mask .|. shiftMask), xK_a), (windows $ W.shift "a:✉"))
@@ -87,6 +99,7 @@ keysToAdd x = [
               --,((mod4Mask .|. shiftMask, xK_u), moveTo Prev NonEmptyWS)
               ,((mod4Mask, xK_i), moveTo Next EmptyWS)
               ,((mod4Mask, xK_Tab), nextWS)
+              ,((mod4Mask .|. shiftMask, xK_Tab), prevWS)
               ,((mod4Mask .|. shiftMask, xK_Tab), prevWS)
               --,((mod4Mask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_grave)
               -- TODO: add forward version!

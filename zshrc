@@ -21,7 +21,6 @@ antigen bundle systemd
 #antigen bundle autojump
 antigen bundle scala
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
-#antigen theme nfarrar/oh-my-powerline oh-my-powerline
 antigen apply
 
 #### VARS ####
@@ -314,3 +313,4 @@ fi
 
 # For Terminator
 export TERM=xterm-256color
+

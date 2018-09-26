@@ -24,7 +24,7 @@ Bundle 'VundleVim/Vundle.vim'
 
 """ Completion
 " snippets
-" Bundle 'sirver/ultisnips'
+Bundle 'sirver/ultisnips'
 Bundle 'honza/vim-snippets'
 " templates in vim (mostly for latex)
 "Bundle 'aperezdc/vim-template'
@@ -192,6 +192,7 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " > UltiSnippets better key bindings for UltiSnipsExpandTrigger
 " key bindings to make it compatible with YCM/Supertab
+" NOTE: Ultisnips AutoTrigger created some performance problems for me
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
@@ -261,6 +262,9 @@ nnoremap <leader><space> :%s/\s\+$//<cr>''
 " Retain visual selection on tabbing.
 vnoremap < <gv
 vnoremap > >gv
+
+" logfile for debugging purposes
+set verbosefile=log.txt
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>

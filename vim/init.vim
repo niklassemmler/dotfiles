@@ -33,7 +33,7 @@ Bundle 'VundleVim/Vundle.vim'
 Bundle 'sirver/ultisnips'
 Bundle 'honza/vim-snippets'
 " templates in vim (mostly for latex)
-"Bundle 'aperezdc/vim-template'
+Bundle 'aperezdc/vim-template'
 " more autocomplete
 " NOTE: YouCompleteMe takes forever to update/install
 "Bundle "Valloric/YouCompleteMe"
@@ -119,6 +119,8 @@ Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'rking/ag.vim'
 " list of open buffers
 Bundle 'fholgado/minibufexpl.vim'
+" center text window
+Bundle 'junegunn/goyo.vim'
 """
 
 
@@ -265,9 +267,17 @@ inoremap jk <esc>
 " Delete trailing whitespaces
 nnoremap <leader><space> :%s/\s\+$//<cr>''
 
+" add line after or before
+nmap <C-O> O<Esc>j
+nmap <CR> o<Esc>k
+
 " Retain visual selection on tabbing.
 vnoremap < <gv
 vnoremap > >gv
+
+" Tab in command mode
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
 
 " logfile for debugging purposes
 set verbosefile=log.txt
@@ -450,3 +460,19 @@ nmap <leader>c "*y
 
 "--- Paste from system register
 "nmap <leader>v "*p
+
+"--- WordCount function
+function! WordCount()
+   let s:old_status = v:statusmsg
+   let position = getpos(".")
+   exe ":silent normal g\<c-g>"
+   let stat = v:statusmsg
+   let s:word_count = 0
+   if stat != '--No lines in buffer--'
+     let s:word_count = str2nr(split(v:statusmsg)[11])
+     let v:statusmsg = s:old_status
+   end
+   call setpos('.', position)
+   return s:word_count 
+endfunction
+nnoremap <leader>c :set statusline=wc:%{WordCount()}<CR>

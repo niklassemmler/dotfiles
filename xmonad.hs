@@ -27,6 +27,7 @@ import XMonad.Actions.CycleRecentWS
 import XMonad.Hooks.ManageHelpers
 import System.IO
 import XMonad.Util.SpawnOnce
+import XMonad.Actions.GridSelect
 
 -- HINTs 
 -- * use xprop to figure out window name
@@ -72,6 +73,9 @@ keysToAdd x = [
               --,((0, xF86XK_Tools), spawn "amixer -c 0 -q set Master 2dB-")
               ,((0, xF86XK_LaunchA), spawn "i3lock -f -c 000000")
               ,((0, xF86XK_Explorer), spawn "systemctl suspend")
+              ,((mod4Mask, xK_F12), spawn "systemctl suspend")
+              ,((mod4Mask, xK_F11), goToSelected defaultGSConfig)
+              ,((mod4Mask, xK_F10), spawnSelected defaultGSConfig ["eaglemode","calibre","vlc", "skype", "starcraft"])
               ,((mod4Mask, xK_BackSpace), spawn "xterm ranger")
               --,((0, xF86XK_Tools), spawn "/usr/bin/togglexkbmap")
               ,((0, xF86XK_Tools), spawn "xmodmap ~/.Xmodmap")
@@ -86,14 +90,23 @@ keysToAdd x = [
               ,(((mod4Mask .|. shiftMask), xK_f), (windows $ W.shift "f:⌂"))
               -- should learn some more haskell to do this right
               ,((mod4Mask, xK_1), (windows $ W.view "1"))
+              ,((mod4Mask, xK_KP_End), (windows $ W.view "1"))
               ,((mod4Mask, xK_2), (windows $ W.view "2"))
+              ,((mod4Mask, xK_KP_Down), (windows $ W.view "2"))
               ,((mod4Mask, xK_3), (windows $ W.view "3"))
+              ,((mod4Mask, xK_KP_Page_Down), (windows $ W.view "3"))
               ,((mod4Mask, xK_4), (windows $ W.view "4"))
+              ,((mod4Mask, xK_KP_Left), (windows $ W.view "4"))
               ,((mod4Mask, xK_5), (windows $ W.view "5"))
+              ,((mod4Mask, xK_KP_Begin), (windows $ W.view "5"))
               ,((mod4Mask, xK_6), (windows $ W.view "6"))
+              ,((mod4Mask, xK_KP_Right), (windows $ W.view "6"))
               ,((mod4Mask, xK_7), (windows $ W.view "7"))
+              ,((mod4Mask, xK_KP_Home), (windows $ W.view "7"))
               ,((mod4Mask, xK_8), (windows $ W.view "8"))
+              ,((mod4Mask, xK_KP_Up), (windows $ W.view "8"))
               ,((mod4Mask, xK_9), (windows $ W.view "9"))
+              ,((mod4Mask, xK_KP_Page_Up), (windows $ W.view "9"))
               ,(((mod4Mask), xK_w), nextScreen)
               --,((mod4Mask, xK_u), moveTo Next NonEmptyWS)
               --,((mod4Mask .|. shiftMask, xK_u), moveTo Prev NonEmptyWS)

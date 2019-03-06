@@ -121,8 +121,6 @@ Bundle 'rking/ag.vim'
 Bundle 'fholgado/minibufexpl.vim'
 " center text window
 Bundle 'junegunn/goyo.vim'
-"""
-Bundle 'junegunn/goyo.vim'
 
 
 call vundle#end()

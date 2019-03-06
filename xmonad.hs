@@ -27,6 +27,30 @@ import XMonad.Actions.CycleRecentWS
 import XMonad.Hooks.ManageHelpers
 import System.IO
 import XMonad.Util.SpawnOnce
+import XMonad.Actions.GridSelect
+-- to get info on the windows with wmctrl
+import XMonad.Hooks.EwmhDesktops
+
+import qualified XMonad.StackSet as W
+
+-- Nice idea:
+-- https://pbrisbin.com/posts/using_notify_osd_for_xmonad_notifications/
+-- But this requires to configure the terminal and I don't want notifications
+-- for everything, just long running background processes. If there was a way
+-- to set this automatically, that would be rad.
+--
+-- import XMonad.Util.NamedWindows
+-- import XMonad.Util.Run
+-- import XMonad.Hooks.UrgencyHook
+-- withUrgencyHook LibNotifyUrgencyHook
+-- data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
+-- 
+-- instance UrgencyHook LibNotifyUrgencyHook where
+--     urgencyHook LibNotifyUrgencyHook w = do
+--         name     <- getName w
+--         Just idx <- fmap (W.findTag w) $ gets windowset
+-- 
+--         safeSpawn "notify-send" [show name, "workspace " ++ idx]
 
 -- HINTs 
 -- * use xprop to figure out window name
@@ -72,6 +96,10 @@ keysToAdd x = [
               --,((0, xF86XK_Tools), spawn "amixer -c 0 -q set Master 2dB-")
               ,((0, xF86XK_LaunchA), spawn "i3lock -f -c 000000")
               ,((0, xF86XK_Explorer), spawn "systemctl suspend")
+              ,((mod4Mask, xK_F12), spawn "systemctl suspend")
+              ,((mod4Mask, xK_F11), spawn "i3lock -f -c 000000")
+              ,((mod4Mask, xK_KP_Begin), goToSelected defaultGSConfig)
+              ,((mod4Mask, xK_KP_Down), spawnSelected defaultGSConfig ["eaglemode","calibre","vlc", "skype", "starcraft"])
               ,((mod4Mask, xK_BackSpace), spawn "xterm ranger")
               --,((0, xF86XK_Tools), spawn "/usr/bin/togglexkbmap")
               ,((0, xF86XK_Tools), spawn "xmodmap ~/.Xmodmap")
@@ -86,28 +114,43 @@ keysToAdd x = [
               ,(((mod4Mask .|. shiftMask), xK_f), (windows $ W.shift "f:⌂"))
               -- should learn some more haskell to do this right
               ,((mod4Mask, xK_1), (windows $ W.view "1"))
+              --,((mod4Mask, xK_KP_End), (windows $ W.view "1"))
               ,((mod4Mask, xK_2), (windows $ W.view "2"))
+              --,((mod4Mask, xK_KP_Down), (windows $ W.view "2"))
               ,((mod4Mask, xK_3), (windows $ W.view "3"))
+              --,((mod4Mask, xK_KP_Page_Down), (windows $ W.view "3"))
               ,((mod4Mask, xK_4), (windows $ W.view "4"))
+              --,((mod4Mask, xK_KP_Left), (windows $ W.view "4"))
               ,((mod4Mask, xK_5), (windows $ W.view "5"))
+              --,((mod4Mask, xK_KP_Begin), (windows $ W.view "5"))
               ,((mod4Mask, xK_6), (windows $ W.view "6"))
+              --,((mod4Mask, xK_KP_Right), (windows $ W.view "6"))
               ,((mod4Mask, xK_7), (windows $ W.view "7"))
+              --,((mod4Mask, xK_KP_Home), (windows $ W.view "7"))
               ,((mod4Mask, xK_8), (windows $ W.view "8"))
+              --,((mod4Mask, xK_KP_Up), (windows $ W.view "8"))
               ,((mod4Mask, xK_9), (windows $ W.view "9"))
+              --,((mod4Mask, xK_KP_Page_Up), (windows $ W.view "9"))
               ,(((mod4Mask), xK_w), nextScreen)
               --,((mod4Mask, xK_u), moveTo Next NonEmptyWS)
               --,((mod4Mask .|. shiftMask, xK_u), moveTo Prev NonEmptyWS)
               ,((mod4Mask, xK_i), moveTo Next EmptyWS)
-              ,((mod4Mask, xK_Tab), nextWS)
-              ,((mod4Mask .|. shiftMask, xK_Tab), prevWS)
-              ,((mod4Mask .|. shiftMask, xK_Tab), prevWS)
+              --,((mod4Mask, xK_Tab), nextWS)
+              --,((mod4Mask .|. shiftMask, xK_Tab), prevWS)
+              ,((mod4Mask, xK_KP_Page_Down), nextWS)
+              ,((mod4Mask, xK_KP_End), prevWS)
+              --,(((mod4Mask .|. shiftMask), xK_Shift_Lock), cycleRecentWS)
+              ,((mod4Mask, xK_KP_Left), cycleRecentWS [xK_Super_L] xK_KP_Left xK_KP_Right)
+              ,((mod4Mask, xK_KP_Right), cycleRecentWS [xK_Super_L] xK_KP_Left xK_KP_Right)
               --,((mod4Mask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_grave)
               -- TODO: add forward version!
               ]
 
+
 -- does not work?
-keysToDel x = [((mod4Mask .|. shiftMask), xK_q)
-              ,((mod4Mask), xK_Tab)
+keysToDel x = [
+              --((mod4Mask .|. shiftMask), xK_q)
+              ((mod4Mask), xK_Tab)
               ,((mod4Mask .|. shiftMask), xK_Tab)
               ,((mod4Mask), xK_w)
               ,((mod4Mask), xK_1)
@@ -160,8 +203,9 @@ myStartupHook = do
     spawnOnce "pidgin"
     spawnOnce "thunderbird"
 
+main :: IO ()
 main = do
-    xmonad =<< xmobar defaultConfig
+    xmonad  =<< xmobar (ewmh defaultConfig 
         { terminal    = "/usr/bin/terminator"
         , workspaces = myWorkspaces
         , modMask     = mod4Mask
@@ -171,4 +215,5 @@ main = do
         , layoutHook = myLayout
         , keys = myKeys
         , startupHook = myStartupHook
-        }
+        , handleEventHook = handleEventHook def <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
+        })

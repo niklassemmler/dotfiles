@@ -120,6 +120,7 @@ Bundle 'rking/ag.vim'
 " list of open buffers
 Bundle 'fholgado/minibufexpl.vim'
 """
+Bundle 'junegunn/goyo.vim'
 
 
 call vundle#end()
@@ -248,7 +249,7 @@ nnoremap <leader>et :tabnew $MYVIMRC<cr>
 nnoremap <leader>ez :vsp ~/.zshrc_local<CR>
 
 " Set spell checker
-nnoremap <leader>le :set spell spelllang=en_US<CR>
+nnoremap <leader>le :set spell spelllang=en_us<CR>
 nnoremap <leader>ld :set spell spelllang=de_de<CR>
 nnoremap <leader>lg :set spell spelllang=de_de<CR>
 nnoremap <leader>lo :set nospell<CR>
@@ -270,7 +271,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " logfile for debugging purposes
-set verbosefile=log.txt
+" set verbosefile=log.txt
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -450,3 +451,29 @@ nmap <leader>c "*y
 
 "--- Paste from system register
 "nmap <leader>v "*p
+
+
+"--- windows specific
+" copy (write) highlighted text to .vimbuffer
+"vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe<CR><CR>
+
+
+"--- new
+" swap selections
+vnoremap <leader>d "tdmt
+vnoremap <leader>p "rd"tP't"rP
+
+" copy to last accessed split
+nnoremap <leader>w y<c-w>pp<c-w>p
+
+" reformat paragraph
+nnoremap <leader>f mr{mtgq}mg:set nohlsearch<CR>:'t,'gs/  */ /g<CR>'r:let @/ =""<CR>:set hlsearch<CR>
+"nnoremap <leader>f mr{gq}'r
+
+" make
+nnoremap <leader>m w:!make &>/dev/null&<CR> 
+" open new file in vertical split
+nnoremap <leader>n :vsp ./<CR>
+
+" open new file in horizontal split
+nnoremap <leader>s :sp ./<CR>

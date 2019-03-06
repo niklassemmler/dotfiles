@@ -1,5 +1,9 @@
 # Summary of my dotfiles
 
+Don't forget to pull the submodules too:
+
+git submodule update --init --recursive
+
 The goal is to share config files that are needed for setting up the basic
 services between machines.
 

@@ -1,0 +1,30 @@
+[user]
+	email = niklas.semmler@mailbox.org
+	name = Niklas Semmler
+[credential]
+	username = metaswirl
+	helper = /usr/lib/git-core/git-credential-gnome-keyring
+[core]
+	editor = vim
+[push]
+	default = simple
+[diff]
+	tool = vimdiff
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[difftool]
+	prompt = true
+[alias]
+	ci = commit
+	stat = status -s
+	last = log -1 HEAD -p
+	visual = ! gitk &
+[log]
+	abbrevCommit = true
+[pull]
+	rebase = true
+[alias]
+    hist = log --pretty=oneline --abbrev-commit --graph --decorate --all
+    history = log --pretty=oneline --abbrev-commit --graph --decorate --all
+    ci = commit

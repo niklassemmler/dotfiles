@@ -268,8 +268,8 @@ inoremap jk <esc>
 nnoremap <leader><space> :%s/\s\+$//<cr>''
 
 " add line after or before
-nmap <C-O> O<Esc>j
-nmap <CR> o<Esc>k
+nmap <C-O> o<Esc>j
+nmap <C-S-O> O<Esc>k
 
 " Retain visual selection on tabbing.
 vnoremap < <gv
@@ -280,7 +280,7 @@ nnoremap <Tab> >>_
 nnoremap <S-Tab> <<_
 
 " logfile for debugging purposes
-set verbosefile=log.txt
+" set verbosefile=log.txt
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>

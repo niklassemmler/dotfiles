@@ -121,6 +121,8 @@ Bundle 'rking/ag.vim'
 Bundle 'fholgado/minibufexpl.vim'
 " center text window
 Bundle 'junegunn/goyo.vim'
+" sublime like multiple cursors (activate with <c-n> in visual mode)
+Bundle 'terryma/vim-multiple-cursors'
 
 
 call vundle#end()
@@ -500,3 +502,7 @@ function! WordCount()
    return s:word_count 
 endfunction
 nnoremap <leader>c :set statusline=wc:%{WordCount()}<CR>
+
+"--- snakemake 
+au BufNewFile,BufRead Snakefile set syntax=snakemake
+au BufNewFile,BufRead *.smk set syntax=snakemake

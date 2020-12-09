@@ -61,6 +61,8 @@ Bundle 'vim-airline/vim-airline-themes'
 Bundle 'chrisbra/Recover.vim'
 " wakatime - measures time in editor
 Bundle 'wakatime/vim-wakatime'
+" unix interaction
+Bundle 'tpope/vim-eunuch'
 """
 
 """ Programming (mostly python)
@@ -460,11 +462,12 @@ nnoremap <leader>bp :bp<CR>
 nmap <leader>c "*y
 
 "--- Paste from system register
-"nmap <leader>v "*p
+nmap <leader>v "*p
 
 "--- windows specific
 " copy (write) highlighted text to .vimbuffer
-"vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe<CR><CR>
+" I need a better shortcut!
+vmap <C-t> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe<CR><CR>
 
 
 "--- new

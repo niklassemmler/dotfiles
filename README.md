@@ -12,3 +12,13 @@ Almost all files have to be copied or linked to the home directory.
 Exceptions are:
 - `etc/` -- are related to configfiles in etc
 - `terminator_config` -- needs to be linked to ~/.config/terminator/config
+
+## TODO: Make installation easier
+
+Levels of installation of config
+
+- bashrc, inputrc
+- vim, tmux
+- zshrc, terminator, ...
+- xmonadrc
+

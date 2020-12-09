@@ -8,15 +8,15 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=
-HISTFILESIZE=
-HISTTIMEFORMAT="%d/%m/%y %T "
+export HISTSIZE=-1
+export HISTFILESIZE=-1
+export HISTTIMEFORMAT="%d/%m/%y %T "
 export PROMPT_COMMAND='history -a'
 
 # check the window size after each command and, if necessary,
@@ -44,6 +44,8 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lsx='ls --sort=extension --group-directories-first'
 
+alias gitgraph='git log --graph --decorate --pretty=oneline --abbrev-commit'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -68,11 +70,37 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PS1="\[\e[32m\]\u@\h\[\e[m\]:\[\e[33m\]\W\[\e[m\]-> "
-[ "x$(which python3)x" == "xx" ] || alias python="python3"
-[ "x$(which ipython3)x" == "xx" ] || alias ipython="ipython3"
-[ "x${DISPLAY}x" == "xx" ] || export DISPLAY=:0
+export PS1="\[\e[33m\]\W\[\e[m\]-> "
+#export PS1="\[\e[32m\]\u@\h\[\e[m\]:\[\e[33m\]\W\[\e[m\]-> "
+# GIT bash integration
+#if [[ -e /usr/lib/git-core/git-sh-prompt ]]; then
+#
+#  source /usr/lib/git-core/git-sh-prompt
+#
+#  export GIT_PS1_SHOWCOLORHINTS=true
+#  export GIT_PS1_SHOWDIRTYSTATE=true
+#  export GIT_PS1_SHOWSTASHSTATE=true
+#  export GIT_PS1_SHOWUNTRACKEDFILES=true
+#  #export GIT_PS1_SHOWUPSTREAM="auto"
+#  # PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+#
+#  # use existing PS1 settings
+#  #PROMPT_COMMAND=$(sed -r 's|^(.+)(\\\$\s*)$|__git_ps1 "\1" "\2"|' <<< $PS1)
+#  #PROMPT_COMMAND="__git_ps1  $PS1"
+#  PROMPT_COMMAND='__git_ps1 "<\$(basename \"\$CONDA_DEFAULT_ENV\")> \[\e[33m\]\W\[\e[m\]" "-> "'
+#  export PROMPT_COMMAND
+#fi
 
-. $HOME/.bashrc_local.sh
+[ "x$(which python3)x" == "xx" ] && alias python="python3"
+[ "x$(which ipython3)x" == "xx" ] && alias ipython="ipython3"
+[ "x${DISPLAY}x" == "xx" ] && export DISPLAY=localhost:0
 
-[ "x${TMUX}x" == "xx" -a "x${COLORTERM}x" == "xx" -a "x$(which tmux)x" != "xx" ] && tmux
+[ -f "$HOME/.bashrc_local.sh" ] && source $HOME/.bashrc_local.sh
+
+if [ "x${TMUX}x" == "xx" -a "x${COLORTERM}x" == "xx" -a "x$(which tmux)x" != "xx" ]; then 
+  tmux attach || tmux
+  [ "$?" == "0" ] && exit
+fi
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"

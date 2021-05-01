@@ -22,4 +22,6 @@ nnoremap <leader>v :!zathura %:r.pdf 2> /dev/null &<CR><CR>
 " nnoremap <leader>v :!zathura main.pdf 2> /dev/null &<CR><CR>
 
 let g:username = "Niklas Semmler"
-let g:email = "semmler@kth.se"
+let g:email = "niklas.semmler@mailbox.org"
+
+syntax spell toplevel

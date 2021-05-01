@@ -467,7 +467,9 @@ nmap <leader>v "*p
 "--- windows specific
 " copy (write) highlighted text to .vimbuffer
 " I need a better shortcut!
-vmap <C-t> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe<CR><CR>
+vmap <C-t> Jgvyu:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe<CR><CR>
+vmap <C-y> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe<CR><CR>
+
 
 
 "--- new

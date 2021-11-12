@@ -3,6 +3,7 @@ set noexpandtab
 set tabstop=4
 set shiftwidth=4
 set autowrite
+setlocal foldmethod=syntax
 
 " Based on vim-go
 nmap <F1> :GoDef<CR>

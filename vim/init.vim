@@ -21,90 +21,93 @@ let g:username="Niklas Semmler"
 " VundleInstall
 
 set nocompatible               " be iMproved
-filetype off                   " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+call plug#begin('~/.vim/bundle')
+
 
 " let Vundle manage Vundle
 " required!
 "
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PlugList          - list configured bundles
+" :PlugInstall(!)    - install(update) bundles
+" :PlugSearch(!) foo - search(or refresh cache first) for foo
+" :PlugClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" NOTE: comments after Plug command are not allowed..
 " basic for managing bundles
-Bundle 'VundleVim/Vundle.vim'
 
 """ Completion
 " snippets
-Bundle 'sirver/ultisnips'
-Bundle 'honza/vim-snippets'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets'
 " templates in vim (mostly for latex)
-Bundle 'aperezdc/vim-template'
+Plug 'aperezdc/vim-template'
 " more autocomplete
 " NOTE: YouCompleteMe takes forever to update/install
-"Bundle "Valloric/YouCompleteMe"
+"Plug "Valloric/YouCompleteMe"
 " NOTE: deoplete is the neovim alternative for YouCompleteMe
-" Bundle "Shougo/deoplete.nvim"
+" Plug "Shougo/deoplete.nvim"
 " Combine Tab
-Bundle 'ervandew/supertab'
+Plug 'ervandew/supertab'
 """
 
 """ Visuals
 " colorscheme badwolf
-Bundle 'sjl/badwolf'
+Plug 'sjl/badwolf'
 " solarized colors
-Bundle 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
+" colorscheme stellarized
+Plug 'nightsense/stellarized'
 " vim airline
-Bundle 'vim-airline/vim-airline'
-Bundle 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 """
 
 """ Misc
 " git and vim
 " NOTE: So far I always preferred using the command line
-"Bundle 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 " produces a diff option for swp files
-Bundle 'chrisbra/Recover.vim'
+Plug 'chrisbra/Recover.vim'
+" wakatime - measures time in editor
+" Plug 'wakatime/vim-wakatime'
 " unix interaction
-Bundle 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'
 """
 
 """ Programming (mostly python)
 " NOTE: selectively activate when you start to use python again
-Bundle 'lambdalisue/nose.vim'
+Plug 'lambdalisue/nose.vim'
 " syntax checking 
 " NOTE: Really bad for python :(
 " NOTE: and cannot handle large java programs. Probably need to add jars to
 " classpath. But do I really want to that manually?
-" Bundle 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 " python checker
-" Bundle 'nvie/vim-flake8'
+" Plug 'nvie/vim-flake8'
 " a lot of stuff for python
-"Bundle 'klen/python-mode'
+"Plug 'klen/python-mode'
 " identpython
-" Bundle 'vim-scripts/indentpython'
+" Plug 'vim-scripts/indentpython'
 " python autocomplete / Not needed due to youcompleteme?
-"Bundle 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 " orienting with tags
-" Bundle 'majutsushi/tagbar'
-Bundle 'fatih/vim-go'
+" Plug 'majutsushi/tagbar'
+" golang
+Plug 'fatih/vim-go'
 """
 
 """ Markdown
 " markdown plugin to also get math support in markdown
-Bundle 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 " align markdown tables with ":Align |" when visually marked
-Bundle "vim-scripts/Align"
+Plug 'vim-scripts/Align'
 """
 
 """ LaTeX
-" Bundle 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 """
 
 """ Git
@@ -112,43 +115,41 @@ Bundle "vim-scripts/Align"
 " - Git show files
 " - Git move target_path
 " - Git blame | <CR> to return
-Bundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 """
 
 """ Smart editing
 " vim surround del
 " ' => ds', change ' to ( => cs'(, add ' => ys + text obj + '
-Bundle 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " Text Object for arguments (d/c/v + i/a + a)
-Bundle 'vim-scripts/argtextobj.vim'
+Plug 'vim-scripts/argtextobj.vim'
 " Text Object for indentation (d/c/v + i/a + i)
-Bundle 'michaeljsmith/vim-indent-object'
+Plug 'michaeljsmith/vim-indent-object'
 " closing brackets
-Bundle 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 """
 
 """ Navigation
 " Easy Motion
-Bundle 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 " directory structure
-Bundle 'preservim/nerdtree'
+Plug 'preservim/nerdtree'
 " find files/tags/buffers with <C-P>
-Bundle 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " Ag / Searching / Grep substitute
-Bundle 'rking/ag.vim'
+Plug 'rking/ag.vim'
 " list of open buffers
-Bundle 'ap/vim-buftabline'
+Plug 'ap/vim-buftabline'
 " center text window
-Bundle 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 " sublime like multiple cursors (activate with <c-n> in visual mode)
-Bundle 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
+
 " undo tree
-Bundle 'mbbill/undotree'
+Plug 'mbbill/undotree'
 
-
-call vundle#end()
-filetype plugin indent on     " required!
-syntax on
+call plug#end()
 
 " leader
 let mapleader=","

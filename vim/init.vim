@@ -1,3 +1,15 @@
+" Manual
+" <F1-F4> Documentation/Follow tags
+" - <F4> Errors
+" <F4-F8> Execution
+" - <F4> Build
+" - <F5> Test
+" - <F6> Debug 
+" <F9-F12> General
+" - <F9> Directory
+" - <F10> Undo
+" - <F12> Git
+
 " personal information
 let g:email="niklas.semmler@mailbox.org"
 let g:username="Niklas Semmler"
@@ -59,16 +71,12 @@ Bundle 'vim-airline/vim-airline-themes'
 "Bundle 'tpope/vim-fugitive'
 " produces a diff option for swp files
 Bundle 'chrisbra/Recover.vim'
-" wakatime - measures time in editor
-Bundle 'wakatime/vim-wakatime'
 " unix interaction
 Bundle 'tpope/vim-eunuch'
 """
 
 """ Programming (mostly python)
 " NOTE: selectively activate when you start to use python again
-" show red/green test bar
-Bundle 'reinh/vim-makegreen'
 Bundle 'lambdalisue/nose.vim'
 " syntax checking 
 " NOTE: Really bad for python :(
@@ -76,15 +84,16 @@ Bundle 'lambdalisue/nose.vim'
 " classpath. But do I really want to that manually?
 " Bundle 'scrooloose/syntastic'
 " python checker
-" Bundle "nvie/vim-flake8"
+" Bundle 'nvie/vim-flake8'
 " a lot of stuff for python
 "Bundle 'klen/python-mode'
 " identpython
-" Bundle "vim-scripts/indentpython"
+" Bundle 'vim-scripts/indentpython'
 " python autocomplete / Not needed due to youcompleteme?
 "Bundle 'davidhalter/jedi-vim'
 " orienting with tags
 " Bundle 'majutsushi/tagbar'
+Bundle 'fatih/vim-go'
 """
 
 """ Markdown
@@ -96,6 +105,14 @@ Bundle "vim-scripts/Align"
 
 """ LaTeX
 " Bundle 'lervag/vimtex'
+"""
+
+""" Git
+" > git commands
+" - Git show files
+" - Git move target_path
+" - Git blame | <CR> to return
+Bundle 'tpope/vim-fugitive'
 """
 
 """ Smart editing
@@ -114,17 +131,19 @@ Bundle 'Raimondi/delimitMate'
 " Easy Motion
 Bundle 'Lokaltog/vim-easymotion'
 " directory structure
-Bundle 'scrooloose/nerdtree'
+Bundle 'preservim/nerdtree'
 " find files/tags/buffers with <C-P>
 Bundle 'ctrlpvim/ctrlp.vim'
 " Ag / Searching / Grep substitute
 Bundle 'rking/ag.vim'
 " list of open buffers
-Bundle 'fholgado/minibufexpl.vim'
+Bundle 'ap/vim-buftabline'
 " center text window
 Bundle 'junegunn/goyo.vim'
 " sublime like multiple cursors (activate with <c-n> in visual mode)
 Bundle 'terryma/vim-multiple-cursors'
+" undo tree
+Bundle 'mbbill/undotree'
 
 
 call vundle#end()
@@ -166,7 +185,7 @@ let g:tex_conceal = ""
 let g:vim_markdown_math = 1
 
 " > NerdTree
-nmap <leader>t :NERDTreeToggle<CR>
+nmap <F9> :NERDTreeToggle<CR>
 let g:NERDTreeWinPos="left"
 
 " > TagBar
@@ -197,9 +216,10 @@ set tags=./tags;/,tags;/
 
 " > YCM and Supertab
 " key bindings to make it compatible with Ultisnips
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+" Note: I am using C-N now for quickfix. 
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " > UltiSnippets better key bindings for UltiSnipsExpandTrigger
 " key bindings to make it compatible with YCM/Supertab
@@ -229,7 +249,26 @@ autocmd BufNewFile,BufRead *.py map <buffer> <S-T> :MakeGreen %<CR>
 " > powerline
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+
+" > vim-buftabline
+let g:buftabline_show = 1
+let g:buftabline_numbers = 1
+hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
+hi TabLine ctermfg=Blue ctermbg=Yellow
+hi TabLineSel ctermfg=Red ctermbg=Yellow
+
+" > undo tree
+nnoremap <F10> :UndotreeToggle<CR>
+
+" > Git
+nnoremap <F12> :Git<CR>
+
+" > switch between errors
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
 "===================================
+
 
 " For the tex plugin
 let g:tex_indent_brace = 1

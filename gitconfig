@@ -1,30 +1,36 @@
 [user]
-	email = niklas.semmler@mailbox.org
-	name = Niklas Semmler
-[credential]
-	username = metaswirl
-	helper = /usr/lib/git-core/git-credential-gnome-keyring
-[core]
-	editor = vim
+  email = niklas.semmler@sap.com
+  name = Niklas Semmler
+  editor = vim
 [push]
-	default = simple
+  default = simple
 [diff]
-	tool = vimdiff
+  tool = vimdiff
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+  tool = vimdiff
+  conflictstyle = diff3
 [difftool]
-	prompt = true
+  prompt = false
 [alias]
-	ci = commit
-	stat = status -s
-	last = log -1 HEAD -p
-	visual = ! gitk &
+  vim = difftool --tool=vimdiff
+  ci = commit
+  stat = status -s
+  last = log -1 HEAD -p
+  visual = ! gitk &
 [log]
-	abbrevCommit = true
+  abbrevCommit = true
 [pull]
-	rebase = true
+  rebase = true
 [alias]
-    hist = log --pretty=oneline --abbrev-commit --graph --decorate --all
-    history = log --pretty=oneline --abbrev-commit --graph --decorate --all
-    ci = commit
+  hist = log --pretty=oneline --abbrev-commit --graph --decorate --all
+  history = log --pretty=oneline --abbrev-commit --graph --decorate --all
+  ci = commit
+  change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
+  lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
+  pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
+[url "ssh://git@github.wdf.sap.corp/"]
+  insteadOf = https://github.wdf.sap.corp/
+[mergetool]
+  keepBackup = false
+[credential]
+  helper = cache --timeout=360000

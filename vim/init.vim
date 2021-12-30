@@ -14,29 +14,7 @@
 let g:email="niklas.semmler@mailbox.org"
 let g:username="Niklas Semmler"
 
-" NOTE: For new machine
-" 1. download Vundle
-" cd vim/bundle/; git clone https://github.com/VundleVim/Vundle.vim; cd ../../
-" 2. install plugins
-" VundleInstall
-
-set nocompatible               " be iMproved
-
-call plug#begin('~/.vim/bundle')
-
-
-" let Vundle manage Vundle
-" required!
-"
-" Brief help
-" :PlugList          - list configured bundles
-" :PlugInstall(!)    - install(update) bundles
-" :PlugSearch(!) foo - search(or refresh cache first) for foo
-" :PlugClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Plug command are not allowed..
-" basic for managing bundles
+call plug#begin('~/.vim/plugged')
 
 """ Completion
 " snippets

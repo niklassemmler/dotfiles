@@ -5,6 +5,7 @@
 " - <F4> Build
 " - <F5> Test
 " - <F6> Debug 
+" - <F8> Tagbar
 " <F9-F12> General
 " - <F9> Directory
 " - <F10> Undo
@@ -20,15 +21,11 @@ call plug#begin('~/.vim/plugged')
 " snippets
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
-" templates in vim (mostly for latex)
-Plug 'aperezdc/vim-template'
-" more autocomplete
-" NOTE: YouCompleteMe takes forever to update/install
-"Plug "Valloric/YouCompleteMe"
-" NOTE: deoplete is the neovim alternative for YouCompleteMe
-" Plug "Shougo/deoplete.nvim"
-" Combine Tab
-Plug 'ervandew/supertab'
+" autocomplete
+" Didn't get it to work
+" Plug 'ycm-core/YouCompleteMe'
+" python autocomplete
+Plug 'davidhalter/jedi-vim'
 """
 
 """ Visuals
@@ -41,6 +38,10 @@ Plug 'nightsense/stellarized'
 " vim airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+"""
+
+""" Syntax Highlighting
+Plug 'jparise/vim-graphql'
 """
 
 """ Misc
@@ -56,23 +57,12 @@ Plug 'tpope/vim-eunuch'
 """
 
 """ Programming (mostly python)
-" NOTE: selectively activate when you start to use python again
-Plug 'lambdalisue/nose.vim'
+" run tests from python
+Plug 'vim-test/vim-test'
 " syntax checking 
-" NOTE: Really bad for python :(
-" NOTE: and cannot handle large java programs. Probably need to add jars to
-" classpath. But do I really want to that manually?
-" Plug 'scrooloose/syntastic'
-" python checker
-" Plug 'nvie/vim-flake8'
-" a lot of stuff for python
-"Plug 'klen/python-mode'
-" identpython
-" Plug 'vim-scripts/indentpython'
-" python autocomplete / Not needed due to youcompleteme?
-"Plug 'davidhalter/jedi-vim'
+Plug 'vim-syntastic/syntastic'
 " orienting with tags
-" Plug 'majutsushi/tagbar'
+Plug 'preservim/tagbar'
 " golang
 Plug 'fatih/vim-go'
 """
@@ -109,8 +99,6 @@ Plug 'Raimondi/delimitMate'
 """
 
 """ Navigation
-" Easy Motion
-Plug 'Lokaltog/vim-easymotion'
 " directory structure
 Plug 'preservim/nerdtree'
 " find files/tags/buffers with <C-P>
@@ -135,17 +123,15 @@ let mapleader=","
 "============> Plugin customizations
 " > Syntastic
 " Default options from help syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height=7
-let g:error_list_is_closed = 1
 " End
-"let g:syntastic_python_pylint_args = "--extension-pkg-whitelist=numpy"
-let g:syntastic_java_javac_autoload_maven_classpath = 0
-let g:syntastic_c_checkers = ["gcc"]
-let g:syntastic_python_checker = "flake8"
 " key for ErrorToggle
 nmap <leader>e :call ErrorToggle()<CR>
 
@@ -168,9 +154,7 @@ nmap <F9> :NERDTreeToggle<CR>
 let g:NERDTreeWinPos="left"
 
 " > TagBar
-nmap <leader>f :TagbarToggle<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-let g:tagbar_left = 0
+nmap <F8> :TagbarToggle<CR>
 
 "" go up the tree to find tags file
 set tags=./tags;/,tags;/
@@ -219,7 +203,7 @@ let g:ctrlp_working_path_mode = 0
 " <leader>d --> show original definition
 " <leader>r --> rename all occurrences of var
 " <leader>n --> show all uses of var
-let g:jedi#use_tabs_not_buffers = 0
+" let g:jedi#use_tabs_not_buffers = 0
 
 " > nose & makegreen
 autocmd BufNewFile,BufRead *.py map <buffer> <S-T> :MakeGreen %<CR>

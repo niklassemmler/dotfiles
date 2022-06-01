@@ -1,5 +1,5 @@
 [user]
-  email = niklas.semmler@sap.com
+  email = niklas.semmler@mailbox.org
   name = Niklas Semmler
   editor = vim
 [push]
@@ -28,9 +28,11 @@
   change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f"
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
   pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
-[url "ssh://git@github.wdf.sap.corp/"]
-  insteadOf = https://github.wdf.sap.corp/
+  fetchpr = "!sh -c 'if [ $# -ne 2 ]; then echo \"<pr> <branch>\"; return; fi; PR=$1; BRANCH=$2; git fetch upstream pull/$PR/head:$BRANCH; git checkout $BRANCH;' -"
+  getmaster = "!f() { git checkout master && git fetch upstream master && git rebase upstream/master; }; f"
 [mergetool]
   keepBackup = false
 [credential]
   helper = cache --timeout=360000
+[init]
+  defaultBranch = main

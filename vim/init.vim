@@ -249,6 +249,7 @@ map <C-e>c :tabclose<CR>
 vnorem // y/<c-r>"<cr>
 
 " Change config,
+let $MYVIMRC="$HOME/.vimrc"
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>es :split $MYVIMRC<cr>
 nnoremap <leader>et :tabnew $MYVIMRC<cr>
@@ -492,7 +493,10 @@ nnoremap <leader>m w:!make &>/dev/null&<CR>
 nnoremap <leader>n :vsp ./<CR>
 
 " open new file in horizontal split
-nnoremap <leader>s :sp ./<CR>
+nnoremap <leader>h :sp ./<CR>
+
+" save file
+nnoremap <leader>s :w<CR>
 
 "--- WordCount function
 function! WordCount()

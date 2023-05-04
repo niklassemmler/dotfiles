@@ -1,0 +1,48 @@
+[include]
+  path = /home/vagrant/.snowflake.gitconfig
+  path = /home/vagrant/.snowflake.aliases
+[init]
+  templateDir = /home/nsemmler/.git-template
+  defaultBranch = main
+[user]
+  email = niklas.semmler@snowflake.com
+  name = Niklas Semmler
+[push]
+  default = simple
+[diff]
+  tool = vimdiff
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+[difftool]
+  prompt = false
+[alias]
+  vim = difftool --tool=vimdiff
+  ci = commit
+  stat = status -s
+  last = log -1 HEAD -p
+  visual = ! gitk &
+  hist = log --pretty=oneline --abbrev-commit --graph --decorate --all
+  history = log --pretty=oneline --abbrev-commit --graph --decorate --all
+  logfiles = log --name-only
+  ci = commit
+  lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
+  pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
+  update = "!f() { git fetch origin main:main; git fetch --tags --force --all; git rebase --onto bptp-verified origin/main; }; f"
+  rcont = "rebase --continue"
+  rabort = "rebase --abort"
+  sw = "switch"
+  goto = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git branch | fzf | xargs); }; f"
+  recent = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git reflog | egrep -io 'moving from ([^[:space:]]+)' | awk '{ print $3 }' | awk ' !x[$0]++' | egrep -v '^[a-f0-9]{40}$' | head -n20 | fzf | xargs); }; f"
+  go = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $1; }; f"
+[log]
+  abbrevCommit = true
+[pull]
+  rebase = true
+[mergetool]
+  keepBackup = false
+[core]
+  excludesfile = /home/nsemmler/.gitignore
+[rerere]
+	enabled = 1
+	autoupdate = true

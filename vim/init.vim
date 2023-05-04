@@ -15,7 +15,7 @@
 let g:email="niklas.semmler@mailbox.org"
 let g:username="Niklas Semmler"
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 """ Completion
 " snippets
@@ -26,6 +26,7 @@ Plug 'honza/vim-snippets'
 " Plug 'ycm-core/YouCompleteMe'
 " python autocomplete
 Plug 'davidhalter/jedi-vim'
+Plug 'deoplete-plugins/deoplete-jedi'
 """
 
 """ Visuals
@@ -33,8 +34,8 @@ Plug 'davidhalter/jedi-vim'
 Plug 'sjl/badwolf'
 " solarized colors
 Plug 'altercation/vim-colors-solarized'
-" colorscheme stellarized
-Plug 'nightsense/stellarized'
+" colorscheme material
+Plug 'hzchirs/vim-material'
 " vim airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -249,7 +250,7 @@ map <C-e>c :tabclose<CR>
 vnorem // y/<c-r>"<cr>
 
 " Change config,
-let $MYVIMRC="$HOME/.vimrc"
+let $MYVIMRC="~/.config/nvim/init.vim"
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>es :split $MYVIMRC<cr>
 nnoremap <leader>et :tabnew $MYVIMRC<cr>
@@ -517,3 +518,5 @@ nnoremap <leader>c :set statusline=wc:%{WordCount()}<CR>
 "--- snakemake 
 au BufNewFile,BufRead Snakefile set syntax=snakemake
 au BufNewFile,BufRead *.smk set syntax=snakemake
+
+autocmd FileType * exe "normal zR"

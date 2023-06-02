@@ -22,3 +22,19 @@ Levels of installation of config
 - zshrc, terminator, ...
 - xmonadrc
 
+## Tools
+
+- bat --- better cat
+- exa -- better ls
+- delta -- better git show 
+- ripgrep -- better grep
+- fd -- better find
+- fzf -- list
+
+On Ubuntu:
+
+`sudo apt install fd-find bat exa fzf ripgrep`
+
+And for delta
+
+https://github.com/dandavison/delta/releases

@@ -127,9 +127,6 @@ add("honza/vim-snippets")
 -- Use tools that don't speak LSP
 add("jose-elias-alvarez/null-ls.nvim")
 
--- align markdown tables with ":Align |" when visually marked
-add("vim-scripts/Align")
-
 -- Easy Motion Lua variant
 add("phaazon/hop.nvim")
 

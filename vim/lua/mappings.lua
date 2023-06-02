@@ -1,7 +1,9 @@
 -- A list of vim mappings
 -- These should be independent of plugins
 local wk = require("which-key")
-local set = vim.keymap.set
+local set = function(mode, mapping, cmd, desc)
+	vim.keymap.set(mode, mapping, cmd, { desc = desc })
+end
 
 -- Buffers
 wk.register({
@@ -17,12 +19,8 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
-set("n", "<Tab>", ":bn<cr>")
-set("n", "<S-Tab>", ":bp<cr>")
-set("n", "<c-Left>", "<c-w>10<")
-set("n", "<c-Right>", "<c-w>10>")
-set("n", "<c-Up>", "<c-w>5-")
-set("n", "<c-Down>", "<c-w>5+")
+set("n", "<Tab>", ":bn<cr>", "Next buffer")
+set("n", "<S-Tab>", ":bp<cr>", "Previous buffer")
 
 -- Tabs
 wk.register({
@@ -54,7 +52,7 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 set("n", "F", Open_tree)
-set({ "n", "v", "i" }, "<C-s>", ":w<cr>")
+set({ "n", "v", "i" }, "<C-s>", "<cmd> w<cr>")
 
 -- Splits
 wk.register({
@@ -64,10 +62,10 @@ wk.register({
 		v = { ":vsplit ", "Split vertically" },
 	},
 }, { prefix = "<leader>" })
-set("n", "<C-h>", ":wincmd h<CR>")
-set("n", "<C-j>", ":wincmd j<CR>")
-set("n", "<C-k>", ":wincmd k<CR>")
-set("n", "<C-l>", ":wincmd l<CR>")
+set("n", "<C-h>", ":wincmd h<CR>", "Move to left split")
+set("n", "<C-j>", ":wincmd j<CR>", "Move to bottom split")
+set("n", "<C-k>", ":wincmd k<CR>", "Move to top split")
+set("n", "<C-l>", ":wincmd l<CR>", "Move to right split")
 
 -- Load config
 vim.g.VIMRC = "~/.config/nvim/init.lua"
@@ -81,7 +79,7 @@ wk.register({
 }, { prefix = "<leader>" })
 
 -- Search for selected term
-set("v", "//", 'y/<c-r>"<cr>')
+set("v", "//", 'y/<c-r>"<cr>', "Search for selection")
 
 -- Set spell checker
 wk.register({
@@ -94,49 +92,39 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
+-- # Basics
 -- Use semicolon and colon
-set("n", ";", ":")
-
--- Reach insert mode easier.
-set("i", "jk", "<esc>")
-
--- Add line after or before current line
-set("n", "<leader>o", "o<Esc>j")
-set("n", "<leader>O", "O<Esc>k")
+set("n", ";", ":", "Switch to command mode")
 
 -- Retain visual selection on tabbing.
-set("v", "<", "<gv")
-set("v", ">", ">gv")
+set("v", "<", "<gv", "Move selected text left")
+set("v", ">", ">gv", "Move selected text right")
 
 -- Navigate text lines in wrap
-set("n", "j", "gj")
-set("n", "k", "gk")
-set("n", "vj", "vgj")
-set("n", "vk", "vgk")
+set("n", "j", "gj", "Go down in wrap")
+set("n", "k", "gk", "Go up in wrap")
+set("n", "vj", "vgj", "Select down in wrap")
+set("n", "vk", "vgk", "Select up in wrap")
 
--- Sudo write
+-- Reach insert mode easier.
+set("i", "jk", "<esc>", "Switch to command mode")
 
--- # Refactoring
-wk.register({
-	r = {
-		name = "Refactor",
-		w = { ":%s/<C-r><C-w>/<C-r><C-w>/gc<Left><Left><Left>", "Rename term" },
-		d = { ":%s/\\s\\+$//<cr>''", "Remove trailing spaces" },
-	},
-}, { prefix = "<leader>" })
+-- Add line after or before current line
+set("n", "<leader>o", "o<Esc>j", "Add line below")
+set("n", "<leader>O", "O<Esc>k", "Add line above")
 
 -- disable search highlightinq
-set("n", "<leader>sq", ":nohlsearch<cr>")
+set("n", "<leader>sq", ":nohlsearch<cr>", "Disable search highlighting")
 
 -- gv highlights last selected text
 -- gV now highlights last entered text
-set("v", "gV", "`[v`]")
+set("v", "gV", "`[v`]", "Highlight last entered text")
 
 -- Copy to system register
-set({ "n", "v" }, "<leader>c", '"+y')
+set({ "n", "v" }, "<leader>c", '"+y', "Copy to system register")
 
 -- Paste from system register
-set("n", "<leader>v", '"+p')
+set("n", "<leader>v", '"+p', "Paste from system register")
 
 -- Testing
 wk.register({
@@ -181,8 +169,8 @@ wk.register({
 	},
 }, { prefix = "<leader>", mode = "v" })
 
-set("t", "<esc>", [[<C-\><C-n>]])
-set("t", "jk", [[<C-\><C-n>]])
+set("t", "<esc>", [[<C-\><C-n>]], "Exit terminal mode")
+set("t", "jk", [[<C-\><C-n>]], "Exit terminal mode")
 
 -- Sessions
 wk.register({
@@ -192,11 +180,12 @@ wk.register({
 		d = { ":Obsession!<cr>", "Delete" },
 	},
 }, { prefix = "<leader>" })
-set("n", "<C-Q>", ":qa<cr>")
-set("n", "<C-q>", ":bd<cr>")
+set("n", "QQ", "<cmd> qa<cr>", "Quit all")
+set({ "n", "i", "v" }, "<C-q>", "<cmd> q<cr>", "Close buffer")
+set("n", "XX", "<cmd> bd<cr>", "Remove buffer")
 
 -- Undotree
-set("n", "U", ":UndotreeToggle<cr>")
+set("n", "U", ":UndotreeToggle<cr>", "Undo tree")
 
 -- LSP
 wk.register({
@@ -206,8 +195,8 @@ wk.register({
 		l = { vim.diagnostic.setloclist, "Loclist" },
 	},
 }, { prefix = "<leader>" })
-vim.keymap.set("n", "<S-Up>", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "<S-Down>", vim.diagnostic.goto_next)
+set("n", "<S-Up>", vim.diagnostic.goto_prev, "Previous issue")
+set("n", "<S-Down>", vim.diagnostic.goto_next, "Next issue")
 
 -- Debug
 local open_sidebar = function()
@@ -236,37 +225,37 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		local opts = { buffer = ev.buf }
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-		vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-		vim.keymap.set("n", "<space>wl", function()
+		set("n", "gD", vim.lsp.buf.declaration, opts)
+		set("n", "gd", vim.lsp.buf.definition, opts)
+		set("n", "K", vim.lsp.buf.hover, opts)
+		set("n", "gi", vim.lsp.buf.implementation, opts)
+		set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+		set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+		set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+		set("n", "<space>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, opts)
-		vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-		vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-		vim.keymap.set("n", "<space>f", function()
+		set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+		set("n", "<space>rn", vim.lsp.buf.rename, opts)
+		set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+		set("n", "gr", vim.lsp.buf.references, opts)
+		set("n", "<space>f", function()
 			vim.lsp.buf.format({ async = true })
 		end, opts)
 	end,
 })
 
 -- Symbols
-set("n", "S", ":SymbolsOutline<cr>")
+set("n", "S", ":SymbolsOutline<cr>", "Show symbols")
 
 -- Hop
-set("n", "gt", ":HopWord<cr>")
+set("n", "gt", ":HopWord<cr>", "Jump to word")
 
 -- Yanky
 local yanky = require("yanky")
-vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
-vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", "Paste after")
+set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", "Paste before")
+set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", "Paste after & move cursor")
+set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", "Paste before & move cursor")
+set("n", "<c-n>", "<Plug>(YankyCycleForward)", "Cycle forward")
+set("n", "<c-p>", "<Plug>(YankyCycleBackward)", "Cycle backward")

@@ -72,12 +72,11 @@ add("neovim/nvim-lspconfig")
 
 -- Highlighting
 add({ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" })
+add("folke/todo-comments.nvim")
+add("nvim-treesitter/nvim-treesitter-context")
 
 -- Undotree
 add("mbbill/undotree")
-
--- Comments
-add("numToStr/Comment.nvim")
 
 -- Beautify error messages
 add({
@@ -138,5 +137,22 @@ add("gbprod/yanky.nvim")
 
 -- Multiline enable when I figure out keymappings
 -- add 'mg979/vim-visual-multi'
+
+-- IDE UI elements
+add("ldelossa/litee.nvim")
+add("ldelossa/litee-calltree.nvim")
+add("ldelossa/litee-symboltree.nvim")
+
+-- Lazy git
+add({
+	"kdheepak/lazygit.nvim",
+	-- optional for floating window border decoration
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+	},
+})
+
+-- Minis: Lots of really cool & minimal plugin
+add("echasnovski/mini.nvim")
 
 return plugins

@@ -9,45 +9,45 @@ end
 wk.register({
 	b = {
 		name = "Buffers",
-		n = { ":bn<cr>", "Next buffer" },
-		p = { ":bp<cr>", "Previous buffer" },
-		d = { ":bd<cr>", "Delete buffer" },
-		o = { ":b ", "Open buffer" },
-		s = { ":sb ", "Open buffer horizontally" },
-		v = { ":vert sb ", "Open buffer vertically" },
-		c = { ":lua require('fzf-lua').buffers()<cr>", "Choose (fzf)" },
+		n = { "<cmd> bn<cr>", "Next buffer" },
+		p = { "<cmd> bp<cr>", "Previous buffer" },
+		d = { "<cmd> bd<cr>", "Delete buffer" },
+		o = { "<cmd> b ", "Open buffer" },
+		s = { "<cmd> sb ", "Open buffer horizontally" },
+		v = { "<cmd> vert sb ", "Open buffer vertically" },
+		c = { "<cmd> lua require('fzf-lua').buffers()<cr>", "Choose (fzf)" },
 	},
 }, { prefix = "<leader>" })
 
-set("n", "<Tab>", ":bn<cr>", "Next buffer")
-set("n", "<S-Tab>", ":bp<cr>", "Previous buffer")
+set("n", "<Tab>", "<cmd> bn<cr>", "Next buffer")
+set("n", "<S-Tab>", "<cmd> bp<cr>", "Previous buffer")
 
 -- Tabs
 wk.register({
 	t = {
 		name = "Tabs",
-		n = { ":tabn<cr>", "Tab next" },
-		p = { ":tabp<cr>", "Tab previous" },
-		s = { ":tab split<cr>", "Tab split" },
-		o = { ":tabnew<cr>", "Tab new" },
-		q = { ":tabclose<cr>", "Tab close" },
-		c = { ":lua require('fzf-lua').tabs()<cr>", "Choose (fzf)" },
+		n = { "<cmd> tabn<cr>", "Tab next" },
+		p = { "<cmd> tabp<cr>", "Tab previous" },
+		s = { "<cmd> tab split<cr>", "Tab split" },
+		o = { "<cmd> tabnew<cr>", "Tab new" },
+		q = { "<cmd> tabclose<cr>", "Tab close" },
+		c = { "<cmd> lua require('fzf-lua').tabs()<cr>", "Choose (fzf)" },
 	},
 }, { prefix = "<leader>" })
-set("n", "J", ":tabn<cr>")
-set("n", "K", ":tabp<cr>")
+set("n", "J", "<cmd> tabn<cr>")
+set("n", "K", "<cmd> tabp<cr>")
 
 -- Files
 wk.register({
 	f = {
 		name = "Files",
-		e = { ":e ", "File edit" },
-		w = { ":w<cr>", "File write" },
-		s = { ":w<cr>", "File write" },
-		q = { ":q<cr>", "File quit" },
+		e = { "<cmd> e ", "File edit" },
+		w = { "<cmd> w<cr>", "File write" },
+		s = { "<cmd> w<cr>", "File write" },
+		q = { "<cmd> q<cr>", "File quit" },
 		t = { Open_tree, "Toggle finder" },
 		h = { Open_tree_here, "Toggle finder here" },
-		c = { ":lua require('fzf-lua').files()<cr>", "Choose (FzF)" },
+		c = { "<cmd> lua require('fzf-lua').files()<cr>", "Choose (FzF)" },
 		f = { "w !sudo tee % >/dev/null", "sudo write" },
 	},
 }, { prefix = "<leader>" })
@@ -58,23 +58,26 @@ set({ "n", "v", "i" }, "<C-s>", "<cmd> w<cr>")
 wk.register({
 	s = {
 		name = "Splits",
-		h = { ":split ", "Split horizontally" },
-		v = { ":vsplit ", "Split vertically" },
+		h = { "<cmd> split ", "Split horizontally" },
+		v = { "<cmd> vsplit ", "Split vertically" },
 	},
 }, { prefix = "<leader>" })
-set("n", "<C-h>", ":wincmd h<CR>", "Move to left split")
-set("n", "<C-j>", ":wincmd j<CR>", "Move to bottom split")
-set("n", "<C-k>", ":wincmd k<CR>", "Move to top split")
-set("n", "<C-l>", ":wincmd l<CR>", "Move to right split")
+set("", "<C-h>", "<cmd> wincmd h<CR>", "Move to left split")
+set("", "<C-j>", "<cmd> wincmd j<CR>", "Move to bottom split")
+set("", "<C-k>", "<cmd> wincmd k<CR>", "Move to top split")
+set("", "<C-l>", "<cmd> wincmd l<CR>", "Move to right split")
+set("", "<C-+>", "<cmd> wincmd resize 10<CR>", "Move to right split")
+set("", "<C-->", "<cmd> wincmd resize -10<CR>", "Move to right split")
 
 -- Load config
-vim.g.VIMRC = "~/.config/nvim/init.lua"
+vim.g.VIMRC = "~/.config/nvim/"
 wk.register({
-	c = {
+	l = {
 		name = "Edit Config",
-		h = { ":split $MYVIMRC<cr>", "Edit in horizontal split" },
-		v = { ":vsplit $MYVIMRC<cr>", "Edit in vertical split" },
-		t = { ":tabnew $MYVIMRC<cr>", "Edit in new tab" },
+		i = { "<cmd> e ~/.vim/init.lua<cr>", "Init.lua" },
+		p = { "<cmd> e ~/.vim/lua/plugins.lua<cr>", "Plugins" },
+		c = { "<cmd> e ~/.vim/lua/plugin_config.lua<cr>", "Plugin config" },
+		m = { "<cmd> e ~/.vim/lua/mappings.lua<cr>", "Key mappings" },
 	},
 }, { prefix = "<leader>" })
 
@@ -83,18 +86,18 @@ set("v", "//", 'y/<c-r>"<cr>', "Search for selection")
 
 -- Set spell checker
 wk.register({
-	l = {
+	L = {
 		name = "Spell checker",
-		e = { ":set spell spelllang=en_us<cr>", "Language EN_US" },
-		d = { ":set spell spelllang=de_de<cr>", "Language DE_DE" },
-		g = { ":set spell spelllang=de_de<cr>", "Language DE_DE" },
-		o = { ":set nospell<cr>", "Disable" },
+		e = { "<cmd> set spell spelllang=en_us<cr>", "Language EN_US" },
+		d = { "<cmd> set spell spelllang=de_de<cr>", "Language DE_DE" },
+		g = { "<cmd> set spell spelllang=de_de<cr>", "Language DE_DE" },
+		o = { "<cmd> set nospell<cr>", "Disable" },
 	},
 }, { prefix = "<leader>" })
 
 -- # Basics
 -- Use semicolon and colon
-set("n", ";", ":", "Switch to command mode")
+set("n", ";", "<cmd> ", "Switch to command mode")
 
 -- Retain visual selection on tabbing.
 set("v", "<", "<gv", "Move selected text left")
@@ -114,7 +117,7 @@ set("n", "<leader>o", "o<Esc>j", "Add line below")
 set("n", "<leader>O", "O<Esc>k", "Add line above")
 
 -- disable search highlightinq
-set("n", "<leader>sq", ":nohlsearch<cr>", "Disable search highlighting")
+set("n", "<leader>sq", "<cmd> nohlsearch<cr>", "Disable search highlighting")
 
 -- gv highlights last selected text
 -- gV now highlights last entered text
@@ -130,11 +133,11 @@ set("n", "<leader>v", '"+p', "Paste from system register")
 wk.register({
 	T = {
 		name = "Testing",
-		t = { ":TestNearest<CR>", "Nearest" },
-		f = { ":TestFile<CR>", "File" },
-		s = { ":TestSuite<CR>", "Suite" },
-		l = { ":TestLast<CR>", "Last" },
-		v = { ":TestVisit<CR>", "Visit" },
+		t = { "<cmd> TestNearest<CR>", "Nearest" },
+		f = { "<cmd> TestFile<CR>", "File" },
+		s = { "<cmd> TestSuite<CR>", "Suite" },
+		l = { "<cmd> TestLast<CR>", "Last" },
+		v = { "<cmd> TestVisit<CR>", "Visit" },
 	},
 }, { prefix = "<leader>" })
 
@@ -142,12 +145,12 @@ wk.register({
 wk.register({
 	a = {
 		name = "Access (fzf)",
-		f = { ":lua require('fzf-lua').files()<cr>", "Files" },
-		b = { ":lua require('fzf-lua').buffers()<cr>", "Buffers" },
-		q = { ":lua require('fzf-lua').quickfix()<cr>", "Quickfix" },
-		l = { ":lua require('fzf-lua').oldfiles()<cr>", "Last files" },
-		m = { ":lua require('fzf-lua').man_pages()<cr>", "Man pages" },
-		g = { ":lua require('fzf-lua').grep()<cr>", "Grep" },
+		f = { "<cmd> lua require('fzf-lua').files()<cr>", "Files" },
+		b = { "<cmd> lua require('fzf-lua').buffers()<cr>", "Buffers" },
+		q = { "<cmd> lua require('fzf-lua').quickfix()<cr>", "Quickfix" },
+		l = { "<cmd> lua require('fzf-lua').oldfiles()<cr>", "Last files" },
+		m = { "<cmd> lua require('fzf-lua').man_pages()<cr>", "Man pages" },
+		g = { "<cmd> lua require('fzf-lua').grep()<cr>", "Grep" },
 	},
 }, { prefix = "<leader>" })
 
@@ -155,17 +158,17 @@ wk.register({
 wk.register({
 	e = {
 		name = "Terminal",
-		f = { ":ToggleTerm direction=float<cr>", "Float" },
-		h = { ":ToggleTerm size=20 direction=horizontal<cr>", "Horizontal" },
-		v = { ":ToggleTerm size=50 direction=vertical<cr>", "Vertical" },
-		e = { ":ToggleTermSendCurrentLine<cr>", "Execute" },
+		f = { "<cmd> ToggleTerm direction=float<cr>", "Float" },
+		h = { "<cmd> ToggleTerm size=20 direction=horizontal<cr>", "Horizontal" },
+		v = { "<cmd> ToggleTerm size=50 direction=vertical<cr>", "Vertical" },
+		e = { "<cmd> ToggleTermSendCurrentLine<cr>", "Execute" },
 	},
 }, { prefix = "<leader>" })
 
 wk.register({
 	t = {
 		name = "Terminal",
-		e = { ":ToggleTermSendVisualSelection<cr>", "Execute" },
+		e = { "<cmd> ToggleTermSendVisualSelection<cr>", "Execute" },
 	},
 }, { prefix = "<leader>", mode = "v" })
 
@@ -176,8 +179,8 @@ set("t", "jk", [[<C-\><C-n>]], "Exit terminal mode")
 wk.register({
 	S = {
 		name = "Session",
-		s = { ":Obsession<cr>", "Store" },
-		d = { ":Obsession!<cr>", "Delete" },
+		s = { "<cmd> Obsession<cr>", "Store" },
+		d = { "<cmd> Obsession!<cr>", "Delete" },
 	},
 }, { prefix = "<leader>" })
 set("n", "QQ", "<cmd> qa<cr>", "Quit all")
@@ -185,7 +188,7 @@ set({ "n", "i", "v" }, "<C-q>", "<cmd> q<cr>", "Close buffer")
 set("n", "XX", "<cmd> bd<cr>", "Remove buffer")
 
 -- Undotree
-set("n", "U", ":UndotreeToggle<cr>", "Undo tree")
+set("n", "U", "<cmd> UndotreeToggle<cr>", "Undo tree")
 
 -- LSP
 wk.register({
@@ -193,6 +196,7 @@ wk.register({
 		name = "Errors",
 		f = { vim.diagnostic.open_float, "Float" },
 		l = { vim.diagnostic.setloclist, "Loclist" },
+		t = { "<cmd> TroubleToggle<cr>", "Trouble" },
 	},
 }, { prefix = "<leader>" })
 set("n", "<S-Up>", vim.diagnostic.goto_prev, "Previous issue")
@@ -214,6 +218,14 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
+--  External commands
+wk.register({
+	C = {
+		name = "Tools",
+		g = { "<cmd> LazyGit<cr>", "Lazy Git" },
+	},
+}, { prefix = "<leader>" })
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -224,35 +236,51 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
-		local opts = { buffer = ev.buf }
-		set("n", "gD", vim.lsp.buf.declaration, opts)
-		set("n", "gd", vim.lsp.buf.definition, opts)
-		set("n", "K", vim.lsp.buf.hover, opts)
-		set("n", "gi", vim.lsp.buf.implementation, opts)
-		set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-		set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-		set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-		set("n", "<space>wl", function()
+		local setHere = function(mode, mapping, cmd, desc)
+			vim.keymap.set(mode, mapping, cmd, {
+				buffer = ev.buf,
+				desc = desc,
+			})
+		end
+
+		-- Go tos
+		setHere("n", "<leader>gD", vim.lsp.buf.declaration, "Go to declaration")
+		setHere("n", "<leader>gd", vim.lsp.buf.definition, "Go to definition")
+		setHere("n", "<leader>gi", vim.lsp.buf.implementation, "Go to implementation")
+		setHere("n", "<leader>gI", vim.lsp.buf.incoming_calls, "Go to incoming calls")
+		setHere("n", "<leader>gO", vim.lsp.buf.outgoing_calls, "Go to outgoing calls")
+		setHere("n", "<leader>gt", vim.lsp.buf.type_definition, "Go to type definition")
+		setHere("n", "<leader>gr", vim.lsp.buf.references, "Show references")
+		setHere("n", "<leader>gs", vim.lsp.buf.document_symbol, "Show symbols")
+
+		-- Workspace
+		setHere("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "add workspace folder")
+		setHere("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "remove workspace folder")
+		setHere("n", "<leader>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end, opts)
-		set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-		set("n", "<space>rn", vim.lsp.buf.rename, opts)
-		set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-		set("n", "gr", vim.lsp.buf.references, opts)
-		set("n", "<space>f", function()
+		end, "list workspace folders")
+
+		-- in-place info
+		setHere("n", "K", vim.lsp.buf.hover, "Hover")
+		setHere("n", "<C-K>", vim.lsp.buf.signature_help, "Signature help")
+
+		-- Refactor actions
+		setHere("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+		setHere({ "n", "v" }, "<leader>ra", vim.lsp.buf.code_action, "Code action")
+		setHere("n", "<leader>rf", function()
 			vim.lsp.buf.format({ async = true })
-		end, opts)
+		end, "Format")
 	end,
 })
 
 -- Symbols
-set("n", "S", ":SymbolsOutline<cr>", "Show symbols")
+set("n", "S", "<cmd> SymbolsOutline<cr>", "Show symbols")
 
 -- Hop
-set("n", "gt", ":HopWord<cr>", "Jump to word")
+set("n", "<leader>gw", "<cmd> HopWord<cr>", "Jump to word")
 
 -- Yanky
-local yanky = require("yanky")
+require("yanky")
 set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", "Paste after")
 set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", "Paste before")
 set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", "Paste after & move cursor")

@@ -102,6 +102,7 @@ lspconfig.lua_ls.setup({
 	},
 })
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
 null_ls.setup({
 	sources = {
@@ -133,8 +134,8 @@ require("nvim-treesitter.configs").setup({
 		additional_vim_regex_highlighting = false,
 	},
 })
-
-require("Comment").setup()
+require("todo-comments").setup()
+require("treesitter-context").setup()
 
 require("gitsigns").setup()
 
@@ -161,3 +162,18 @@ require("bufferline").setup()
 require("hop").setup()
 
 require("yanky").setup()
+
+-- configure the litee.nvim library
+require("litee.lib").setup()
+-- configure litee-calltree.nvim
+require("litee.calltree").setup()
+require("litee.symboltree").setup()
+
+-- minis
+require("mini.ai").setup()
+require("mini.comment").setup()
+require("mini.bracketed").setup()
+require("mini.move").setup()
+require("mini.pairs").setup()
+require("mini.splitjoin").setup()
+require("mini.surround").setup()

@@ -52,9 +52,6 @@ add("folke/which-key.nvim")
 -- Faster find
 add("ibhagwan/fzf-lua")
 
--- Session management
-add("tpope/vim-obsession")
-
 -- Manage external dependencies
 add({
 	"williamboman/mason.nvim",
@@ -69,6 +66,15 @@ add("jay-babu/mason-null-ls.nvim")
 
 -- LSP Configs
 add("neovim/nvim-lspconfig")
+
+-- pictograms for lsp
+add("onsails/lspkind.nvim")
+
+-- live signature
+add("ray-x/lsp_signature.nvim")
+
+-- lsp ui
+add("DNLHC/glance.nvim")
 
 -- Highlighting
 add({ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" })
@@ -154,5 +160,32 @@ add({
 
 -- Minis: Lots of really cool & minimal plugin
 add("echasnovski/mini.nvim")
+
+-- Markdown
+add("jghauser/follow-md-links.nvim")
+
+-- Marks
+add("chentoast/marks.nvim")
+
+-- for experimentation
+-- Can I used this to maintain state of a project?
+add("Shatur/neovim-session-manager")
+add("ahmedkhalf/project.nvim")
+
+-- Edit Macros
+add("ecthelionvi/NeoComposer.nvim")
+
+-- Tests
+add("nvim-neotest/neotest")
+
+-- Browse
+-- Requires telescope?
+-- add("lalitmee/browse.nvim")
+
+-- Profiling/benchmarking currneltly not needed
+-- add("stevearc/profile.nvim")
+
+-- Go tricks
+add("olexsmir/gopher.nvim")
 
 return plugins

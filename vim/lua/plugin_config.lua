@@ -2,16 +2,25 @@
 vim.opt.termguicolors = true
 vim.cmd([[colorscheme vim-material]])
 
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+	sync_root_with_cwd = true,
+	respect_buf_cwd = true,
+	update_focused_file = {
+		enable = true,
+		update_root = true,
+	},
+})
 
 require("toggleterm").setup({ open_mapping = [[<c-\>]] })
 
 require("mason").setup()
 require("mason-lspconfig").setup()
-require("mason-nvim-dap").setup()
+require("mason-nvim-dap").setup({ automatic_setup = true, handlers = {} })
+require("dapui").setup()
 require("mason-null-ls").setup()
 
 -- Completion
+local lspkind = require("lspkind")
 local cmp = require("cmp")
 cmp.setup({
 	snippet = {
@@ -41,6 +50,19 @@ cmp.setup({
 	}, {
 		{ name = "buffer" },
 	}),
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = "symbol", -- show only symbol annotations
+			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+			-- The function below will be called before any actual modifications from lspkind
+			-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+			before = function(entry, vim_item)
+				return vim_item
+			end,
+		}),
+	},
 })
 
 -- `/` cmdline setup.
@@ -65,7 +87,19 @@ cmp.setup.cmdline(":", {
 
 -- Setup lspconfig.
 local lspconfig = require("lspconfig")
-lspconfig.pyright.setup({ capabilities = capabilities })
+lspconfig.pylsp.setup({
+	capabilities = capabilities,
+	settings = {
+		pylsp = {
+			plugins = {
+				rope = {
+					enable = true,
+					rope_autoimport_enabled = true,
+				},
+			},
+		},
+	},
+})
 lspconfig.gopls.setup({
 	capabilities = capabilities,
 	cmd = { "gopls", "serve" },
@@ -101,6 +135,22 @@ lspconfig.lua_ls.setup({
 		},
 	},
 })
+cmp.setup({
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = "symbol", -- show only symbol annotations
+			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+			-- The function below will be called before any actual modifications from lspkind
+			-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+			before = function(entry, vim_item)
+				return vim_item
+			end,
+		}),
+	},
+})
+require("lsp_signature").setup({ hint_enable = false })
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
@@ -173,7 +223,28 @@ require("litee.symboltree").setup()
 require("mini.ai").setup()
 require("mini.comment").setup()
 require("mini.bracketed").setup()
-require("mini.move").setup()
+-- require("mini.move").setup()
 require("mini.pairs").setup()
 require("mini.splitjoin").setup()
 require("mini.surround").setup()
+
+-- marks
+require("marks").setup()
+
+require("project_nvim").setup()
+
+local config = require("session_manager.config")
+require("session_manager").setup({
+	autosave_last_session = false,
+	autosave_ignore_dirs = { "/home/nsemmler" },
+	autoload_mode = config.AutoloadMode.CurrentDir,
+})
+local config_group = vim.api.nvim_create_augroup("MyConfigGroup", {}) -- A global group for all your config autocommands
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	group = config_group,
+	callback = function()
+		if vim.bo.filetype ~= "git" and not vim.bo.filetype ~= "gitcommit" and not vim.bo.filetype ~= "gitrebase" then
+			require("session_manager").autosave_session()
+		end
+	end,
+})

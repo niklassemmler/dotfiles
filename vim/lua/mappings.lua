@@ -51,7 +51,6 @@ wk.register({
 		f = { "w !sudo tee % >/dev/null", "sudo write" },
 	},
 }, { prefix = "<leader>" })
-set("n", "F", Open_tree)
 set({ "n", "v", "i" }, "<C-s>", "<cmd> w<cr>")
 
 -- Splits
@@ -179,8 +178,10 @@ set("t", "jk", [[<C-\><C-n>]], "Exit terminal mode")
 wk.register({
 	S = {
 		name = "Session",
-		s = { "<cmd> Obsession<cr>", "Store" },
-		d = { "<cmd> Obsession!<cr>", "Delete" },
+		s = { "<cmd> SessionManager save_current_session`<cr>", "Store" },
+		l = { "<cmd> SessionManager load_session<cr>", "Load" },
+		c = { "<cmd> SessionManager load_current_dir_session<cr>", "Load current dir" },
+		d = { "<cmd> SessionManager delete_session<cr>", "Delete" },
 	},
 }, { prefix = "<leader>" })
 set("n", "QQ", "<cmd> qa<cr>", "Quit all")
@@ -188,7 +189,7 @@ set({ "n", "i", "v" }, "<C-q>", "<cmd> q<cr>", "Close buffer")
 set("n", "XX", "<cmd> bd<cr>", "Remove buffer")
 
 -- Undotree
-set("n", "U", "<cmd> UndotreeToggle<cr>", "Undo tree")
+-- set("n", "U", "<cmd> UndotreeToggle<cr>", "Undo tree")
 
 -- LSP
 wk.register({
@@ -208,13 +209,43 @@ local open_sidebar = function()
 	local sidebar = widgets.sidebar(widgets.scopes)
 	sidebar.open()
 end
+local dap = require("dap")
+local dapui = require("dapui")
 wk.register({
 	D = {
 		name = "Debug",
-		b = { "<cmd> DapToggleBreakPoint <cr>", "Add breakpoint" },
-		s = { open_sidebar, "Open debug sidebar" },
-		l = { require("dap-go").debug_last, "Debug last" },
-		t = { require("dap-go").debug_test, "Debug test" },
+		R = { dap.run_to_cursor, "Run to Cursor" },
+		E = {
+			function()
+				dapui.eval(vim.fn.input("[Expression] > "))
+			end,
+			"Evaluate Input",
+		},
+		C = {
+			function()
+				dap.set_breakpoint(vim.fn.input("[Condition] > "))
+			end,
+			"Conditional Breakpoint",
+		},
+		U = { dapui.toggle, "Toggle UI" },
+		b = { dap.step_back, "Step Back" },
+		c = { dap.continue, "Continue" },
+		d = { dap.disconnect, "Disconnect" },
+		e = { dapui.eval, "Evaluate" },
+		g = { dap.session, "Get Session" },
+		-- h = { dapui.widgets.hover, "Hover Variables" },
+		-- S = { dapui.widgets.scopes, "Scopes" },
+		i = { dap.step_into, "Step Into" },
+		o = { dap.step_over, "Step Over" },
+		p = { dap.pause, "Pause" },
+		q = { dap.close, "Quit" },
+		r = { dap.repl.toggle, "Toggle Repl" },
+		s = { dap.continue, "Start" },
+		t = { dap.toggle_breakpoint, "Toggle Breakpoint" },
+		x = { dap.terminate, "Terminate" },
+		u = { dap.step_out, "Step Out" },
+		-- l = { require("dap-go").debug_last, "Debug last" },
+		-- t = { require("dap-go").debug_test, "Debug test" },
 	},
 }, { prefix = "<leader>" })
 
@@ -245,12 +276,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		-- Go tos
 		setHere("n", "<leader>gD", vim.lsp.buf.declaration, "Go to declaration")
-		setHere("n", "<leader>gd", vim.lsp.buf.definition, "Go to definition")
-		setHere("n", "<leader>gi", vim.lsp.buf.implementation, "Go to implementation")
+		setHere("n", "<leader>gd", "<cmd> Glance definitions<cr>", "Go to definition")
+		setHere("n", "<leader>gi", "<cmd> Glance implementations<cr>", "Go to implementation")
 		setHere("n", "<leader>gI", vim.lsp.buf.incoming_calls, "Go to incoming calls")
 		setHere("n", "<leader>gO", vim.lsp.buf.outgoing_calls, "Go to outgoing calls")
-		setHere("n", "<leader>gt", vim.lsp.buf.type_definition, "Go to type definition")
-		setHere("n", "<leader>gr", vim.lsp.buf.references, "Show references")
+		setHere("n", "<leader>gt", "<cmd> Glance type_definition<cr>", "Go to type definition")
+		setHere("n", "<leader>gr", "<cmd> Glance references<cr>", "Show references")
 		setHere("n", "<leader>gs", vim.lsp.buf.document_symbol, "Show symbols")
 
 		-- Workspace
@@ -287,3 +318,28 @@ set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)", "Paste after & move cursor")
 set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", "Paste before & move cursor")
 set("n", "<c-n>", "<Plug>(YankyCycleForward)", "Cycle forward")
 set("n", "<c-p>", "<Plug>(YankyCycleBackward)", "Cycle backward")
+
+-- cmp
+local cmp = require("cmp")
+cmp.setup({
+	mapping = {
+		-- Shift+TAB to go to the Previous Suggested item
+		["<S-Tab>"] = cmp.mapping.select_prev_item(),
+		-- Tab to go to the next suggestion
+		["<Tab>"] = cmp.mapping.select_next_item(),
+		-- CTRL+SHIFT+f to scroll backwards in description
+		["<C-S-f>"] = cmp.mapping.scroll_docs(-4),
+		-- CTRL+F to scroll forwards in the description
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		-- CTRL+SPACE to bring up completion at current Cursor location
+		["<C-Space>"] = cmp.mapping.complete(),
+		-- CTRL+e to exit suggestion and close it
+		["<C-e>"] = cmp.mapping.close(),
+		-- CR (enter or return) to CONFIRM the currently selection suggestion
+		-- We set the ConfirmBehavior to insert the Selected suggestion
+		["<CR>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = true,
+		}),
+	},
+})

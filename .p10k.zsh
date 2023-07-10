@@ -1,0 +1,1 @@
+/media/psf/Home/dotfiles/p10k.zsh

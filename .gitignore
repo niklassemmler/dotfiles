@@ -1,4 +1,1 @@
-vim/bundle/*
-vim/plugged/*
-!vim/bundle/Vundle.vim
-vim/plugin/device_specific.vim
+vim/lazy-lock.json

@@ -39,3 +39,7 @@ options.list = true
 
 -- Undofile
 vim.opt.undofile = true 
+
+-- Mouse
+vim.o.mouse = nil
+vim.o.ttymouse = nil

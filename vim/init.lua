@@ -2,6 +2,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+local utils = require("utils")
+VIMUSERDIR = utils.getLinuxDirPath(os.getenv("MYVIMRC"))
+
 require("options")
 require("lazy_install")
 require("lazy").setup("plugins", nil)

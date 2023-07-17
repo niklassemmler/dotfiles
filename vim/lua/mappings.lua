@@ -288,15 +288,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
       })
     end
 
-    -- Go tos
-    setHere("n", "<leader>gD", vim.lsp.buf.declaration, "Go to declaration")
-    setHere("n", "<leader>gd", "<cmd> Glance definitions<cr>", "Go to definition")
-    setHere("n", "<leader>gi", "<cmd> Glance implementations<cr>", "Go to implementation")
-    setHere("n", "<leader>gI", vim.lsp.buf.incoming_calls, "Go to incoming calls")
-    setHere("n", "<leader>gO", vim.lsp.buf.outgoing_calls, "Go to outgoing calls")
-    setHere("n", "<leader>gt", "<cmd> Glance type_definition<cr>", "Go to type definition")
-    setHere("n", "<leader>gr", "<cmd> Glance references<cr>", "Show references")
-    setHere("n", "<leader>gs", vim.lsp.buf.document_symbol, "Show symbols")
+    -- TODO: Requires section names
+		-- Go tos
+		setHere("n", "<leader>gD", vim.lsp.buf.declaration, "Go to declaration")
+		setHere("n", "<leader>gd", "<cmd> Glance definitions<cr>", "Go to definition")
+		setHere("n", "<leader>gi", "<cmd> Glance implementations<cr>", "Go to implementation")
+		setHere("n", "<leader>gI", vim.lsp.buf.incoming_calls, "Go to incoming calls")
+		setHere("n", "<leader>gO", vim.lsp.buf.outgoing_calls, "Go to outgoing calls")
+		setHere("n", "<leader>gt", "<cmd> Glance type_definition<cr>", "Go to type definition")
+		setHere("n", "<leader>gr", "<cmd> Glance references<cr>", "Show references")
+		setHere("n", "<leader>gs", vim.lsp.buf.document_symbol, "Show symbols")
 
     -- Workspace
     setHere("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "add workspace folder")

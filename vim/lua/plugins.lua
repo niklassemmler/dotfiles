@@ -10,6 +10,7 @@ add("hzchirs/vim-material")
 add("sjl/badwolf")
 add("morhetz/gruvbox")
 add("folke/tokyonight.nvim")
+add("junegunn/seoul256.vim")
 
 -- status line
 add("nvim-lualine/lualine.nvim")

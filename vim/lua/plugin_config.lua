@@ -87,6 +87,9 @@ cmp.setup.cmdline(":", {
 
 -- Setup lspconfig.
 local lspconfig = require("lspconfig")
+lspconfig.rust_analyzer.setup({
+	capabilities = capabilities,
+})
 lspconfig.pylsp.setup({
 	capabilities = capabilities,
 	settings = {
@@ -178,7 +181,7 @@ null_ls.setup({
 })
 
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "python", "go" },
+	ensure_installed = { "lua", "python", "go", "rust" },
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,

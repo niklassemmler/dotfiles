@@ -50,11 +50,16 @@ alias -g M='| more'
 alias -g S='| sort'
 alias -g SU='| sort -u'
 alias -g H='| head'
+alias -g HELP='--help | less -R'
 alias -g T='| tail'
 alias -g h="top10_history"
 alias -g j='jobs'
 alias vim=nvim
-alias e=nvim
+alias vsp='nvim -O'
+alias ezsh='nvim ~/.zshrc'
+alias egit='nvim ~/.gitconfig'
+alias v=nvim
+alias szsh='. ~/.zshrc'
 #alias cat='bat -pp'
 alias k='kubectl'
 alias d='docker'
@@ -86,11 +91,30 @@ up-line-or-local-history() {
 }
 zle -N up-line-or-local-history
 
+#function gitsth {
+#  print -z git $(fc -lrinm '*git*' -10000 | grep -E '^*[^a-zA-Z]*git' | sort -r | cut -d' ' -f5- | uniq | fzf --height=20)
+#}
+function _gitsth {
+  zle push-input
+  CMD="$(fc -lrinm '*git*' -10000 | grep -E '^*[^a-zA-Z]*git' | sort -r | cut -d' ' -f5- | uniq | fzf --height=20)"
+  if [ $? -eq 0 ]; then
+    BUFFER="git $CMD"
+    zle reset-prompt
+    zle accept-line
+  else
+    zle reset-prompt
+    zle send-break
+  fi
+}
+zle -N _gitsth
+
+
 bindkey "\e[A" up-line-or-local-history
 bindkey "\eOA" up-line-or-local-history
 bindkey "\e[B" down-line-or-local-history
 bindkey "\eOB" down-line-or-local-history
-
+bindkey '^g' _gitsth
+ 
 # scripts
 function title {
     echo -ne "\033]0;"$*"\007"

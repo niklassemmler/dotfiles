@@ -12,11 +12,9 @@ require("plugin_config")
 require("mappings")
 
 -- TODO
--- * Per project test and code runner
---   * Create new Build, Run, Test, & Debug commands that can be defined per project
---   * Build & Run command can use toggleterm
---   * Debug should trigger DAP
---   * Test should trigger neotests
---   * Set per project settings using exrc
--- * neotests
+-- * Use exrc to define code runner, dap, testing
+-- * Define cwd in exrc -- override project.nvim
+-- * Use neotests to start tests
 -- * Replace trouble.nvim with https://github.com/kevinhwang91/nvim-bqf
+-- * Set up neovim to develop hammerspoon code
+-- * Split plugin config to make it easier to maintain

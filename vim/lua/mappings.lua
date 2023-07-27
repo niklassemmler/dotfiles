@@ -34,8 +34,8 @@ wk.register({
     c = { "<cmd> lua require('fzf-lua').tabs()<cr>", "Choose (fzf)" },
   },
 }, { prefix = "<leader>" })
-set("n", "J", "<cmd> tabn<cr>")
-set("n", "K", "<cmd> tabp<cr>")
+set("n", "J", "<cmd> tabn<cr>", "Next tab")
+set("n", "K", "<cmd> tabp<cr>", "Previous tab")
 
 -- Files
 wk.register({
@@ -51,7 +51,8 @@ wk.register({
     f = { "w !sudo tee % >/dev/null", "sudo write" },
   },
 }, { prefix = "<leader>" })
-set({ "n", "v", "i" }, "<C-s>", "<cmd> w<cr>")
+set({ "n", "v", "i" }, "<C-s>", "<cmd> w<cr>", "Save")
+set("n", "F", Open_tree, "Directory")
 
 -- Splits
 wk.register({
@@ -171,7 +172,6 @@ wk.register({
   },
 }, { prefix = "<leader>", mode = "v" })
 
-set("t", "<esc>", [[<C-\><C-n>]], "Exit terminal mode")
 set("t", "jk", [[<C-\><C-n>]], "Exit terminal mode")
 
 -- Sessions

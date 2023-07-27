@@ -151,7 +151,6 @@ add("gbprod/yanky.nvim")
 -- IDE UI elements
 add("ldelossa/litee.nvim")
 add("ldelossa/litee-calltree.nvim")
-add("ldelossa/litee-symboltree.nvim")
 
 -- Lazy git
 add({

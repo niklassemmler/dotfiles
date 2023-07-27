@@ -40,6 +40,9 @@ add("nvim-lua/plenary.nvim")
 -- - Git blame | <CR> to return
 add("tpope/vim-fugitive")
 
+-- Git conflicts
+add({'akinsho/git-conflict.nvim', version = "*", config = true})
+
 -- Terminal manager
 add({ "akinsho/toggleterm.nvim", version = "*", config = true })
 

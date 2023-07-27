@@ -190,7 +190,9 @@ require("nvim-treesitter.configs").setup({
 require("todo-comments").setup()
 require("treesitter-context").setup()
 
+-- git
 require("gitsigns").setup()
+require'git-conflict'.setup()
 
 require("indent_blankline").setup({
 	show_end_of_line = true,

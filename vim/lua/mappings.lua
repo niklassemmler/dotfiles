@@ -289,34 +289,48 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     -- TODO: Requires section names
-		-- Go tos
-		setHere("n", "<leader>gD", vim.lsp.buf.declaration, "Go to declaration")
-		setHere("n", "<leader>gd", "<cmd> Glance definitions<cr>", "Go to definition")
-		setHere("n", "<leader>gi", "<cmd> Glance implementations<cr>", "Go to implementation")
-		setHere("n", "<leader>gI", vim.lsp.buf.incoming_calls, "Go to incoming calls")
-		setHere("n", "<leader>gO", vim.lsp.buf.outgoing_calls, "Go to outgoing calls")
-		setHere("n", "<leader>gt", "<cmd> Glance type_definition<cr>", "Go to type definition")
-		setHere("n", "<leader>gr", "<cmd> Glance references<cr>", "Show references")
-		setHere("n", "<leader>gs", vim.lsp.buf.document_symbol, "Show symbols")
+    -- Go tos
+    wk.register({
+      g = {
+        name = "Goto",
+        D = { vim.lsp.buf.declaration, "declaration" },
+        d = { "<cmd> Glance definitions<cr>", "definition" },
+        i = { "<cmd> Glance implementations<cr", "implementation" },
+        I = { vim.lsp.buf.incoming_calls, "Go to incoming calls" },
+        O = { vim.lsp.buf.outgoing_calls, "Go to outgoing calls" },
+        t = { "<cmd> Glance type_definition<cr>", "Go to type definition" },
+        r = { "<cmd> Glance references<cr>", "Show references" },
+        s = { vim.lsp.buf.document_symbol, "Show symbols" },
+      },
+    }, { prefix = "<leader>" })
 
     -- Workspace
-    setHere("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "add workspace folder")
-    setHere("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "remove workspace folder")
-    setHere("n", "<leader>wl", function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, "list workspace folders")
+    wk.register({
+      w = {
+        name = "Workspace",
+        a = { vim.lsp.buf.add_workspace_folder, "add workspace folder" },
+        r = { vim.lsp.buf.remove_workspace_folder, "remove workspace folder" },
+        l = { function()
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, "list workspace folders" },
+      },
+    }, { prefix = "<leader>" })
 
     -- in-place info
     setHere("n", "K", vim.lsp.buf.hover, "Hover")
     setHere("n", "<C-K>", vim.lsp.buf.signature_help, "Signature help")
 
     -- Refactor actions
-    setHere("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
-    setHere({ "n", "v" }, "<leader>ra", vim.lsp.buf.code_action, "Code action")
-    setHere("n", "<leader>rf", function()
-      vim.lsp.buf.format({ async = true })
-    end, "Format")
-  end,
+    --
+    wk.register({
+      r = {
+        name = "Refactor",
+        n = { vim.lsp.buf.rename, "Rename" },
+        a = { vim.lsp.buf.code_action, "Code action" },
+        f = { function() vim.lsp.buf.format({ async = true }) end, "Format" }
+      },
+    }, { prefix = "<leader>" })
+  end
 })
 
 -- Symbols

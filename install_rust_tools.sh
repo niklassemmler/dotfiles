@@ -4,3 +4,4 @@ source "$HOME/.cargo/env"
 cargo install ripgrep
 cargo install fd-find
 cargo install exa
+cargo install broot

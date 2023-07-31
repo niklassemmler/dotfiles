@@ -1,6 +1,6 @@
 local plugins = {}
 local add = function(value)
-	table.insert(plugins, value)
+    table.insert(plugins, value)
 end
 
 -- # Visuals
@@ -17,6 +17,9 @@ add("nvim-lualine/lualine.nvim")
 
 -- buffer line
 add("akinsho/bufferline.nvim")
+
+-- delete buffers
+add("kazhala/close-buffers.nvim")
 
 -- Startpage
 add("mhinz/vim-startify")
@@ -41,7 +44,7 @@ add("nvim-lua/plenary.nvim")
 add("tpope/vim-fugitive")
 
 -- Git conflicts
-add({'akinsho/git-conflict.nvim', version = "*", config = true})
+add({ 'akinsho/git-conflict.nvim', version = "*", config = true })
 
 -- Terminal manager
 add({ "akinsho/toggleterm.nvim", version = "*", config = true })
@@ -56,13 +59,14 @@ add("folke/which-key.nvim")
 -- Faster find
 add("ibhagwan/fzf-lua")
 
+
 -- Manage external dependencies
 add({
-	"williamboman/mason.nvim",
-	build = ":MasonUpdate",
-	ensure_installed = {
-		"gopls",
-	},
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    ensure_installed = {
+        "gopls",
+    },
 })
 add("jay-babu/mason-nvim-dap.nvim")
 add("williamboman/mason-lspconfig.nvim")
@@ -90,9 +94,9 @@ add("mbbill/undotree")
 
 -- Beautify error messages
 add({
-	"folke/trouble.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = {},
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
 })
 
 -- Show line indents
@@ -111,9 +115,9 @@ add("RRethy/vim-illuminate")
 add("mfussenegger/nvim-dap")
 add({ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } })
 add({
-	"leoluz/nvim-dap-go",
-	ft = "go",
-	dependencies = { "mfussenegger/nvim-dap" },
+    "leoluz/nvim-dap-go",
+    ft = "go",
+    dependencies = { "mfussenegger/nvim-dap" },
 })
 
 -- Use jay-babu/mason-nvim-dap.nvim instead
@@ -154,11 +158,11 @@ add("ldelossa/litee-calltree.nvim")
 
 -- Lazy git
 add({
-	"kdheepak/lazygit.nvim",
-	-- optional for floating window border decoration
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	},
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
 })
 
 -- Minis: Lots of really cool & minimal plugin

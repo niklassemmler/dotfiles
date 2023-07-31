@@ -219,7 +219,7 @@ function kns {
 zinit snippet OMZ::plugins/bgnotify/bgnotify.plugin.zsh
 zinit snippet OMZ::plugins/colorize/colorize.plugin.zsh
 zinit snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
-zinit snippet OMZ::plugins/docker/_docker
+# zinit snippet OMZ::plugins/docker/_docker
 zinit snippet OMZ::plugins/aliases/aliases.plugin.zsh
 zinit snippet OMZ::plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh
 zinit snippet OMZ::plugins/fzf/fzf.plugin.zsh

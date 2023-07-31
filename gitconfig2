@@ -17,6 +17,7 @@
 [difftool]
   prompt = false
 [alias]
+  branchlocal = "!f() { git branch --format '%(refname:short) %(upstream)' | awk '{if (!$2) print $1;}'; }; f"
   vim = difftool --tool=vimdiff
   amend = commit --amend
   ci = commit
@@ -34,7 +35,7 @@
   rst = reset
   conflict = diff --name-only --diff-filter=U --relative
   bptp = log --no-walk --tags='*bptp-verified' --tags='*devenv-certified*' --tags="*bptp-stable*" --pretty=format:'%h%Creset %C(yellow)%D%n%ch - %Creset%s - %cr%n' --abbrev-commit
-  fetchall = fetch --tags --all --force
+  fetchall = "!f() { git fetch origin main:main; git fetch --tags --all --force; }; f"
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
   pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
   update = "!f() { git fetch origin main:main; git fetch --tags --force --all; git rebase --onto bptp-verified origin/main; }; f"

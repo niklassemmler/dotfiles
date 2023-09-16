@@ -11,6 +11,14 @@ require("nvim-tree").setup({
         update_root = true,
     },
 })
+local api = require("nvim-tree.api")
+function Open_tree()
+    api.tree.toggle({ path = vim.loop.cwd() })
+end
+
+function Open_tree_here()
+    api.tree.toggle({ path = vim.loop.cwd(), find_file = true })
+end
 
 require("toggleterm").setup({ open_mapping = [[<c-\>]] })
 
@@ -57,8 +65,8 @@ cmp.setup({
     }),
     formatting = {
         format = lspkind.cmp_format({
-            mode = "symbol",       -- show only symbol annotations
-            maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
             -- The function below will be called before any actual modifications from lspkind
@@ -136,8 +144,8 @@ lspconfig.lua_ls.setup({
 cmp.setup({
     formatting = {
         format = lspkind.cmp_format({
-            mode = "symbol",       -- show only symbol annotations
-            maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            mode = "symbol", -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
 
             -- The function below will be called before any actual modifications from lspkind
@@ -197,20 +205,11 @@ require("treesitter-context").setup()
 
 -- git
 require("gitsigns").setup()
-require 'git-conflict'.setup()
+require("git-conflict").setup()
 
 require("indent_blankline").setup({
     show_end_of_line = true,
 })
-
-local api = require("nvim-tree.api")
-function Open_tree()
-    api.tree.toggle({ path = vim.loop.cwd() })
-end
-
-function Open_tree_here()
-    api.tree.toggle({ path = vim.loop.cwd(), find_file = true })
-end
 
 require("symbols-outline").setup()
 
@@ -220,10 +219,10 @@ require("lualine").setup()
 -- buffer management
 require("bufferline").setup()
 -- close buffers
-require('close_buffers').setup({
-    preserve_window_layout = { 'this' },
+require("close_buffers").setup({
+    preserve_window_layout = { "this" },
     next_buffer_cmd = function(windows)
-        require('bufferline').cycle(1)
+        require("bufferline").cycle(1)
         local bufnr = vim.api.nvim_get_current_buf()
 
         for _, window in ipairs(windows) do
@@ -231,7 +230,6 @@ require('close_buffers').setup({
         end
     end,
 })
-
 
 require("hop").setup()
 

@@ -44,7 +44,7 @@ add("nvim-lua/plenary.nvim")
 add("tpope/vim-fugitive")
 
 -- Git conflicts
-add({ 'akinsho/git-conflict.nvim', version = "*", config = true })
+add({ "akinsho/git-conflict.nvim", version = "*", config = true })
 
 -- Terminal manager
 add({ "akinsho/toggleterm.nvim", version = "*", config = true })
@@ -58,7 +58,6 @@ add("folke/which-key.nvim")
 
 -- Faster find
 add("ibhagwan/fzf-lua")
-
 
 -- Manage external dependencies
 add({

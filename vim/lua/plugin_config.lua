@@ -239,6 +239,7 @@ require("mini.surround").setup()
 
 -- marks
 require("marks").setup()
+require("nvim-lastplace").setup({})
 
 require("project_nvim").setup()
 

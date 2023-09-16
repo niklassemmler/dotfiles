@@ -30,10 +30,11 @@
   rbco = rebase --continue
   rbab = rebase --abort
   rbver = rebase bptp-verified
+  rbmain = rebase main
   rbi = "!f() { git rebase -i $(git log --invert-grep --author='Niklas Semmler' -1 --pretty="%H"); }; f"
   rsthd = reset HEAD~
   rst = reset
-  conflict = diff --name-only --diff-filter=U --relative
+  conflict = "!f() { nvim $(git diff --name-only --diff-filter=U --relative); }; f"
   bptp = log --no-walk --tags='*bptp-verified' --tags='*devenv-certified*' --tags="*bptp-stable*" --pretty=format:'%h%Creset %C(yellow)%D%n%ch - %Creset%s - %cr%n' --abbrev-commit
   fetchall = "!f() { git fetch origin main:main; git fetch --tags --all --force; }; f"
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
@@ -42,7 +43,7 @@
   rcont = "rebase --continue"
   rabort = "rebase --abort"
   sw = "switch"
-  goto = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git branch | fzf | xargs); }; f"
+  goto = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git branch --sort=-committerdate | fzf | xargs); }; f"
   recent = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git reflog | egrep -io 'moving from ([^[:space:]]+)' | awk '{ print $3 }' | awk ' !x[$0]++' | egrep -v '^[a-f0-9]{40}$' | head -n20 | fzf | xargs); }; f"
   go = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $1; }; f"
 [log]
@@ -56,3 +57,5 @@
 [rerere]
 	enabled = 1
 	autoupdate = true
+[url "git@github.com:"]
+  insteadOf = "https://github.com/"

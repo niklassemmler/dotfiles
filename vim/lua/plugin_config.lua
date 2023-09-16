@@ -14,10 +14,14 @@ require("nvim-tree").setup({
 require("toggleterm").setup({ open_mapping = [[<c-\>]] })
 
 require("mason").setup()
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = { "pyright", "lua_ls", "rust_analyzer" },
+})
 require("mason-nvim-dap").setup({ automatic_setup = true, handlers = {} })
 require("dapui").setup()
-require("mason-null-ls").setup()
+require("mason-null-ls").setup({
+    ensure_installed = { "black", "isort", "mypy", "goimports", "golines", "stylua", "gofumpt", "google_java_format" },
+})
 
 -- Completion
 local lspkind = require("lspkind")
@@ -147,10 +151,19 @@ require("lsp_signature").setup({ hint_enable = false })
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
+local nhelpers = require("null-ls.helpers")
 null_ls.setup({
+    debug = true,
     sources = {
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.isort,
+        null_ls.builtins.diagnostics.mypy.with({
+            extra_args = function()
+                local virtual = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_DEFAULT_ENV") or "/usr"
+                return { "--python-executable", virtual .. "/bin/python3" }
+            end,
+        }),
+        null_ls.builtins.diagnostics.flake8,
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.gofumpt,
         null_ls.builtins.formatting.golines,

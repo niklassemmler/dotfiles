@@ -4,6 +4,7 @@ vim.cmd([[colorscheme vim-material]])
 
 require("nvim-tree").setup({
     sync_root_with_cwd = true,
+    view = { width = 40 },
     respect_buf_cwd = true,
     update_focused_file = {
         enable = true,

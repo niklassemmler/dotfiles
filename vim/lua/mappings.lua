@@ -149,15 +149,23 @@ wk.register({
         f = { "<cmd> lua require('fzf-lua').files()<cr>", "Files" },
         b = { "<cmd> lua require('fzf-lua').buffers()<cr>", "Buffers" },
         q = { "<cmd> lua require('fzf-lua').quickfix()<cr>", "Quickfix" },
-        l = { "<cmd> lua require('fzf-lua').oldfiles()<cr>", "Last files" },
-        m = { "<cmd> lua require('fzf-lua').man_pages()<cr>", "Man pages" },
+        o = { "<cmd> lua require('fzf-lua').oldfiles()<cr>", "Last files" },
         g = { "<cmd> lua require('fzf-lua').grep()<cr>", "Grep" },
-        s = { "<cmd> lua require('fzf-lua').document_symbols()<cr>", "Grep" },
+        G = { "<cmd> lua require('fzf-lua').grep_cword()<cr>", "Grep word under cursor" },
+        l = { "<cmd> lua require('fzf-lua').grep_last()<cr>", "Man pages" },
+        s = { "<cmd> lua require('fzf-lua').lsp_document_symbols()<cr>", "Grep" },
     },
 }, { prefix = "<leader>" })
 
-set("n", "<F36>", ":FzfLua lsp_document_symbols<cr>", "Browse symbols")
+wk.register({
+    a = {
+        name = "Access (fzf)",
+        g = { "<cmd> lua require('fzf-lua').grep_visual()<cr>", "Grep" },
+    },
+}, { prefix = "<leader>", mode = "v" })
 
+set("n", "<F36>", ":FzfLua lsp_document_symbols<cr>", "Browse symbols")
+set("n", "<C-F12>", ":FzfLua lsp_document_symbols<cr>", "Browse symbols")
 
 -- Terminal
 wk.register({
@@ -305,10 +313,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 name = "Goto",
                 D = { vim.lsp.buf.declaration, "declaration" },
                 d = { "<cmd> Glance definitions<cr>", "definition" },
-                i = { "<cmd> Glance implementations<cr", "implementation" },
+                i = { "<cmd> Glance implementations<cr>", "implementation" },
                 I = { vim.lsp.buf.incoming_calls, "Go to incoming calls" },
                 O = { vim.lsp.buf.outgoing_calls, "Go to outgoing calls" },
-                t = { "<cmd> Glance type_definition<cr>", "Go to type definition" },
+                t = { "<cmd> Glance type_definitions<cr>", "Go to type definition" },
                 r = { "<cmd> Glance references<cr>", "Show references" },
                 s = { vim.lsp.buf.document_symbol, "Show symbols" },
             },
@@ -337,11 +345,65 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 name = "Refactor",
                 n = { vim.lsp.buf.rename, "Rename" },
                 a = { vim.lsp.buf.code_action, "Code action" },
-                f = { function() vim.lsp.buf.format({ async = true }) end, "Format" }
+                f = {
+                    function()
+                        vim.lsp.buf.format({ async = true })
+                    end,
+                    "Format",
+                },
             },
         }, { prefix = "<leader>" })
-    end
+    end,
 })
+wk.register({
+    r = {
+        name = "Refactor",
+        n = { vim.lsp.buf.rename, "Rename" },
+        a = { vim.lsp.buf.code_action, "Code action" },
+        e = {
+            function()
+                require("refactoring").refactor("Extract Variable")
+            end,
+            "Extract variable",
+        },
+        E = {
+            function()
+                require("refactoring").refactor("Extract Function")
+            end,
+            "Extract function",
+        },
+        b = {
+            function()
+                require("refactoring").refactor("Extract Block")
+            end,
+            "Extract block",
+        },
+        i = {
+            function()
+                require("refactoring").refactor("Inline Variable")
+            end,
+            "Inline variable",
+        },
+        I = {
+            function()
+                require("refactoring").refactor("Inline Function")
+            end,
+            "Inline function",
+        },
+        s = {
+            function()
+                require("refactoring").select_refactor()
+            end,
+            "Select action",
+        },
+        f = {
+            function()
+                vim.lsp.buf.format({ async = true })
+            end,
+            "Format",
+        },
+    },
+}, { prefix = "<leader>", mode = "v" })
 
 -- Symbols
 set("n", "S", "<cmd> SymbolsOutline<cr>", "Show symbols")

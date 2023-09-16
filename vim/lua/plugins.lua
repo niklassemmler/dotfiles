@@ -195,4 +195,7 @@ add("nvim-neotest/neotest")
 -- Go tricks
 add("olexsmir/gopher.nvim")
 
+-- Refactoring
+add("ThePrimeagen/refactoring.nvim")
+
 return plugins

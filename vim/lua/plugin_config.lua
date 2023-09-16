@@ -257,3 +257,5 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
         end
     end,
 })
+
+require("refactoring").setup({})

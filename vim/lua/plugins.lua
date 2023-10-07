@@ -1,6 +1,6 @@
 local plugins = {}
 local add = function(value)
-    table.insert(plugins, value)
+	table.insert(plugins, value)
 end
 
 -- # Visuals
@@ -61,11 +61,11 @@ add("ibhagwan/fzf-lua")
 
 -- Manage external dependencies
 add({
-    "williamboman/mason.nvim",
-    build = ":MasonUpdate",
-    ensure_installed = {
-        "gopls",
-    },
+	"williamboman/mason.nvim",
+	build = ":MasonUpdate",
+	ensure_installed = {
+		"gopls",
+	},
 })
 add("jay-babu/mason-nvim-dap.nvim")
 add("williamboman/mason-lspconfig.nvim")
@@ -73,6 +73,9 @@ add("jay-babu/mason-null-ls.nvim")
 
 -- LSP Configs
 add("neovim/nvim-lspconfig")
+
+-- pairs of brackets quotes etc
+add("windwp/nvim-autopairs")
 
 -- pictograms for lsp
 add("onsails/lspkind.nvim")
@@ -93,9 +96,9 @@ add("mbbill/undotree")
 
 -- Beautify error messages
 add({
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {},
+	"folke/trouble.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
+	opts = {},
 })
 
 -- Show line indents
@@ -114,9 +117,9 @@ add("RRethy/vim-illuminate")
 add("mfussenegger/nvim-dap")
 add({ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } })
 add({
-    "leoluz/nvim-dap-go",
-    ft = "go",
-    dependencies = { "mfussenegger/nvim-dap" },
+	"leoluz/nvim-dap-go",
+	ft = "go",
+	dependencies = { "mfussenegger/nvim-dap" },
 })
 
 -- Use jay-babu/mason-nvim-dap.nvim instead
@@ -143,7 +146,8 @@ add("jose-elias-alvarez/null-ls.nvim")
 add("phaazon/hop.nvim")
 
 -- Github Copilot
-add("github/copilot.vim")
+add("zbirenbaum/copilot.lua")
+add("zbirenbaum/copilot-cmp")
 
 -- Improved yank ring
 add("gbprod/yanky.nvim")
@@ -157,11 +161,11 @@ add("ldelossa/litee-calltree.nvim")
 
 -- Lazy git
 add({
-    "kdheepak/lazygit.nvim",
-    -- optional for floating window border decoration
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-    },
+	"kdheepak/lazygit.nvim",
+	-- optional for floating window border decoration
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+	},
 })
 
 -- Minis: Lots of really cool & minimal plugin

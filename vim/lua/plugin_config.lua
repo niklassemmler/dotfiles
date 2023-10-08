@@ -105,6 +105,12 @@ local lspconfig = require("lspconfig")
 lspconfig.rust_analyzer.setup({
 	capabilities = capabilities,
 })
+lspconfig.html.setup({
+	capabilities = capabilities,
+})
+lspconfig.tailwindcss.setup({
+	capabilities = capabilities,
+})
 lspconfig.pyright.setup({
 	capabilities = capabilities,
 })
@@ -287,3 +293,9 @@ end
 
 -- reasonable auto pairs
 require("nvim-autopairs").setup({})
+
+-- f string python
+require("f-string-toggle").setup({
+	key_binding = "<leader>F",
+	key_binding_desc = "Toggle f-string",
+})

@@ -101,6 +101,9 @@ add({
 	opts = {},
 })
 
+--
+add("roobert/f-string-toggle.nvim")
+
 -- Show line indents
 add("lukas-reineke/indent-blankline.nvim")
 

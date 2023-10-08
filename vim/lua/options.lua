@@ -1,5 +1,5 @@
 local globals = vim.g
-globals.mapleader = ' '
+globals.mapleader = " "
 globals.email = "niklas.semmler@mailbox.org"
 globals.username = "Niklas Semmler"
 
@@ -28,17 +28,17 @@ options.wildignore = "*.swp,*.bak,*.pyc,*.class,*.aux,*.pdf,*.bbl,*.blg"
 -- Search options
 options.ignorecase = true
 options.smartcase = true
-options.showmatch = true  -- highlight parenthesis
+options.showmatch = true -- highlight parenthesis
 
--- Show tabs
+-- Show tabs -- disable for now
 options.encoding = "utf-8"
-vim.opt.listchars["tab"] = "»»"
-vim.opt.listchars["trail"] = "··"
-vim.opt.listchars["nbsp"] = "nbsp"
-options.list = true
+-- vim.opt.listchars["tab"] = "»»"
+-- vim.opt.listchars["trail"] = "··"
+-- vim.opt.listchars["nbsp"] = "nbsp"
+-- options.list = true
 
 -- Undofile
-vim.opt.undofile = true 
+vim.opt.undofile = true
 
 -- Mouse
 vim.o.mouse = nil

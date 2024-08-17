@@ -80,7 +80,7 @@ add("windwp/nvim-autopairs")
 -- pictograms for lsp
 add("onsails/lspkind.nvim")
 
--- live signature
+-- live function signature
 add("ray-x/lsp_signature.nvim")
 
 -- lsp ui
@@ -89,6 +89,8 @@ add("DNLHC/glance.nvim")
 -- Highlighting
 add({ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" })
 add("folke/todo-comments.nvim")
+
+-- context of current buffer (e.g., function)
 add("nvim-treesitter/nvim-treesitter-context")
 
 -- Undotree
@@ -108,17 +110,18 @@ add("roobert/f-string-toggle.nvim")
 add("lukas-reineke/indent-blankline.nvim")
 
 -- Gitsigns
+-- TODO: Use to stage hunks and show blame
 add("lewis6991/gitsigns.nvim")
 
 -- browse workspace symbols
-add("simrat39/symbols-outline.nvim")
+add("hedyhli/outline.nvim")
 
 -- highlight other term
 add("RRethy/vim-illuminate")
 
 -- debugging
 add("mfussenegger/nvim-dap")
-add({ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } })
+add({ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } })
 add({
 	"leoluz/nvim-dap-go",
 	ft = "go",
@@ -129,21 +132,19 @@ add({
 -- add 'ravenxrz/DAPInstall.nvim'
 
 -- completion
-add("neovim/nvim-lspconfig")
 add("hrsh7th/cmp-nvim-lsp")
 add("hrsh7th/cmp-buffer")
 add("hrsh7th/cmp-path")
 add("hrsh7th/cmp-cmdline")
 add("hrsh7th/nvim-cmp")
-add("L3MON4D3/LuaSnip")
-add("honza/vim-snippets")
 
--- neovim configuration
--- add 'folke/neodev.nvim'
--- Doesn't work for me
+-- TODO: Fix luasnip and reenable
+add({ "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" })
+-- add("honza/vim-snippets")
 
 -- Use tools that don't speak LSP
-add("jose-elias-alvarez/null-ls.nvim")
+-- Null-Ls alternative
+add("nvimtools/none-ls.nvim")
 
 -- Easy Motion Lua variant
 add("phaazon/hop.nvim")

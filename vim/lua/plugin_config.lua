@@ -129,26 +129,32 @@ lspconfig.gopls.setup({
 		},
 	},
 })
-lspconfig.lua_ls.setup({
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim" },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-				checkThirdParty = false,
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
+if vim.fn.hostname() ~= "Policy1st" then
+	lspconfig.lua_ls.setup({
+		capabilities = capabilities,
+		settings = {
+			Lua = {
+				runtime = {
+					version = "LuaJIT",
+				},
+				diagnostics = {
+					-- Get the language server to recognize the `vim` global
+					globals = { "vim" },
+				},
+				workspace = {
+					-- Make the server aware of Neovim runtime files
+					library = vim.api.nvim_get_runtime_file("", true),
+					checkThirdParty = false,
+					ignoreDir = { "lazy" },
+				},
+				-- Do not send telemetry data containing a randomized but unique identifier
+				telemetry = {
+					enable = false,
+				},
 			},
 		},
-	},
-})
+	})
+end
 cmp.setup({
 	formatting = {
 		format = lspkind.cmp_format({
@@ -180,7 +186,6 @@ null_ls.setup({
 				return { "--python-executable", virtual .. "/bin/python3" }
 			end,
 		}),
-		null_ls.builtins.diagnostics.flake8,
 		null_ls.builtins.formatting.goimports,
 		null_ls.builtins.formatting.gofumpt,
 		null_ls.builtins.formatting.golines,
@@ -203,8 +208,14 @@ null_ls.setup({
 
 require("nvim-treesitter.configs").setup({
 	ensure_installed = { "lua", "python", "go", "rust", "java" },
+	auto_install = true,
+	sync_install = false,
 	highlight = {
 		enable = true,
+		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+		-- Using this option may slow down your editor, and you may see some duplicate highlights.
+		-- Instead of true it can also be a list of languages
 		additional_vim_regex_highlighting = false,
 	},
 })
@@ -217,7 +228,7 @@ require("git-conflict").setup()
 
 require("ibl").setup()
 
-require("symbols-outline").setup()
+require("outline").setup()
 
 -- require('nvim-web-devicons').setup()
 require("lualine").setup()

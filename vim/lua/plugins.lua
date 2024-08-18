@@ -74,6 +74,13 @@ add("jay-babu/mason-null-ls.nvim")
 -- LSP Configs
 add("neovim/nvim-lspconfig")
 
+-- LSP config for rust-analyzer
+add({
+	"mrcjkb/rustaceanvim",
+	version = "^5", -- Recommended
+	lazy = false, -- This plugin is already lazy
+})
+
 -- pairs of brackets quotes etc
 add("windwp/nvim-autopairs")
 

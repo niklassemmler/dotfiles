@@ -102,9 +102,11 @@ cmp.setup.cmdline(":", {
 
 -- Setup lspconfig.
 local lspconfig = require("lspconfig")
-lspconfig.rust_analyzer.setup({
-	capabilities = capabilities,
-})
+-- rust_analyzer is automatically setup by rustacean.nvim
+-- keeping just in case I wanto to go back
+-- lspconfig.rust_analyzer.setup({
+-- 	capabilities = capabilities,
+-- })
 lspconfig.html.setup({
 	capabilities = capabilities,
 })

@@ -28,6 +28,18 @@ require("mason-lspconfig").setup({
 })
 require("mason-nvim-dap").setup({ automatic_setup = true, handlers = {} })
 require("dapui").setup()
+require("nvim-dap-virtual-text").setup()
+local dap = require("dap")
+dap.configurations.rust = {
+	{
+		name = "Debug generic rust",
+		type = "codelldb",
+		request = "launch",
+		program = vim.fn.getcwd() .. "/target/debug/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
+		cwd = "${workspaceFolder}",
+		stopOnEntry = false,
+	},
+}
 require("mason-null-ls").setup({
 	ensure_installed = { "black", "isort", "mypy", "goimports", "golines", "stylua", "gofumpt", "google_java_format" },
 })

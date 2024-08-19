@@ -134,6 +134,7 @@ add({
 	ft = "go",
 	dependencies = { "mfussenegger/nvim-dap" },
 })
+add("theHamsta/nvim-dap-virtual-text")
 
 -- Use jay-babu/mason-nvim-dap.nvim instead
 -- add 'ravenxrz/DAPInstall.nvim'

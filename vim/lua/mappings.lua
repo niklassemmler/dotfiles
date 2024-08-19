@@ -171,9 +171,9 @@ set({ "n", "i", "v" }, "<C-q>", "<cmd>q<cr>", "Close buffer")
 set("n", "XX", "<cmd>bd<cr>", "Remove buffer")
 
 -- Errors
-set("n", "T", "<cmd>TroubleToggle document_diagnostics<cr>", "Errors & warnings (this file)")
+set("n", "T", "<cmd>Trouble diagnostics toggle focus=false filter.buf=0<cr>", "Errors & warnings (this file)")
 -- this overrides tags, but I haven't used them so far
-set("n", "<C-T>", "<cmd>Trouble<cr>", "Errors & warnings")
+set("n", "<C-T>", "<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>", "Errors & warnings")
 
 -- Undotree
 set("n", "<leader>U", "<cmd>UndotreeToggle<cr>", "Undo tree")
@@ -198,7 +198,7 @@ local dap = require("dap")
 local dapui = require("dapui")
 wk.add({
 	{ "<leader>D", group = "Debug" },
-	{ "<leader>DR", dap.run_to_cursor, desc = "Run to Cursor" },
+	{ "<leader>DU", dapui.toggle, desc = "Toggle UI" },
 	{
 		"<leader>DE",
 		function()
@@ -206,6 +206,7 @@ wk.add({
 		end,
 		desc = "Evaluate Input",
 	},
+	{ "<leader>De", dapui.eval, desc = "Evaluate" },
 	{
 		"<leader>DC",
 		function()
@@ -213,21 +214,22 @@ wk.add({
 		end,
 		desc = "Conditional Breakpoint",
 	},
-	{ "<leader>DU", dapui.toggle, desc = "Toggle UI" },
-	{ "<leader>Db", dap.step_back, desc = "Step Back" },
+	{ "<leader>Db", dap.toggle_breakpoint, desc = "Toggle Breakpoint" },
 	{ "<leader>Dc", dap.continue, desc = "Continue" },
-	{ "<leader>Dd", dap.disconnect, desc = "Disconnect" },
-	{ "<leader>De", dapui.eval, desc = "Evaluate" },
-	{ "<leader>Dg", dap.session, desc = "Get Session" },
-	{ "<leader>Di", dap.step_into, desc = "Step Into" },
-	{ "<leader>Do", dap.step_over, desc = "Step Over" },
-	{ "<leader>Dp", dap.pause, desc = "Pause" },
-	{ "<leader>Dq", dap.close, desc = "Quit" },
 	{ "<leader>Dr", dap.repl.toggle, desc = "Toggle Repl" },
-	{ "<leader>Ds", dap.continue, desc = "Start" },
-	{ "<leader>Dt", dap.toggle_breakpoint, desc = "Toggle Breakpoint" },
-	{ "<leader>Dx", dap.terminate, desc = "Terminate" },
-	{ "<leader>Du", dap.step_out, desc = "Step Out" },
+	{ "<leader>Dm", group = "Debug manage session" },
+	{ "<leader>Dmd", dap.disconnect, desc = "Disconnect" },
+	{ "<leader>Dmx", dap.terminate, desc = "Terminate" },
+	{ "<leader>Dmp", dap.pause, desc = "Pause" },
+	{ "<leader>Dmq", dap.close, desc = "Quit" },
+	{ "<leader>Dms", dap.session, desc = "Get Session" },
+	{ "<leader>Dml", dap.run_last, desc = "Run last" },
+	{ "<leader>Dmr", dap.run_to_cursor, desc = "Run to Cursor" },
+	{ "<leader>Ds", group = "Debug step" },
+	{ "<leader>Dsi", dap.step_into, desc = "Step Into" },
+	{ "<leader>Dso", dap.step_over, desc = "Step Over" },
+	{ "<leader>Dsb", dap.step_back, desc = "Step Back" },
+	{ "<leader>Dsu", dap.step_out, desc = "Step Out" },
 	-- { "<leader>Dl", require("dap-go").debug_last, "Debug last"}
 	-- { "<leader>Dt", require("dap-go").debug_test, "Debug test"}
 	-- { "<leader>Dh", dapui.widgets.hover, desc="Hover Variables"}

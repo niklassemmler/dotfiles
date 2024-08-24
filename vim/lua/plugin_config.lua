@@ -282,7 +282,11 @@ require("mini.splitjoin").setup()
 require("mini.surround").setup()
 
 -- marks
-require("marks").setup()
+require("marks").setup({
+	default_mappings = true,
+	signs = true,
+	mappings = {},
+})
 require("nvim-lastplace").setup({})
 
 require("project_nvim").setup()

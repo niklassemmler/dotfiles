@@ -168,7 +168,7 @@ wk.add({
 })
 set("n", "QQ", "<cmd>qa<cr>", "Quit all")
 set({ "n", "i", "v" }, "<C-q>", "<cmd>q<cr>", "Close buffer")
-set("n", "XX", "<cmd>bd<cr>", "Remove buffer")
+set("n", "XX", "<cmd>BDelete this<cr>", "Remove buffer")
 
 -- Errors
 set("n", "T", "<cmd>Trouble diagnostics toggle focus=false filter.buf=0<cr>", "Errors & warnings (this file)")
@@ -421,13 +421,12 @@ cmp.setup({
 	},
 })
 
--- TODO: reenable when you fix plugin
 -- lua snip
 local ls = require("luasnip")
 wk.add({
-	{ "i", group = "Snips" },
+	{ "<leader>i", group = "Snips" },
 	{
-		"ic",
+		"<leader>ic",
 		function()
 			if ls.choice_active() then
 				ls.change_choice(1)
@@ -435,16 +434,16 @@ wk.add({
 		end,
 		desc = "change choice",
 	},
-	{ "ie", ls.expand, desc = "expand" },
+	{ "<leader>ie", ls.expand, desc = "expand" },
 	{
-		"ii",
+		"<leader>ii",
 		function()
 			ls.jump(1)
 		end,
 		desc = "jump forward",
 	},
 	{
-		"il",
+		"<leader>il",
 		function()
 			ls.jump(-1)
 		end,

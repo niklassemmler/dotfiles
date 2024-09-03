@@ -2,7 +2,7 @@
   path = /home/vagrant/.snowflake.gitconfig
   path = /home/vagrant/.snowflake.aliases
 [init]
-  templateDir = /home/nsemmler/.git-template
+  templateDir = ~/.git-template
   defaultBranch = main
 [user]
   email = niklas.semmler@snowflake.com
@@ -15,12 +15,18 @@
   tool = vimdiff
   conflictstyle = diff3
 [difftool]
-  prompt = false
+  prompt = true
+[diff]
+  tool = nvimdiff
+[difftool "nvimdiff"]
+  cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [alias]
   branchlocal = "!f() { git branch --format '%(refname:short) %(upstream)' | awk '{if (!$2) print $1;}'; }; f"
   vim = difftool --tool=vimdiff
   amend = commit --amend
   ci = commit
+  cp = cherry-pick
+  cached = diff --cached
   stat = status -s
   last = log -1 HEAD -p
   visual = ! gitk &
@@ -35,9 +41,12 @@
   rsthd = reset HEAD~
   rst = reset
   conflict = "!f() { nvim $(git diff --name-only --diff-filter=U --relative); }; f"
+  unmerged = "!f() { git diff --name-only --diff-filter=U --relative; }; f"
+  addunmerged = "!f() { git add $(git diff --name-only --diff-filter=U --relative); }; f"
   bptp = log --no-walk --tags='*bptp-verified' --tags='*devenv-certified*' --tags="*bptp-stable*" --pretty=format:'%h%Creset %C(yellow)%D%n%ch - %Creset%s - %cr%n' --abbrev-commit
   fetchall = "!f() { git fetch origin main:main; git fetch --tags --all --force; }; f"
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
+  new = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git checkout -b $1 main; git update-index --skip-worktree GSAll/.idea/compiler.xml; }; f"
   pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
   update = "!f() { git fetch origin main:main; git fetch --tags --force --all; git rebase --onto bptp-verified origin/main; }; f"
   rcont = "rebase --continue"
@@ -46,6 +55,8 @@
   goto = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git branch --sort=-committerdate | fzf | xargs); }; f"
   recent = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $(git reflog | egrep -io 'moving from ([^[:space:]]+)' | awk '{ print $3 }' | awk ' !x[$0]++' | egrep -v '^[a-f0-9]{40}$' | head -n20 | fzf | xargs); }; f"
   go = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $1; }; f"
+  gorelease = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout main; git fetch --all --tags --force; git checkout release_$1; }; f"
+  golast = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git switch -; git update-index --skip-worktree GSAll/.idea/compiler.xml; }; f"
 [log]
   abbrevCommit = true
 [pull]
@@ -55,7 +66,7 @@
 [core]
   excludesfile = /home/nsemmler/.gitignore
 [rerere]
-	enabled = 1
-	autoupdate = true
+  enabled = true
+  autoupdate = true
 [url "git@github.com:"]
   insteadOf = "https://github.com/"

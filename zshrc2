@@ -148,7 +148,7 @@ function sudo_call () {
 zle -N sudo_call
 
 function hl () {
-  sed -E "s/$1/$(tput setaf 5)\1$(tput sgr0)/"
+  sed -E "s/$1/$(tput setaf 5)$1$(tput sgr0)/"
 }
 
 # edit command

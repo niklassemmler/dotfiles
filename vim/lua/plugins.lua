@@ -213,4 +213,7 @@ add("olexsmir/gopher.nvim")
 -- Refactoring
 add("ThePrimeagen/refactoring.nvim")
 
+-- jsonnet
+add("google/vim-jsonnet")
+
 return plugins

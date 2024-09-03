@@ -128,6 +128,9 @@ lspconfig.tailwindcss.setup({
 lspconfig.pyright.setup({
 	capabilities = capabilities,
 })
+lspconfig.jsonnet_language_server.setup({
+	capabilities = capabilities,
+})
 lspconfig.gopls.setup({
 	capabilities = capabilities,
 	cmd = { "gopls", "serve" },

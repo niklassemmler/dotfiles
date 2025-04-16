@@ -147,8 +147,8 @@ add("hrsh7th/cmp-cmdline")
 add("hrsh7th/nvim-cmp")
 
 -- TODO: Fix luasnip and reenable
-add({ "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" })
-add("honza/vim-snippets")
+-- add({ "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" })
+-- add("honza/vim-snippets")
 
 -- Use tools that don't speak LSP
 -- Null-Ls alternative
@@ -191,7 +191,7 @@ add("chentoast/marks.nvim")
 
 -- for experimentation
 -- Can I used this to maintain state of a project?
-add("Shatur/neovim-session-manager")
+-- add("Shatur/neovim-session-manager")
 add("ahmedkhalf/project.nvim")
 
 -- Edit Macros

@@ -422,31 +422,31 @@ cmp.setup({
 })
 
 -- lua snip
-local ls = require("luasnip")
-wk.add({
-	{ "<leader>i", group = "Snips" },
-	{
-		"<leader>ic",
-		function()
-			if ls.choice_active() then
-				ls.change_choice(1)
-			end
-		end,
-		desc = "change choice",
-	},
-	{ "<leader>ie", ls.expand, desc = "expand" },
-	{
-		"<leader>ii",
-		function()
-			ls.jump(1)
-		end,
-		desc = "jump forward",
-	},
-	{
-		"<leader>il",
-		function()
-			ls.jump(-1)
-		end,
-		desc = "jump backward",
-	},
-})
+-- local ls = require("luasnip")
+-- wk.add({
+-- 	{ "<leader>i", group = "Snips" },
+-- 	{
+-- 		"<leader>ic",
+-- 		function()
+-- 			if ls.choice_active() then
+-- 				ls.change_choice(1)
+-- 			end
+-- 		end,
+-- 		desc = "change choice",
+-- 	},
+-- 	{ "<leader>ie", ls.expand, desc = "expand" },
+-- 	{
+-- 		"<leader>ii",
+-- 		function()
+-- 			ls.jump(1)
+-- 		end,
+-- 		desc = "jump forward",
+-- 	},
+-- 	{
+-- 		"<leader>il",
+-- 		function()
+-- 			ls.jump(-1)
+-- 		end,
+-- 		desc = "jump backward",
+-- 	},
+-- })

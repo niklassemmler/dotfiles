@@ -44,6 +44,7 @@
   unmerged = "!f() { git diff --name-only --diff-filter=U --relative; }; f"
   addunmerged = "!f() { git add $(git diff --name-only --diff-filter=U --relative); }; f"
   bptp = log --no-walk --tags='*bptp-verified' --tags='*devenv-certified*' --tags="*bptp-stable*" --pretty=format:'%h%Creset %C(yellow)%D%n%ch - %Creset%s - %cr%n' --abbrev-commit
+  unpushed = log --branches --not --remotes --no-walk --decorate --oneline
   fetchall = "!f() { git fetch origin main:main; git fetch --tags --all --force; }; f"
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
   new = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git checkout -b $1 main; git update-index --skip-worktree GSAll/.idea/compiler.xml; }; f"

@@ -148,35 +148,36 @@ local lspconfig = require("lspconfig")
 -- lspconfig.rust_analyzer.setup({
 -- 	capabilities = capabilities,
 -- })
-lspconfig.html.setup({
+vim.lsp.config('htmnl', {
     capabilities = capabilities,
 })
-lspconfig.tailwindcss.setup({
+vim.lsp.config('tailwindcss', {
     capabilities = capabilities,
 })
-lspconfig.pyright.setup({
+vim.lsp.config('pyright', {
     capabilities = capabilities,
 })
-lspconfig.jsonnet_language_server.setup({
+vim.lsp.config('jsonnet_language_server', {
     capabilities = capabilities,
 })
-lspconfig.gopls.setup({
-    capabilities = capabilities,
-    cmd = { "gopls", "serve" },
-    filetypes = { "go", "gomod" },
-    root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
-    settings = {
-        gopls = {
-            completeUnimported = true,
-            usePlaceholders = true,
-            analyses = {
-                unusedparams = true,
-            },
-        },
-    },
-})
+-- TODO: Fix with new vim.lsp.config syntax
+-- vim.lsp.config('gopls'. {
+--     capabilities = capabilities,
+--     cmd = { "gopls", "serve" },
+--     filetypes = { "go", "gomod" },
+--     root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+--     settings = {
+--         gopls = {
+--             completeUnimported = true,
+--             usePlaceholders = true,
+--             analyses = {
+--                 unusedparams = true,
+--             },
+--         },
+--     },
+-- })
 if vim.fn.hostname() ~= "Policy1st" then
-    lspconfig.lua_ls.setup({
+    vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         settings = {
             Lua = {

@@ -22,6 +22,7 @@ ohmyzsh/ohmyzsh path:plugins/dircycle
 ohmyzsh/ohmyzsh path:plugins/encode64
 ohmyzsh/ohmyzsh path:plugins/eza
 ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
+ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/gradle
 ohmyzsh/ohmyzsh path:plugins/jira
 ohmyzsh/ohmyzsh path:plugins/kubectl

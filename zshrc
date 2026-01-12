@@ -1,8 +1,12 @@
+## Required
+# export DOTFILES_DIR="$HOME/dotfiles"
+# export ANTIDOTE_DIR="$HOME/.antidote"
+
 ## Zsh packages (Antidote)
 # install with homebrew or linux package manager
 
 # source antidote
-source /opt/homebrew/share/antidote/antidote.zsh
+source $ANTIDOTE_DIR/antidote.zsh
  
 # initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
 antidote load
@@ -124,4 +128,4 @@ bindkey . rationalise-dot
 bindkey -M isearch . self-insert # so that search works
 
 ## Powerline
-source ~/.dotfiles/p10k.zsh
+source $DOTFILES_DIR/p10k.zsh

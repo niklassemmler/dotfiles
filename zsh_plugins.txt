@@ -1,0 +1,39 @@
+# Propmt
+romkatv/powerlevel10k
+
+zsh-users/zsh-syntax-highlighting
+# use substring search for history etc.
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+
+olets/zsh-abbr    kind:defer
+
+# internal stuff
+mattmc3/ez-compinit
+
+
+# Oh My Zsh
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/alias-finder
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/dircycle
+ohmyzsh/ohmyzsh path:plugins/encode64
+ohmyzsh/ohmyzsh path:plugins/eza
+ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
+ohmyzsh/ohmyzsh path:plugins/gradle
+ohmyzsh/ohmyzsh path:plugins/jira
+ohmyzsh/ohmyzsh path:plugins/kubectl
+# Open finder, create tabs, control spotify etc
+ohmyzsh/ohmyzsh path:plugins/macos
+ohmyzsh/ohmyzsh path:plugins/pip
+ohmyzsh/ohmyzsh path:plugins/safe-paste
+# ohmyzsh/ohmyzsh path:plugins/tmux
+# convert timestamp
+ohmyzsh/ohmyzsh path:plugins/tt
+
+# better vim mode
+jeffreytse/zsh-vi-mode
+
+bigH/git-fuzzy path:bin kind:path

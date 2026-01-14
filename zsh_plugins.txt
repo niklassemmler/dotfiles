@@ -33,6 +33,7 @@ ohmyzsh/ohmyzsh path:plugins/safe-paste
 # ohmyzsh/ohmyzsh path:plugins/tmux
 # convert timestamp
 ohmyzsh/ohmyzsh path:plugins/tt
+ohmyzsh/ohmyzsh path:plugins/web-search
 
 # better vim mode
 jeffreytse/zsh-vi-mode

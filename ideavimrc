@@ -1,0 +1,72 @@
+" TODO: Sync these key bindings with nvim 
+
+" Set Space as your leader key
+let mapleader=" "
+
+" Status & Overview
+nnoremap <leader>gs :action Vcs.Operations.Popup<CR>
+nnoremap <leader>gg :action ActivateVersionControlToolWindow<CR>
+
+" Branching & Syncing
+nnoremap <leader>gb :action Git.Branches<CR>
+nnoremap <leader>gf :action Git.Fetch<CR>
+nnoremap <leader>gp :action Git.Pull<CR>
+nnoremap <leader>gP :action Git.Push<CR>
+
+" Merging & Rebasing
+nnoremap <leader>gm :action Git.Merge<CR>
+nnoremap <leader>gr :action Git.Rebase<CR>
+
+" History & Diffs
+nnoremap <leader>gh :action Vcs.Show.Log<CR>
+nnoremap <leader>gd :action Vcs.Diff<CR>
+nnoremap <leader>gl :action Vcs.ShowTabbedFileHistory<CR>
+
+" --- Quick Fixes & Errors ---
+" Jump to next/previous error (like ]d and [d in modern Neovim)
+nnoremap ]d :action GotoNextError<CR>
+nnoremap [d :action GotoPreviousError<CR>
+
+" Open the 'Lightbulb' menu (Intention Actions)
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+
+" View the full error description (Hover)
+nnoremap K :action ShowErrorDescription<CR>
+
+" Open the 'Problems' tool window
+nnoremap <leader>xx :action ActivateProblemsViewToolWindow<CR>
+
+
+" --- Interface Management ---
+" Toggle the Project Explorer (Files)
+nnoremap <leader>ee :action ActivateProjectToolWindow<CR>
+
+" Toggle the Terminal
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
+
+" ESC to return to Editor from any Tool Window (Terminal, Project, etc.)
+tnoremap <Esc> <C-\><C-n>:action HideActiveWindow<CR>
+
+" Maximize/Restore current tab (Zen mode for your code)
+nnoremap <leader>wm :action ToggleMaximizeEditor<CR>
+
+
+" --- Search & Refactor ---
+" Search Everywhere (The double-shift menu)
+nnoremap <leader>ff :action SearchEverywhere<CR>
+
+" Rename symbol (Variable, Class, Method)
+nnoremap <leader>rn :action RenameElement<CR>
+
+" Reformat code (Like Prettier/Auto-format)
+nnoremap <leader>rf :action ReformatCode<CR>
+
+" View Recent Files
+nnoremap <leader>fo :action RecentFiles<CR>
+
+" plugins
+set surround          " Add/change/delete brackets and quotes (cs"', ds", etc.)
+set commentary        " Use 'gcc' to comment out lines or 'gc' for motions
+set highlightedyank   " Briefly highlight the text you just yanked (copied)
+set ideajoin          " Make Vim's 'J' smart (handles comments and code logic)
+set which-key         " Shows a popup guide for your <leader> keys as you type

@@ -69,4 +69,7 @@ set surround          " Add/change/delete brackets and quotes (cs"', ds", etc.)
 set commentary        " Use 'gcc' to comment out lines or 'gc' for motions
 set highlightedyank   " Briefly highlight the text you just yanked (copied)
 set ideajoin          " Make Vim's 'J' smart (handles comments and code logic)
+" NOTE: Which-key requires plugin installation in IDEA
 set which-key         " Shows a popup guide for your <leader> keys as you type
+
+set timeoutlen=10000

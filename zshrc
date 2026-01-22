@@ -99,7 +99,45 @@ function rationalise-dot () {
 }
 zle -N rationalise-dot
 
-function hl () {
+function goto {
+  # 1. Ensure we are in a git repo
+  git rev-parse --is-inside-work-tree > /dev/null 2>&1 || { echo "Not a git repository"; return 1; }
+
+  # 2. Get branches, filter through fzf, and store in a variable
+  local target
+  target=$(git for-each-ref --sort=-committerdate refs/heads/ --format="%(refname:short)" | 
+           fzf --preview 'git log -n 5 --color=always {}' --height 40% --layout=reverse --border --prompt="Checkout Branch > ")
+
+  # 3. If a target was selected (user didn't hit ESC), checkout
+  if [[ -n "$target" ]]; then
+    git switch "$target"
+  fi
+}
+
+# Rebase current branch onto latest main
+function rbm {
+  # 1. Check for dirty working directory
+  if ! git diff-index --quiet HEAD --; then
+    echo "Error: You have uncommitted changes. Stash or commit them first."
+    return 1
+  fi
+
+  # 2. Update local main and rebase
+  echo "Updating main and rebasing..."
+  git fetch origin main:main && git rebase main
+  
+  # 3. Ask to force push if rebase was successful
+  if [ $? -eq 0 ]; then
+    echo -n "Rebase successful. Force push to origin? (y/n) "
+    read -k 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      git push --force-with-lease
+    fi
+  fi
+}
+
+function hl {
   sed -E "s/$1/$(tput setaf 5)$1$(tput sgr0)/"
 }
 

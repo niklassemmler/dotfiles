@@ -1,7 +1,6 @@
 ## Required
 # export DOTFILES_DIR="$HOME/dotfiles"
 # export ANTIDOTE_DIR="$HOME/.antidote"
-
 ## Zsh packages (Antidote)
 # install with homebrew or linux package manager
 
@@ -115,7 +114,7 @@ function goto {
 }
 
 # Rebase current branch onto latest main
-function rbm {
+function rbmain {
   # 1. Check for dirty working directory
   if ! git diff-index --quiet HEAD --; then
     echo "Error: You have uncommitted changes. Stash or commit them first."
@@ -164,6 +163,10 @@ bindkey '^[s' sudo_call
 bindkey '^[a' background_call 
 bindkey . rationalise-dot
 bindkey -M isearch . self-insert # so that search works
+
+# Setup key to temporarily store lines
+bindkey -M viins '^Q' push-line
+bindkey -M vicmd '^Q' push-line
 
 ## Powerline
 source $DOTFILES_DIR/p10k.zsh

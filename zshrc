@@ -22,7 +22,7 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 ## Variables
-EDITOR="vim"
+EDITOR="nvim"
 PATH=${HOME}/.local/bin/:$PATH
 HISTFILE=~/.zsh_history
 HISTSIZE=100000000
@@ -136,6 +136,23 @@ function rbmain {
   fi
 }
 
+gh_search() {
+  if [ -z "$1" ]; then
+    echo "Usage: gh_search <search-string>"
+    return 1
+  fi
+  gh search code "$1" --owner="$GITHUB_ORG"
+}
+
+gh_web() {
+  if [ -z "$1" ]; then
+    echo "Usage: gh_web <search-string>"
+    return 1
+  fi
+  # We embed the org filter directly in the query to avoid the CLI redirection bug
+  gh search code "$1 org:$GITHUB_ORG" --web
+}
+
 function hl {
   sed -E "s/$1/$(tput setaf 5)$1$(tput sgr0)/"
 }
@@ -170,3 +187,15 @@ bindkey -M vicmd '^Q' push-line
 
 ## Powerline
 source $DOTFILES_DIR/p10k.zsh
+
+# Load the edit-command-line function
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+# Bind it to a shortcut (Ctrl-x, Ctrl-e is the standard convention)
+bindkey '^x^e' edit-command-line
+
+# iterm2 
+function iterm2_print_user_vars() {
+  iterm2_set_user_var gitProject $(basename $(git rev-parse --show-toplevel 2> /dev/null) 2> /dev/null)
+}

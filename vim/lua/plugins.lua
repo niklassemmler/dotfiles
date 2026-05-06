@@ -1,6 +1,6 @@
 local plugins = {}
 local add = function(value)
-	table.insert(plugins, value)
+  table.insert(plugins, value)
 end
 
 -- # Visuals
@@ -61,11 +61,11 @@ add("ibhagwan/fzf-lua")
 
 -- Manage external dependencies
 add({
-	"williamboman/mason.nvim",
-	build = ":MasonUpdate",
-	ensure_installed = {
-		"gopls",
-	},
+  "williamboman/mason.nvim",
+  build = ":MasonUpdate",
+  ensure_installed = {
+    "gopls",
+  },
 })
 add("jay-babu/mason-nvim-dap.nvim")
 add("williamboman/mason-lspconfig.nvim")
@@ -76,9 +76,9 @@ add("neovim/nvim-lspconfig")
 
 -- LSP config for rust-analyzer
 add({
-	"mrcjkb/rustaceanvim",
-	version = "^5", -- Recommended
-	lazy = false, -- This plugin is already lazy
+  "mrcjkb/rustaceanvim",
+  version = "^5", -- Recommended
+  lazy = false, -- This plugin is already lazy
 })
 
 -- pairs of brackets quotes etc
@@ -105,9 +105,9 @@ add("mbbill/undotree")
 
 -- Beautify error messages
 add({
-	"folke/trouble.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = {},
+  "folke/trouble.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = {},
 })
 
 --
@@ -130,9 +130,9 @@ add("RRethy/vim-illuminate")
 add("mfussenegger/nvim-dap")
 add({ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } })
 add({
-	"leoluz/nvim-dap-go",
-	ft = "go",
-	dependencies = { "mfussenegger/nvim-dap" },
+  "leoluz/nvim-dap-go",
+  ft = "go",
+  dependencies = { "mfussenegger/nvim-dap" },
 })
 add("theHamsta/nvim-dap-virtual-text")
 
@@ -154,13 +154,6 @@ add("hrsh7th/nvim-cmp")
 -- Null-Ls alternative
 add("nvimtools/none-ls.nvim")
 
--- Easy Motion Lua variant
-add("phaazon/hop.nvim")
-
--- Github Copilot
-add("zbirenbaum/copilot.lua")
-add("zbirenbaum/copilot-cmp")
-
 -- Improved yank ring
 add("gbprod/yanky.nvim")
 
@@ -173,11 +166,11 @@ add("ldelossa/litee-calltree.nvim")
 
 -- Lazy git
 add({
-	"kdheepak/lazygit.nvim",
-	-- optional for floating window border decoration
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	},
+  "kdheepak/lazygit.nvim",
+  -- optional for floating window border decoration
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
 })
 
 -- Minis: Lots of really cool & minimal plugin

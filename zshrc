@@ -66,6 +66,7 @@ zstyle ':completion:*:kill:*' verbose yes # show description for kill
 autoload zmv
 autoload colors
 colors
+source <(fzf --zsh)
 
 ## Scripts
 function mkcd () {

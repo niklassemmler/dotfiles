@@ -1,13 +1,12 @@
 [user]
-  email = niklas.semmler@mailbox.org
+  email = niklas@langfuse.com
   name = Niklas Semmler
   editor = vim
 [push]
   default = simple
+  autoSetupRemote = true
 [pull]
   rebase = true
-[core]
-  pager = delta
 [interactive]
   diffFilter = delta --color-only
 [delta]
@@ -44,19 +43,16 @@
   fetchpr = "!sh -c 'if [ $# -ne 2 ]; then echo \"<pr> <branch>\"; return; fi; PR=$1; BRANCH=$2; git fetch upstream pull/$PR/head:$BRANCH; git checkout $BRANCH;' -"
   files = log --name-only
   getmaster = "!f() { git checkout master && git fetch upstream master && git rebase upstream/master; }; f"
-  go = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git update-index --skip-worktree GSAll/.idea/compiler.xml; git checkout $1; }; f"
   hist = log --pretty=oneline --abbrev-commit --graph --decorate --all
   history = log --pretty=oneline --abbrev-commit --graph --decorate --all
   last = log -1 HEAD -p
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
-  new = "!f() { git update-index --no-skip-worktree GSAll/.idea/compiler.xml; git checkout GSAll/.idea/compiler.xml; git checkout -b $1 main; git update-index --skip-worktree GSAll/.idea/compiler.xml; }; f"
   pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
   rabort = "rebase --abort"
   rbab = rebase --abort
   rbco = rebase --continue
   rbi = "!f() { git rebase -i $(git log --invert-grep --author='Niklas Semmler' -1 --pretty="%H"); }; f"
   rbmain = rebase main
-  rbver = rebase bptp-verified
   rcont = "rebase --continue"
   rst = reset
   rsthd = reset HEAD~
@@ -64,5 +60,5 @@
   sw = "switch"
   unmerged = "!f() { git diff --name-only --diff-filter=U --relative; }; f"
   unpushed = log --branches --not --remotes --no-walk --decorate --oneline
-  update = "!f() { git fetch origin main:main; git fetch --tags --force --all; git rebase --onto bptp-verified origin/main; }; f"
   visual = ! gitk &
+  current = symbolic-ref --short HEAD

@@ -22,7 +22,7 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 ## Variables
-EDITOR="nvim"
+EDITOR="$(where nvim)"
 PATH=${HOME}/.local/bin/:$PATH
 HISTFILE=~/.zsh_history
 HISTSIZE=100000000

@@ -204,6 +204,9 @@ null_ls.setup({
     null_ls.builtins.formatting.golines,
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.google_java_format,
+    null_ls.builtins.formatting.sqlfluff.with({
+      extra_args = { "--dialect", "clickhouse" },
+    }),
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then

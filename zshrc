@@ -189,12 +189,13 @@ bindkey -M vicmd '^Q' push-line
 ## Powerline
 source $DOTFILES_DIR/p10k.zsh
 
-# Load the edit-command-line function
+# zsh-vi-mode resets all bindings on init, so register via its hook
 autoload -Uz edit-command-line
 zle -N edit-command-line
-
-# Bind it to a shortcut (Ctrl-x, Ctrl-e is the standard convention)
-bindkey '^x^e' edit-command-line
+function zvm_after_init() {
+  bindkey -M viins '^x^e' edit-command-line
+  bindkey -M vicmd '^x^e' edit-command-line
+}
 
 # iterm2 
 function iterm2_print_user_vars() {

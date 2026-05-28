@@ -8,7 +8,7 @@
 [pull]
   rebase = true
 [interactive]
-  diffFilter = delta --color-only
+  difffilter = sh -c 'command -v delta >/dev/null 2>&1 && exec delta --color-only || exec cat'
 [delta]
   navigate = true    # use n and N to move between diff sections
   light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
@@ -39,6 +39,7 @@
   ci = commit
   conflict = "!f() { nvim $(git diff --name-only --diff-filter=U --relative); }; f"
   cp = cherry-pick
+  current = symbolic-ref --short HEAD
   fetchall = "!f() { git fetch origin main:main; git fetch --tags --all --force; }; f"
   fetchpr = "!sh -c 'if [ $# -ne 2 ]; then echo \"<pr> <branch>\"; return; fi; PR=$1; BRANCH=$2; git fetch upstream pull/$PR/head:$BRANCH; git checkout $BRANCH;' -"
   files = log --name-only
@@ -47,6 +48,7 @@
   history = log --pretty=oneline --abbrev-commit --graph --decorate --all
   last = log -1 HEAD -p
   lastbranch = "!f() { git reflog | grep -o \"checkout: moving from .* to \" | sed -e 's/checkout: moving from //' -e 's/ to $//' | awk '!x[$0]++' | head -10; }; f"
+  new = "!f() { git fetch origin main && git checkout -b \"$1\" --no-track origin/main; }; f"
   pushnew = "!f() { git push --set-upstream origin $(git branch --show-current); }; f"
   rabort = "rebase --abort"
   rbab = rebase --abort
@@ -61,4 +63,11 @@
   unmerged = "!f() { git diff --name-only --diff-filter=U --relative; }; f"
   unpushed = log --branches --not --remotes --no-walk --decorate --oneline
   visual = ! gitk &
-  current = symbolic-ref --short HEAD
+[rebase]
+  updateRefs = true
+[core]
+  pager = sh -c 'command -v delta >/dev/null 2>&1 && exec delta || exec less -FRX'
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !gh auth git-credential

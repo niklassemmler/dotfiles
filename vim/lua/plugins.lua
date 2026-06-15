@@ -178,6 +178,14 @@ add("echasnovski/mini.nvim")
 
 -- Markdown
 add("jghauser/follow-md-links.nvim")
+add({
+	"3rd/image.nvim",
+	build = false,
+})
+add({
+	"MeanderingProgrammer/render-markdown.nvim",
+	dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons", "3rd/image.nvim" },
+})
 
 -- Marks
 add("chentoast/marks.nvim")
@@ -204,9 +212,19 @@ add("nvim-neotest/neotest")
 add("olexsmir/gopher.nvim")
 
 -- Refactoring
-add("ThePrimeagen/refactoring.nvim")
+add({
+	"ThePrimeagen/refactoring.nvim",
+	dependencies = { "lewis6991/async.nvim" },
+})
 
 -- jsonnet
 add("google/vim-jsonnet")
+
+-- claude code
+add({
+	"coder/claudecode.nvim",
+	dependencies = { "folke/snacks.nvim" },
+	config = true,
+})
 
 return plugins

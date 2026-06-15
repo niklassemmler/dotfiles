@@ -115,20 +115,20 @@ set("n", "<leader>sq", "<cmd>nohlsearch<cr>", "Disable search highlighting")
 set("v", "gV", "`[v`]", "Highlight last entered text")
 
 -- Copy to system register
-set({ "n", "v" }, "<leader>c", '"+y', "Copy to system register")
+set({ "n", "v" }, "<leader>y", '"+y', "Copy to system register")
 
 -- Paste from system register
 set("n", "<leader>v", '"+p', "Paste from system register")
 
--- Testing
-wk.add({
-	{ "<leader>T", group = "Testing" },
-	{ "<leader>Tf", "<cmd>TestFile<CR>", desc = "File" },
-	{ "<leader>Tl", "<cmd>TestLast<CR>", desc = "Last" },
-	{ "<leader>Ts", "<cmd>TestSuite<CR>", desc = "Suite" },
-	{ "<leader>Tt", "<cmd>TestNearest<CR>", desc = "Nearest" },
-	{ "<leader>Tv", "<cmd>TestVisit<CR>", desc = "Visit" },
-})
+-- Testing (vim-test not installed; wire up neotest when configured)
+-- wk.add({
+-- 	{ "<leader>T", group = "Testing" },
+-- 	{ "<leader>Tf", "<cmd>TestFile<CR>", desc = "File" },
+-- 	{ "<leader>Tl", "<cmd>TestLast<CR>", desc = "Last" },
+-- 	{ "<leader>Ts", "<cmd>TestSuite<CR>", desc = "Suite" },
+-- 	{ "<leader>Tt", "<cmd>TestNearest<CR>", desc = "Nearest" },
+-- 	{ "<leader>Tv", "<cmd>TestVisit<CR>", desc = "Visit" },
+-- })
 
 -- Access via fzf
 wk.add({
@@ -159,14 +159,14 @@ wk.add({
 
 set("t", "jk", [[<C-\><C-n>]], "Exit terminal mode")
 
--- Sessions
-wk.add({
-	{ "<leader>S", group = "Session" },
-	{ "<leader>Sc", "<cmd>SessionManager load_current_dir_session<cr>", desc = "Load current dir" },
-	{ "<leader>Sd", "<cmd>SessionManager delete_session<cr>", desc = "Delete" },
-	{ "<leader>Sl", "<cmd>SessionManager load_session<cr>", desc = "Load" },
-	{ "<leader>Ss", "<cmd>SessionManager save_current_session`<cr>", desc = "Store" },
-})
+-- Sessions (session_manager plugin disabled)
+-- wk.add({
+-- 	{ "<leader>S", group = "Session" },
+-- 	{ "<leader>Sc", "<cmd>SessionManager load_current_dir_session<cr>", desc = "Load current dir" },
+-- 	{ "<leader>Sd", "<cmd>SessionManager delete_session<cr>", desc = "Delete" },
+-- 	{ "<leader>Sl", "<cmd>SessionManager load_session<cr>", desc = "Load" },
+-- 	{ "<leader>Ss", "<cmd>SessionManager save_current_session`<cr>", desc = "Store" },
+-- })
 set("n", "QQ", "<cmd>qa<cr>", "Quit all")
 set({ "n", "i", "v" }, "<C-q>", "<cmd>q<cr>", "Close buffer")
 set("n", "XX", "<cmd>BDelete this<cr>", "Remove buffer")
@@ -276,14 +276,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Go tos
 		wk.add({
 			{ "<leader>g", group = "Goto" },
-			{ "<leader>gD", vim.lsp.buf.declaration, desc = "declaration" },
+			{ "<leader>gD", fzflua.lsp_declarations, desc = "declaration" },
 			{ "<leader>gd", "<cmd>Glance definitions<cr>", desc = "definition" },
 			{ "<leader>gi", "<cmd>Glance implementations<cr>", desc = "implementation" },
-			{ "<leader>gI", vim.lsp.buf.incoming_calls, desc = "Go to incoming calls" },
-			{ "<leader>gO", vim.lsp.buf.outgoing_calls, desc = "Go to outgoing calls" },
+			{ "<leader>gI", fzflua.lsp_incoming_calls, desc = "Go to incoming calls" },
+			{ "<leader>gO", fzflua.lsp_outgoing_calls, desc = "Go to outgoing calls" },
 			{ "<leader>gt", "<cmd>Glance type_definitions<cr>", desc = "Go to type definition" },
 			{ "<leader>gr", "<cmd>Glance references<cr>", desc = "Show references" },
 			{ "<leader>gs", vim.lsp.buf.document_symbol, desc = "Show symbols" },
+			{ "<leader>gW", fzflua.lsp_workspace_symbols, desc = "Workspace symbols" },
 		})
 
 		-- Workspace
@@ -382,11 +383,40 @@ wk.add({
 	},
 })
 
+-- Claude Code
+wk.add({
+	{ "<leader>c", group = "AI/Claude Code" },
+	{ "<leader>cc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+	{ "<leader>cf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+	{ "<leader>cr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+	{ "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+	{ "<leader>cm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+	{ "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+	{ "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+	{ "<leader>ca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+	{ "<leader>cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+})
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+	callback = function()
+		vim.keymap.set(
+			"n",
+			"<leader>gS",
+			"<cmd>LspTypescriptGoToSourceDefinition<cr>",
+			{ buffer = true, desc = "Go to source definition (TS)" }
+		)
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+	callback = function()
+		vim.keymap.set("n", "<leader>cs", "<cmd>ClaudeCodeTreeAdd<cr>", { buffer = true, desc = "Add file" })
+	end,
+})
+
 -- Symbols
 set("n", "S", "<cmd>Outline<cr>", "Show symbols")
-
--- Hop
-set("n", "<leader>gw", "<cmd>HopWord<cr>", "Jump to word")
 
 -- Yanky
 require("yanky")
@@ -397,30 +427,6 @@ set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)", "Paste before & move cursor")
 set("n", "<c-n>", "<Plug>(YankyCycleForward)", "Cycle forward")
 set("n", "<c-p>", "<Plug>(YankyCycleBackward)", "Cycle backward")
 
--- cmp
-local cmp = require("cmp")
-cmp.setup({
-	mapping = {
-		-- Shift+TAB to go to the Previous Suggested item
-		["<S-Tab>"] = cmp.mapping.select_prev_item(),
-		-- Tab to go to the next suggestion
-		["<Tab>"] = cmp.mapping.select_next_item(),
-		-- CTRL+SHIFT+f to scroll backwards in description
-		["<C-S-f>"] = cmp.mapping.scroll_docs(-4),
-		-- CTRL+F to scroll forwards in the description
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		-- CTRL+SPACE to bring up completion at current Cursor location
-		["<C-Space>"] = cmp.mapping.complete(),
-		-- CTRL+e to exit suggestion and close it
-		["<C-e>"] = cmp.mapping.close(),
-		-- CR (enter or return) to CONFIRM the currently selection suggestion
-		-- We set the ConfirmBehavior to insert the Selected suggestion
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Insert,
-			select = true,
-		}),
-	},
-})
 
 -- lua snip
 -- local ls = require("luasnip")

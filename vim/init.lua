@@ -2,6 +2,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Shim for plugins still using the deprecated vim.lsp.buf_get_clients API
+vim.lsp.buf_get_clients = vim.lsp.get_clients
+
 local utils = require("utils")
 VIMUSERDIR = utils.getLinuxDirPath(os.getenv("MYVIMRC"))
 

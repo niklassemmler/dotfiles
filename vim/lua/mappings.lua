@@ -231,8 +231,8 @@ wk.add({
 	{ "<leader>Dso", dap.step_over, desc = "Step Over" },
 	{ "<leader>Dsb", dap.step_back, desc = "Step Back" },
 	{ "<leader>Dsu", dap.step_out, desc = "Step Out" },
-	-- { "<leader>Dl", require("dap-go").debug_last, "Debug last"}
-	-- { "<leader>Dt", require("dap-go").debug_test, "Debug test"}
+	{ "<leader>Dl", function() require("dap-go").debug_last() end, desc = "Debug last" },
+	{ "<leader>Dt", function() require("dap-go").debug_test() end, desc = "Debug test" },
 	-- { "<leader>Dh", dapui.widgets.hover, desc="Hover Variables"}
 	-- { "<leader>DS", dapui.widgets.scopes, desc="Scopes"}
 })
@@ -253,6 +253,21 @@ wk.add({
 wk.add({
 	{ "<leader>C", group = "Tools" },
 	{ "<leader>Cg", "<cmd>LazyGit<cr>", desc = "Lazy Git" },
+})
+
+-- Conflicts
+wk.add({
+	{ "<leader>i", group = "Conflict" },
+	{ "<leader>ic", "<cmd>Conflict current<cr>", desc = "keep current" },
+	{ "<leader>ii", "<cmd>Conflict incoming<cr>", desc = "keep incoming" },
+	{ "<leader>ib", "<cmd>Conflict both<cr>", desc = "keep both" },
+	{ "<leader>ia", "<cmd>Conflict base<cr>", desc = "keep base" },
+	{ "<leader>in", "<cmd>Conflict none<cr>", desc = "keep none" },
+	{ "<leader>i]", "<cmd>Conflict next<cr>", desc = "next conflict" },
+	{ "<leader>i[", "<cmd>Conflict prev<cr>", desc = "prev conflict" },
+	{ "<leader>il", "<cmd>Conflict list<cr>", desc = "list files" },
+	{ "<leader>iq", "<cmd>Conflict qflist<cr>", desc = "quickfix list" },
+	{ "<leader>ir", "<cmd>Conflict refresh<cr>", desc = "refresh" },
 })
 
 -- Use LspAttach autocommand to only map the following keys

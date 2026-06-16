@@ -24,7 +24,7 @@ require("toggleterm").setup({ open_mapping = [[<c-\>]] })
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-	ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "ts_ls" },
+	ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "ts_ls", "gopls" },
 })
 require("mason-nvim-dap").setup({ automatic_setup = true, handlers = {} })
 require("dapui").setup()
@@ -160,22 +160,18 @@ vim.lsp.config("pyright", {
 vim.lsp.config("jsonnet_language_server", {
 	capabilities = capabilities,
 })
--- TODO: Fix with new vim.lsp.config syntax
--- vim.lsp.config('gopls'. {
---     capabilities = capabilities,
---     cmd = { "gopls", "serve" },
---     filetypes = { "go", "gomod" },
---     root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
---     settings = {
---         gopls = {
---             completeUnimported = true,
---             usePlaceholders = true,
---             analyses = {
---                 unusedparams = true,
---             },
---         },
---     },
--- })
+vim.lsp.config('gopls', {
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+                unusedparams = true,
+            },
+        },
+    },
+})
 if vim.fn.hostname() ~= "Policy1st" then
 	vim.lsp.config("lua_ls", {
 		capabilities = capabilities,
@@ -202,7 +198,17 @@ if vim.fn.hostname() ~= "Policy1st" then
 		},
 	})
 end
-require("lsp_signature").setup({ hint_enable = false })
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client:supports_method("textDocument/signatureHelp") then
+      vim.api.nvim_create_autocmd("CursorHoldI", {
+        buffer = args.buf,
+        callback = function() vim.lsp.buf.signature_help() end,
+      })
+    end
+  end,
+})
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
@@ -227,7 +233,7 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.eslint_d,
 	},
 	on_attach = function(client, bufnr)
-		if client.supports_method("textDocument/formatting") then
+		if client:supports_method("textDocument/formatting") then
 			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = augroup,
@@ -258,7 +264,7 @@ require("treesitter-context").setup()
 
 -- git
 require("gitsigns").setup()
-require("git-conflict").setup()
+require("conflict").setup()
 
 require("image").setup({
 	backend = "kitty",
@@ -300,11 +306,6 @@ require("close_buffers").setup({
 
 require("yanky").setup()
 
--- configure the litee.nvim library
-require("litee.lib").setup({})
--- configure litee-calltree.nvim
-require("litee.calltree").setup()
-
 -- minis
 require("mini.ai").setup()
 require("mini.comment").setup()
@@ -342,9 +343,10 @@ require("project_nvim").setup()
 -- })
 
 require("refactoring").setup({})
+require("gopher").setup({})
 
 -- enable signs
-local signs = { Error = "", Warn = "⚠", Hint = "", Info = "", Information = "" }
+local signs = { Error = "", Warn = "⚠", Hint = "", Info = "", Information = "" }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -358,4 +360,3 @@ require("f-string-toggle").setup({
 	key_binding = "<leader>F",
 	key_binding_desc = "Toggle f-string",
 })
-

@@ -44,7 +44,7 @@ add("nvim-lua/plenary.nvim")
 add("tpope/vim-fugitive")
 
 -- Git conflicts
-add({ "akinsho/git-conflict.nvim", version = "*", config = true })
+add("niekdomi/conflict.nvim")
 
 -- Terminal manager
 add({ "akinsho/toggleterm.nvim", version = "*", config = true })
@@ -86,9 +86,6 @@ add("windwp/nvim-autopairs")
 
 -- pictograms for lsp
 add("onsails/lspkind.nvim")
-
--- live function signature
-add("ray-x/lsp_signature.nvim")
 
 -- lsp ui
 add("DNLHC/glance.nvim")
@@ -160,10 +157,6 @@ add("gbprod/yanky.nvim")
 -- Multiline enable when I figure out keymappings
 -- add 'mg979/vim-visual-multi'
 
--- IDE UI elements
-add("ldelossa/litee.nvim")
-add("ldelossa/litee-calltree.nvim")
-
 -- Lazy git
 add({
   "kdheepak/lazygit.nvim",
@@ -200,6 +193,7 @@ add("ecthelionvi/NeoComposer.nvim")
 
 -- Tests
 add("nvim-neotest/neotest")
+add({ "nvim-neotest/neotest-go", ft = "go" })
 
 -- Browse
 -- Requires telescope?

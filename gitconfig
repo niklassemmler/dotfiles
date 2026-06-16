@@ -63,6 +63,7 @@
   unmerged = "!f() { git diff --name-only --diff-filter=U --relative; }; f"
   unpushed = log --branches --not --remotes --no-walk --decorate --oneline
   visual = ! gitk &
+	sync = "!f() { git fetch origin main; LOCAL=$(git rev-parse HEAD); REMOTE=$(git rev-parse origin/main); if [ \"$LOCAL\" = \"$REMOTE\" ]; then echo \"Already up to date.\"; return; fi; git stash; git rebase origin/main; git stash pop; }; f"
 [rebase]
   updateRefs = true
 [core]

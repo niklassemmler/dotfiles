@@ -218,6 +218,16 @@ add("google/vim-jsonnet")
 add({
 	"coder/claudecode.nvim",
 	dependencies = { "folke/snacks.nvim" },
+	cmd = {
+		"ClaudeCode",
+		"ClaudeCodeFocus",
+		"ClaudeCodeSelectModel",
+		"ClaudeCodeAdd",
+		"ClaudeCodeSend",
+		"ClaudeCodeDiffAccept",
+		"ClaudeCodeDiffDeny",
+		"ClaudeCodeTreeAdd",
+	},
 	config = true,
 })
 

@@ -24,7 +24,7 @@ require("toggleterm").setup({ open_mapping = [[<c-\>]] })
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-	ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "ts_ls", "gopls" },
+	ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "ts_ls", "gopls", "ruff", "eslint" },
 })
 require("mason-nvim-dap").setup({ automatic_setup = true, handlers = {} })
 require("dapui").setup()
@@ -51,8 +51,7 @@ require("mason-null-ls").setup({
 		"gofumpt",
 		"google_java_format",
 		"prettier",
-		"ruff",
-		"eslint_d",
+		"sql_formatter",
 	},
 })
 
@@ -157,6 +156,19 @@ vim.lsp.config("ts_ls", {
 vim.lsp.config("pyright", {
 	capabilities = capabilities,
 })
+-- Ruff: Python linting + code actions. Formatting stays with black/isort (null-ls),
+-- so Ruff's formatter is disabled to avoid duplicate formatters on <leader>rf.
+vim.lsp.config("ruff", {
+	capabilities = capabilities,
+	on_attach = function(client)
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
+	end,
+})
+-- ESLint: JS/TS linting + code actions (replaces the removed eslint_d null-ls source).
+vim.lsp.config("eslint", {
+	capabilities = capabilities,
+})
 vim.lsp.config("jsonnet_language_server", {
 	capabilities = capabilities,
 })
@@ -229,8 +241,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.google_java_format,
 		null_ls.builtins.formatting.prettier,
-		null_ls.builtins.diagnostics.ruff,
-		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.formatting.sql_formatter,
 	},
 	on_attach = function(client, bufnr)
 		if client:supports_method("textDocument/formatting") then

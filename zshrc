@@ -201,3 +201,29 @@ function zvm_after_init() {
 function iterm2_print_user_vars() {
   iterm2_set_user_var gitProject $(basename $(git rev-parse --show-toplevel 2> /dev/null) 2> /dev/null)
 }
+
+# Plugins in .zsh_plugins.txt are pinned (pin:<sha>), so `antidote update` skips them.
+# This lists upstream commits since each pin; review them, then bump the sha by hand.
+# Fetching only downloads commits, nothing is checked out or sourced.
+antidote-review() {
+  local repo sha dir head n
+  local -A seen
+  while read -r repo sha; do
+    [[ -n ${seen[$repo]} ]] && continue
+    seen[$repo]=1
+    dir=$(antidote path $repo 2>/dev/null) || { print -P "%F{red}$repo%f: not installed"; continue }
+    if ! git -C $dir fetch --quiet origin HEAD 2>/dev/null; then
+      print -P "%F{red}$repo%f: fetch failed"
+      continue
+    fi
+    head=$(git -C $dir rev-parse FETCH_HEAD)
+    n=$(git -C $dir rev-list --count $sha..$head)
+    if (( n == 0 )); then
+      print -P "%F{green}$repo%f: up to date"
+      continue
+    fi
+    print -P "%F{yellow}$repo%f: $n new commit(s)  https://github.com/$repo/compare/${sha:0:12}...${head:0:12}"
+    git -C $dir log --oneline --no-decorate $sha..$head | head -15
+    print "  to update: pin:${sha} -> pin:${head}"
+  done < <(sed -nE 's#^([^ #]+/[^ ]+).* pin:([0-9a-f]{40}).*#\1 \2#p' ${ZDOTDIR:-$HOME}/.zsh_plugins.txt)
+}

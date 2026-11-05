@@ -202,6 +202,24 @@ function iterm2_print_user_vars() {
   iterm2_set_user_var gitProject $(basename $(git rev-parse --show-toplevel 2> /dev/null) 2> /dev/null)
 }
 
+# Claude Code aliases
+alias tellme='noglob _tellme'
+_tellme() { claude --model haiku -p "$*"; }
+alias claude_haiku='claude --model haiku --effort high'
+alias claude_sonnet='claude --model sonnet --effort high'
+alias claude_opus='claude --model opus --effort high'
+alias claude_fable='claude --model fable --effort high'
+alias spacebug='claude -p "Give me one random lore fact about either Tyranids (Warhammer 40K) or Zerg (StarCraft). Just the fact itself, no preamble or label." --model claude-haiku-4-5-20251001'
+
+# Caveman mode
+caveman() {
+  local prompt="$*"
+  local caveman_style="Answer like Grok the caveman. Use guttural sounds, one-word sentences, primal energy, simple concepts. Make it entertaining and memorable. CAPITALIZE for EMPHASIS."
+  echo "$prompt
+
+$caveman_style" | claude --model claude-haiku-4-5-20251001 --effort high
+}
+
 # Plugins in .zsh_plugins.txt are pinned (pin:<sha>), so `antidote update` skips them.
 # This lists upstream commits since each pin; review them, then bump the sha by hand.
 # Fetching only downloads commits, nothing is checked out or sourced.

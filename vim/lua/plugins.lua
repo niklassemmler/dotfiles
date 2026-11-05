@@ -91,7 +91,7 @@ add("onsails/lspkind.nvim")
 add("DNLHC/glance.nvim")
 
 -- Highlighting
-add({ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" })
+add({ "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" })
 add("folke/todo-comments.nvim")
 
 -- context of current buffer (e.g., function)

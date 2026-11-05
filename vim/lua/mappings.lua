@@ -185,6 +185,21 @@ wk.add({
 	{ "<leader>df", vim.diagnostic.open_float, desc = "Float" },
 	{ "<leader>dl", vim.diagnostic.setloclist, desc = "Loclist" },
 	{ "<leader>dt", "<cmd>TroubleToggle<cr>", desc = "Trouble" },
+	{
+		"<leader>dv",
+		function()
+			local cfg = vim.diagnostic.config()
+			vim.diagnostic.config({ virtual_lines = not cfg.virtual_lines })
+		end,
+		desc = "Toggle full messages (virtual_lines)",
+	},
+	{
+		"<leader>di",
+		function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end,
+		desc = "Toggle inlay hints",
+	},
 })
 set("n", "<S-Up>", vim.diagnostic.goto_prev, "Previous issue")
 set("n", "<S-Down>", vim.diagnostic.goto_next, "Next issue")

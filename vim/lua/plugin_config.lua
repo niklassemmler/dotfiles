@@ -150,8 +150,26 @@ vim.lsp.config("html", {
 vim.lsp.config("tailwindcss", {
 	capabilities = capabilities,
 })
+-- ts_ls: TypeScript/JavaScript. Diagnostics come from tsserver (same type errors
+-- tsc reports for open files + their imports). The inlayHints block makes ts_ls
+-- emit inline type/parameter hints; they're actually rendered by the LspAttach
+-- handler below calling vim.lsp.inlay_hint.enable.
+local ts_inlay_hints = {
+	includeInlayParameterNameHints = "all",
+	includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+	includeInlayFunctionParameterTypeHints = true,
+	includeInlayVariableTypeHints = true,
+	includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+	includeInlayPropertyDeclarationTypeHints = true,
+	includeInlayFunctionLikeReturnTypeHints = true,
+	includeInlayEnumMemberValueHints = true,
+}
 vim.lsp.config("ts_ls", {
 	capabilities = capabilities,
+	settings = {
+		typescript = { inlayHints = ts_inlay_hints },
+		javascript = { inlayHints = ts_inlay_hints },
+	},
 })
 vim.lsp.config("pyright", {
 	capabilities = capabilities,
@@ -219,7 +237,27 @@ vim.api.nvim_create_autocmd("LspAttach", {
         callback = function() vim.lsp.buf.signature_help() end,
       })
     end
+    -- Inline inlay hints (inferred types, parameter names) for servers that support them (ts_ls, etc.)
+    if client and client:supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
   end,
+})
+
+-- Diagnostics display: show the error text inline, not just sign-column icons.
+-- virtual_text puts a short message at the end of the line; because TypeScript
+-- errors are often long, <leader>dv toggles virtual_lines (full message below
+-- the line) for the current buffer.
+vim.diagnostic.config({
+	virtual_text = {
+		spacing = 2,
+		prefix = "●",
+		source = "if_many",
+	},
+	underline = true,
+	severity_sort = true,
+	update_in_insert = false,
+	float = { border = "rounded", source = true },
 })
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
